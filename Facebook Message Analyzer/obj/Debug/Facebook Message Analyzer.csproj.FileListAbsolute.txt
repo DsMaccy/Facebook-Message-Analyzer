@@ -1,0 +1,9 @@
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\FBMA\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb
