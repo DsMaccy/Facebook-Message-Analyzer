@@ -7,3 +7,11 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Faceb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb
+F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
+F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
+F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb
+F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe
+F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
+F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
+F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
+F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
