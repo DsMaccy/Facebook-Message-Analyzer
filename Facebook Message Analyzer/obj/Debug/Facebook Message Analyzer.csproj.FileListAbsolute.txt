@@ -15,3 +15,9 @@ F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AuthenticationForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.WelcomeForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.xml
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.xml

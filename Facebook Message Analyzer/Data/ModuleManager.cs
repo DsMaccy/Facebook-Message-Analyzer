@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Facebook_Message_Analyzer.Data
 {
-    class FBData
+    class ModuleManager
     {
     }
 }

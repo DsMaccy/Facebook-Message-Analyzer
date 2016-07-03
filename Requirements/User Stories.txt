@@ -1,0 +1,6 @@
+User Stories
+----------------------
+As a <role>, I want <feature> so that <reason>
+----------------------
+As a user,  I want to get information about chat messages
+As a user/extender, I want to be able to extend the program with my own analysis
