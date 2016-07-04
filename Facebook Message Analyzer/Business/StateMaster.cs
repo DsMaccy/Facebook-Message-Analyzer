@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* TODO
+ * Facebook Model Times
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +15,8 @@ namespace Facebook_Message_Analyzer.Business
 {
     internal static class StateMaster
     {
-        private static Form m_activeForm;
+        private static Form m_activeForm = null;
+        private static bool m_loggedIn = false;
 
 
         /// <summary>
@@ -24,24 +29,49 @@ namespace Facebook_Message_Analyzer.Business
             Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(m_activeForm);
+
+            if (!m_loggedIn)
+            {
+                return;
+            }
+
+            m_activeForm = new ConversationSelectionForm();
+            Application.Run(m_activeForm);
         }
 
         public static void Login()
         {
             AuthenticationForm loginScreen = new AuthenticationForm();
             loginScreen.ShowDialog();
+            if (m_loggedIn)
+            {
+                m_activeForm.Close();
+            }
         }
+
+        public static Uri getLoginURL()
+        {
+            return FBQueryManager.Manager.getLoginURL();
+        }
+
         public static void setOAuthToken(string token)
         {
             if (token != null && token != "")
             {
                 FBQueryManager.Manager.setToken(token);
-                // TODO: Uncomment code -- Close Current Form and Continue to the ConversationSelectionForm
-                // m_activeForm.Close();
-                // m_activeForm = new ConversationSelectionForm()
-
-                // Application.Run(m_activeForm)
+                //m_activeForm.Close();
+                m_loggedIn = true;
             }
+        }
+
+        public static dynamic getConversations()
+        {
+            return FBQueryManager.Manager.getConversations();
+        }
+
+        public static void setConversation()
+        {
+            FBQueryManager.Manager.setConversation();
         }
 
         public static void Exit()

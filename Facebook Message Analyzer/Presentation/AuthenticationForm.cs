@@ -14,9 +14,7 @@ namespace Facebook_Message_Analyzer.Presentation
 {
     public partial class AuthenticationForm : Form
     {     
-        private const string m_APP_ID = "1465357507096514";
-        private const string m_APP_SECRET = "ac5817c4f2dd07bf18137d7297d4015c";
-        private const string m_SUCCESS_URI = "https://www.facebook.com/connect/login_success.html";
+        
         private string m_queryURL = "";
         private bool m_connectionSuccess;
 
@@ -31,46 +29,14 @@ namespace Facebook_Message_Analyzer.Presentation
         /// </summary>
         /// <returns>false if the form cannot be properly displayed and should be closed immediately</returns>
         private bool requestLogin()
-        { 
+        {
 
-            dynamic parameters = new System.Dynamic.ExpandoObject();
-
-            parameters.client_id = m_APP_ID;
-            parameters.redirect_uri = m_SUCCESS_URI;
-
-            // The requested response: an access token (token), an authorization code (code), or both (code token).
-            parameters.response_type = "token";
-
-            // list of additional display modes can be found at http://developers.facebook.com/docs/reference/dialogs/#display
-            parameters.display = "popup";
-
-            // add the 'scope' parameter only if we have extendedPermissions.
-            string extendedPermissions = "read_mailbox";
-            parameters.scope = extendedPermissions;
-
-            // generate the login url
-
-            dynamic token = null;
-            Facebook.FacebookClient FBClient = new Facebook.FacebookClient();
-            try
+            Uri loginUrl = StateMaster.getLoginURL();
+            if (loginUrl == null)
             {
-                token = FBClient.Get("oauth/access_token", new
-                {
-                    client_id = m_APP_ID, // "1465357507096514"
-                    client_secret = m_APP_SECRET, // "ac5817c4f2dd07bf18137d7297d4015c"
-                    grant_type = "client_credentials"
-                });
-            }
-            catch (WebExceptionWrapper)
-            {
-                ErrorMessages.WebConnectionFailure();
                 return false;
             }
-            FBClient.AccessToken = token.access_token;
-            FBClient.AppId = m_APP_ID;
-            FBClient.AppSecret = m_APP_SECRET;
 
-            Uri loginUrl = FBClient.GetLoginUrl(parameters);
             m_queryURL = loginUrl.AbsoluteUri;
             authBrowser.Navigate(m_queryURL);
 

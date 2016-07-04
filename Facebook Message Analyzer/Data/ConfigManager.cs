@@ -8,5 +8,10 @@ namespace Facebook_Message_Analyzer.Data
 {
     class ConfigManager
     {
+        public static ConfigManager Manager = new ConfigManager();
+
+        private ConfigManager()
+        {
+        }
     }
 }
