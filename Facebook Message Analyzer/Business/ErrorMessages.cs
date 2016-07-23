@@ -23,5 +23,18 @@ namespace Facebook_Message_Analyzer.Business
         {
             MessageBox.Show("You must login to proceed");
         }
+
+        public static DateTime timeOfOverflow;
+        public static void APIOverflow()
+        {
+            int timeDifference = (DateTime.Now - timeOfOverflow).Minutes;
+            if (timeOfOverflow == null || timeDifference > 20)
+            {
+                timeOfOverflow = DateTime.Now;
+                timeDifference = (DateTime.Now - timeOfOverflow).Minutes;
+            }
+            string message = String.Concat("Too much information has been requested from Facebook for too long.  You must wait about ", 20 - timeDifference, " minutes");
+            MessageBox.Show(message);
+        }
     }
 }

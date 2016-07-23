@@ -89,30 +89,60 @@ namespace Facebook_Message_Analyzer.Data
 
         public dynamic getConversations()
         {
-            if (m_conversations == null)
+            try
             {
-                m_conversations = m_fbClient.Get("me/inbox", new
+                if (m_conversations == null)
                 {
-                    limit = 200,
-                    offset = 50
-                });
-            }
-            else
-            {
-                m_conversations = m_fbClient.Get("me/inbox");
-            }
+                    m_conversations = m_fbClient.Get("me/inbox", new
+                    {
+                        limit = 200,
+                        offset = 50
+                    });
+                }
+                /*
+                else
+                {
+                    m_conversations = m_fbClient.Get("me/inbox");
+                }*/
 
-            return (m_conversations.data);
+                return (m_conversations.data);
+            }
+            catch (Facebook.FacebookOAuthException)
+            {
+                Console.Error.WriteLine("Api calls exceeded.  You must wait");
+                return null;
+            }
         }
 
         public void nextConversations()
         {
-            m_conversations = m_fbClient.Get(m_conversations.paging.next);
+            try
+            {
+                dynamic conversation = m_fbClient.Get(m_conversations.paging.next);
+                if (conversation.data.Count > 0)
+                {
+                    m_conversations = conversation;
+                }
+            }
+            catch (Exception ex) when (ex is Facebook.FacebookOAuthException || ex is Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+            {
+                // Error caused
+            }
         }
 
         public void prevConversations()
         {
-            m_conversations = m_fbClient.Get(m_conversations.paging.previous);
+            try
+            {
+                dynamic conversation = m_fbClient.Get(m_conversations.paging.previous);
+                if (conversation.data.Count > 0)
+                {
+                    m_conversations = conversation;
+                }
+            }
+            catch (Exception ex) when (ex is Facebook.FacebookOAuthException || ex is Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+            {
+            }
         }
 
         public void setConversation()

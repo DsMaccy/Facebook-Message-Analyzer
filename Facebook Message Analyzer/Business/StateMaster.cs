@@ -74,6 +74,25 @@ namespace Facebook_Message_Analyzer.Business
             FBQueryManager.Manager.setConversation();
         }
 
+        public static void selectAnalysisModules()
+        {
+            // TODO
+            // Create modal for analysis modules and store those values
+        }
+
+        public static void runAnalysisModules(int conversationIndex)
+        {
+            // TODO
+            // Close window and open new one for analysis
+            // Have new one open analysis window for each of the analysis options available
+        }
+
+        public static void showPreferences()
+        {
+            // TODO
+            // Open modal for displaying module preferences
+        }
+
         public static void Exit()
         {
             m_activeForm.Close();

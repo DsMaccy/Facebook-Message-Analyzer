@@ -76,27 +76,6 @@ namespace Facebook_Message_Analyzer.Presentation
             }
         }
 
-        /*
-        private void AuthenticationScreen_Load(object sender, EventArgs e)
-        {
-            //authBrowser.Navigate(m_url);
-            if (authBrowser.Url != null &&
-                authBrowser.Url.ToString() == m_SUCCESS_URI)
-            {
-                Close();
-            }
-            else
-            {
-                ErrorMessages.LoginFailure();
-                m_connectionSuccess = requestLogin();
-                if (!m_connectionSuccess)
-                {
-                    Close();
-                }
-            }
-        }
-        */
-
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);

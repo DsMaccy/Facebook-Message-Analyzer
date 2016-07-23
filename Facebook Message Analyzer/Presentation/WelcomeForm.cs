@@ -35,7 +35,6 @@ namespace Facebook_Message_Analyzer
             title.Left = this.ClientSize.Width / 2 - title.Width / 2;
             version.Left = this.ClientSize.Width / 2 - version.Width / 2;
             login.Left = this.ClientSize.Width / 2 - login.Width / 2;
-            Console.WriteLine(login.Width + " " + this.ClientSize.Height);
             login.Top = this.ClientSize.Height - login.Height - 9;
         }
 
