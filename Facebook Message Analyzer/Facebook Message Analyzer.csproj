@@ -78,6 +78,12 @@
     <Compile Include="Data\ConfigManager.cs" />
     <Compile Include="Data\FBQueryManager.cs" />
     <Compile Include="Data\ModuleManager.cs" />
+    <Compile Include="Presentation\AnalyzingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\AnalyzingForm.Designer.cs">
+      <DependentUpon>AnalyzingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\AuthenticationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,18 @@
     <Compile Include="Presentation\ConversationSelectionForm.Designer.cs">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\ModulePreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\ModulePreferencesForm.Designer.cs">
+      <DependentUpon>ModulePreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\SelectModulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\SelectModulesForm.Designer.cs">
+      <DependentUpon>SelectModulesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\WelcomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,11 +116,20 @@
     </Compile>
     <Compile Include="Business\StateMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\AnalyzingForm.resx">
+      <DependentUpon>AnalyzingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\ConversationSelectionForm.resx">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\ModulePreferencesForm.resx">
+      <DependentUpon>ModulePreferencesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\SelectModulesForm.resx">
+      <DependentUpon>SelectModulesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\WelcomeForm.resx">
       <DependentUpon>WelcomeForm.cs</DependentUpon>

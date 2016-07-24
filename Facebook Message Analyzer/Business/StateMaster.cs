@@ -76,12 +76,15 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void selectAnalysisModules()
         {
-            // TODO
-            // Create modal for analysis modules and store those values
+            SelectModulesForm smf = new SelectModulesForm();
+            smf.ShowDialog();
         }
 
         public static void runAnalysisModules(int conversationIndex)
         {
+            m_activeForm.Close();
+            m_activeForm = new AnalyzingForm();
+            Application.Run(m_activeForm);
             // TODO
             // Close window and open new one for analysis
             // Have new one open analysis window for each of the analysis options available
@@ -89,6 +92,8 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void showPreferences()
         {
+            ModulePreferencesForm mpf = new ModulePreferencesForm();
+            mpf.ShowDialog();
             // TODO
             // Open modal for displaying module preferences
         }
