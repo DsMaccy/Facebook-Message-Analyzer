@@ -12,9 +12,19 @@ namespace Facebook_Message_Analyzer.Presentation
 {
     public partial class ModulePreferencesForm : Form
     {
+        private UserControl m_openPreference;
         public ModulePreferencesForm()
         {
             InitializeComponent();
+
+            modules.Items.Add("General");
+
+            // TODO: Add a label in modules for evey available module that has a preference
+            m_openPreference = new GeneralPreferences();
+            m_openPreference.Show();
+            this.Controls.Add(m_openPreference);
+
+
             alignWidgets();
         }
 
@@ -26,6 +36,18 @@ namespace Facebook_Message_Analyzer.Presentation
         private void alignWidgets()
         {
             modules.Height = this.ClientRectangle.Height - 18;
+            m_openPreference.Height = this.ClientRectangle.Height - 18;
+            m_openPreference.Top = modules.Top;
+            m_openPreference.Left = modules.Left + modules.Width + 9;
+        }
+
+        private void modules_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Controls.Remove(m_openPreference);
+
+            // TODO: Set m_openPreference to the correct preference given the new selected index
+
+            this.Controls.Add(m_openPreference);
         }
     }
 }

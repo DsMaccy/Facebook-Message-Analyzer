@@ -1,13 +1,13 @@
 ﻿namespace Facebook_Message_Analyzer.Presentation
 {
-    partial class ModulePreferencesForm
+    partial class GeneralPreferences
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,41 +20,40 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.modules = new System.Windows.Forms.ListBox();
+            this.moduleLocationLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // modules
+            // moduleLocationLabel
             // 
-            this.modules.FormattingEnabled = true;
-            this.modules.Location = new System.Drawing.Point(12, 12);
-            this.modules.Name = "modules";
-            this.modules.Size = new System.Drawing.Size(99, 238);
-            this.modules.TabIndex = 0;
-            this.modules.SelectedIndexChanged += new System.EventHandler(this.modules_SelectedIndexChanged);
+            this.moduleLocationLabel.AutoSize = true;
+            this.moduleLocationLabel.Location = new System.Drawing.Point(4, 4);
+            this.moduleLocationLabel.Name = "moduleLocationLabel";
+            this.moduleLocationLabel.Size = new System.Drawing.Size(97, 13);
+            this.moduleLocationLabel.TabIndex = 0;
+            this.moduleLocationLabel.Text = "Module Locations: ";
             // 
-            // ModulePreferencesForm
+            // GeneralPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 261);
-            this.Controls.Add(this.modules);
-            this.Name = "ModulePreferencesForm";
-            this.Text = "ModulePreferences";
-            this.Resize += new System.EventHandler(this.ModulePreferencesForm_Resize);
+            this.Controls.Add(this.moduleLocationLabel);
+            this.Name = "GeneralPreferences";
+            this.Size = new System.Drawing.Size(289, 205);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox modules;
+        private System.Windows.Forms.Label moduleLocationLabel;
     }
 }

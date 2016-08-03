@@ -96,6 +96,12 @@
     <Compile Include="Presentation\ConversationSelectionForm.Designer.cs">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\GeneralPreferences.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation\GeneralPreferences.Designer.cs">
+      <DependentUpon>GeneralPreferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\ModulePreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\ConversationSelectionForm.resx">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\GeneralPreferences.resx">
+      <DependentUpon>GeneralPreferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\ModulePreferencesForm.resx">
       <DependentUpon>ModulePreferencesForm.cs</DependentUpon>

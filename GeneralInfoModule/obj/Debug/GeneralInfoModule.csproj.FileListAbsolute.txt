@@ -1,0 +1,7 @@
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\GeneralInfoModule.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\GeneralInfoModule.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\ModuleInterface.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb
