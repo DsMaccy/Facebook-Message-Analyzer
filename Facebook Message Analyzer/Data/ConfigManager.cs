@@ -11,11 +11,10 @@ namespace Facebook_Message_Analyzer.Data
     {
         public static ConfigManager Manager = new ConfigManager();
         private SqlConnection m_sqlConnection;
-        private Database m_db;
 
         private ConfigManager()
         {
-            m_db = new Database("config");
+            Database.createDatabase("config");
         }
 
         public dynamic getValue (string table, string key)
