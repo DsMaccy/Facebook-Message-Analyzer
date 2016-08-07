@@ -16,8 +16,9 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             InitializeComponent();
             alignWidgets();
-            
+
             // TODO: Programmatically add options for each of the modules
+            
         }
 
         private void SelectModulesForm_Resize(object sender, EventArgs e)

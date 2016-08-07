@@ -39,6 +39,12 @@ namespace Facebook_Message_Analyzer.Presentation
             m_openPreference.Height = this.ClientRectangle.Height - 18;
             m_openPreference.Top = modules.Top;
             m_openPreference.Left = modules.Left + modules.Width + 9;
+            apply.Top = this.ClientRectangle.Height - 18 - apply.Height;
+            ok.Top = this.ClientRectangle.Height - 18 - ok.Height;
+            cancel.Top = this.ClientRectangle.Height - 18 - cancel.Height;
+            apply.Left = this.ClientRectangle.Width - 9 - apply.Width;
+            cancel.Left = apply.Left - 9 - cancel.Width;
+            ok.Left = cancel.Left - 9 - ok.Width;
         }
 
         private void modules_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,6 +54,22 @@ namespace Facebook_Message_Analyzer.Presentation
             // TODO: Set m_openPreference to the correct preference given the new selected index
 
             this.Controls.Add(m_openPreference);
+        }
+
+        private void apply_Click(object sender, EventArgs e)
+        {
+            // TODO -- save to DB and send call to module to save their stuff if they are not the general object
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ok_Click(object sender, EventArgs e)
+        {
+            apply_Click(sender, e);
+            this.Close();
         }
     }
 }

@@ -1,5 +1,10 @@
 ﻿/* TODO
+ * Find way to Parse DLL files in path (preferences) and add modules to application
+ * Set up Preferences DB
+ * Set up caching for messages
+ * Create Module for Generic Analysis
  * Facebook Model Times
+ * Create Constants for Width and Heigth offsets
  */
 
 using System;
@@ -10,6 +15,7 @@ using System.Windows.Forms;
 using Facebook_Message_Analyzer.Business;
 using Facebook_Message_Analyzer.Presentation;
 using Facebook_Message_Analyzer.Data;
+using ModuleInterface;
 
 namespace Facebook_Message_Analyzer.Business
 {
@@ -85,17 +91,25 @@ namespace Facebook_Message_Analyzer.Business
             m_activeForm.Close();
             m_activeForm = new AnalyzingForm();
             Application.Run(m_activeForm);
-            // TODO
-            // Close window and open new one for analysis
-            // Have new one open analysis window for each of the analysis options available
+            // TODO -- Have new one open analysis window for each of the analysis options available
         }
 
         public static void showPreferences()
         {
             ModulePreferencesForm mpf = new ModulePreferencesForm();
             mpf.ShowDialog();
-            // TODO
-            // Open modal for displaying module preferences
+        }
+
+        public static Dictionary<string, IModule> getModules()
+        {
+            Dictionary<string, IModule> modules = new Dictionary<string, IModule>();
+
+            
+            // TODO: for each folder in module path, 
+                // check if it's a dll
+                // Add an instance to Dictionary with the filename as key and an instance as the value
+
+            return modules;
         }
 
         public static void Exit()

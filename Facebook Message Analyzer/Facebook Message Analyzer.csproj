@@ -76,8 +76,10 @@
     <Compile Include="Business\ErrorMessages.cs" />
     <Compile Include="Data\CachedMessagesManager.cs" />
     <Compile Include="Data\ConfigManager.cs" />
+    <Compile Include="Data\Database.cs" />
     <Compile Include="Data\FBQueryManager.cs" />
     <Compile Include="Data\ModuleManager.cs" />
+    <Compile Include="Data\DatabaseConstants.cs" />
     <Compile Include="Presentation\AnalyzingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +179,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModuleInterface\ModuleInterface.csproj">
+      <Project>{54b21902-d5bc-4ec9-bd80-8060381cbff2}</Project>
+      <Name>ModuleInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

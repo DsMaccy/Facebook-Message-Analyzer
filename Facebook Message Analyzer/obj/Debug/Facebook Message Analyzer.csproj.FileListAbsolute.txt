@@ -33,3 +33,5 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Faceb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ModulePreferencesForm.resources
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.SelectModulesForm.resources
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ModuleInterface
 {
@@ -25,12 +26,12 @@ namespace ModuleInterface
         void parallelAnalyze(Message message);
 
         bool preferencesAvailable();
-        // TODO: Add preference
+        UserControl getPreferenceForm();
+        void savePreferences(Dictionary<string,dynamic> newValues);
 
         bool formAvailable();
         // TODO: add form
 
         // TODO: Add sql data for preferences???
-        
     }
 }
