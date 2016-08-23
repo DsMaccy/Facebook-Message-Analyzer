@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 using ModuleInterface;
-using System.Windows.Form;
 
 namespace GeneralInfoModule
 {
@@ -15,9 +12,19 @@ namespace GeneralInfoModule
             throw new NotImplementedException();
         }
 
+        public void analyze(FacebookMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool canParallelize()
         {
             return true;
+        }
+
+        public string description()
+        {
+            throw new NotImplementedException();
         }
 
         public bool formAvailable()
@@ -25,12 +32,17 @@ namespace GeneralInfoModule
             throw new NotImplementedException();
         }
 
-        public UserControl getPreferenceForm()
+        public System.Windows.Forms.UserControl getPreferenceForm()
         {
             throw new NotImplementedException();
         }
 
         public void parallelAnalyze(Message message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void parallelAnalyze(FacebookMessage message)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +53,11 @@ namespace GeneralInfoModule
         }
 
         public void savePreferences(Dictionary<string, dynamic> newValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        System.Windows.Forms.UserControl IModule.getPreferenceForm()
         {
             throw new NotImplementedException();
         }

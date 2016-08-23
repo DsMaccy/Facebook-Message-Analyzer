@@ -9,9 +9,9 @@ namespace Facebook_Message_Analyzer.Data
 {
     static class Database
     {
-        private static List<string> previouslyUsedNames;
+        private static List<string> previouslyUsedNames = new List<string>();
 
-        public static bool createDatabase(string dbName)
+        public static bool createDatabase(string dbName, string connectString)
         {
             if (previouslyUsedNames.Contains(dbName))
             {
@@ -19,21 +19,23 @@ namespace Facebook_Message_Analyzer.Data
             }
 
             Console.WriteLine(DatabaseConstants.PATH);
+            string command = "create DATABASE if not exists " + dbName;
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sc = new SqlCommand(command, sqlConnection))
+                {
+                    sc.ExecuteNonQuery();
+                }
+            }
 
-            string command = "create DATABASE if not exists " + dbName + ";";
-            SqlConnection sqlConnection = new SqlConnection();
-            SqlCommand sc = new SqlCommand(command, sqlConnection);
-
-            sqlConnection.BeginTransaction();
-            sc.ExecuteNonQuery();
-            sqlConnection.Close();
             previouslyUsedNames.Add(dbName);
             return true;
         }
 
-        public static bool addTable(string dbName, string tableName, Dictionary<string, Type> columns)
+        public static bool addTable(string connectString, string tableName, Dictionary<string, Type> columns)
         {
-            string command = "create Table if not exists " + tableName + "(";
+            string command = "IF NOT EXISTS (select * from sysobjects where name=\'"+ tableName + "\') CREATE TABLE " + tableName + "(";
 
             foreach (KeyValuePair<string, Type> kvPair in columns)
             {
@@ -48,26 +50,80 @@ namespace Facebook_Message_Analyzer.Data
                 else
                 {
                     Console.Write("Invalid type for key: \'" + kvPair.Key + "\'");
+                    return false;
                 }
                 
             }
             command += ");";
-            SqlConnection sqlConnection = new SqlConnection();
-            SqlCommand sc = new SqlCommand(command, sqlConnection);
-
-            sqlConnection.BeginTransaction();
-            sc.ExecuteNonQuery();
-            sqlConnection.Close();
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sc = new SqlCommand(command, sqlConnection))
+                {
+                    sc.ExecuteNonQuery();
+                }
+            }
             return true;
-            // TODO: Implement
         }
 
-        public static dynamic getValue(string dbName, string tableName, string table, string key)
+        public static List<List<dynamic>> getValue(string connectString, string tableName, string table, params string[] keys)
         {
-            dynamic value = null;
 
-            // TODO: Get value
+            // Create SQL command string by conglomerating data values
+            List<List<dynamic>> value = null;
+            //SqlConnection sqlConnection = new SqlConnection(connectString);
 
+            string command = "SELECT ";
+            if (keys.Length == 0)
+            {
+                command += "* ";
+            }
+            else
+            {
+                for (int index = 0; index < keys.Length; index++)
+                {
+                    command += keys[index];
+                    if (index < keys.Length - 1)
+                    {
+                        command += ",";
+                    }
+                }
+            }
+            command += "FROM " + tableName + ";";
+            // TODO: Check this value
+            Console.WriteLine(command);
+
+            // Run Command in SQL, retrieve and parse data
+
+
+            value = new List<List<dynamic>>();
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sc = new SqlCommand(command, sqlConnection))
+                {
+                    using (SqlDataReader reader = sc.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // TODO: Check this value
+                            Console.WriteLine(reader);
+                            List<dynamic> newRow = new List<dynamic>();
+                            for (int index = 0; index < keys.Length; index++)
+                            {
+                                newRow.Add(reader[keys[index]]);
+                            }
+
+                            value.Add(newRow);
+                        }
+                    }
+                }
+
+
+            }
+
+            // TODO: Check this value
+            Console.WriteLine(value);
             return value;
         }
     }

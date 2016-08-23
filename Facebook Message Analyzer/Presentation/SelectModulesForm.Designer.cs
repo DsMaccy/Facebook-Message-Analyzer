@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.title = new System.Windows.Forms.Label();
             this.checkedList = new System.Windows.Forms.CheckedListBox();
+            this.moduleDescription = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // title
@@ -49,6 +51,7 @@
             this.checkedList.Name = "checkedList";
             this.checkedList.Size = new System.Drawing.Size(260, 214);
             this.checkedList.TabIndex = 1;
+            this.checkedList.MouseHover += new System.EventHandler(this.checkedList_MouseHover);
             // 
             // SelectModulesForm
             // 
@@ -69,5 +72,6 @@
 
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.CheckedListBox checkedList;
+        private System.Windows.Forms.ToolTip moduleDescription;
     }
 }

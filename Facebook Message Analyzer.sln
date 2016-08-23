@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook Message Analyzer", "Facebook Message Analyzer\Facebook Message Analyzer.csproj", "{D1A82E08-453A-44C0-B4B6-23BFD80AD8DE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD40FB18-DE19-4A42-9DB0-019E8B78547E} = {AD40FB18-DE19-4A42-9DB0-019E8B78547E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleInterface", "ModuleInterface\ModuleInterface.csproj", "{54B21902-D5BC-4EC9-BD80-8060381CBFF2}"
 EndProject

@@ -1,7 +1,10 @@
 ﻿/* TODO
+ * Create a DB for each different necessary version and clean up DB files
+ *  - Consider creating contract file and enum to access different databases
  * Find way to Parse DLL files in path (preferences) and add modules to application
  * Set up Preferences DB
- * Set up caching for messages
+ * Set up caching for 
+ * s
  * Create Module for Generic Analysis
  * Facebook Model Times
  * Create Constants for Width and Heigth offsets
@@ -16,6 +19,10 @@ using Facebook_Message_Analyzer.Business;
 using Facebook_Message_Analyzer.Presentation;
 using Facebook_Message_Analyzer.Data;
 using ModuleInterface;
+using System.IO;
+using System.Reflection;
+using GeneralInfoModule;
+
 
 namespace Facebook_Message_Analyzer.Business
 {
@@ -88,9 +95,8 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void runAnalysisModules(int conversationIndex)
         {
-            m_activeForm.Close();
-            m_activeForm = new AnalyzingForm();
-            Application.Run(m_activeForm);
+            AnalyzingForm af = new AnalyzingForm();
+            af.ShowDialog();
             // TODO -- Have new one open analysis window for each of the analysis options available
         }
 
@@ -100,14 +106,24 @@ namespace Facebook_Message_Analyzer.Business
             mpf.ShowDialog();
         }
 
-        public static Dictionary<string, IModule> getModules()
+        public static Dictionary<string, Type> getModules()
         {
-            Dictionary<string, IModule> modules = new Dictionary<string, IModule>();
+            Dictionary<string, Type> modules = new Dictionary<string, Type>();
+            modules.Add("General Info Module", typeof(GeneralInfoModule.GeneralInfo));
 
-            
-            // TODO: for each folder in module path, 
-                // check if it's a dll
-                // Add an instance to Dictionary with the filename as key and an instance as the value
+            string dllPath = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
+            if (dllPath != null)
+            {
+                foreach (string file in Directory.EnumerateFiles(dllPath, "*.dll"))
+                {
+                    Assembly assembly = Assembly.LoadFrom("dllPath");
+                    if (assembly.GetType() is IModule)
+                    {
+                        AppDomain.CurrentDomain.Load(assembly.GetName());
+                        modules.Add(assembly.GetName() + "Module", assembly.GetType());
+                    }
+                }
+            }
 
             return modules;
         }
