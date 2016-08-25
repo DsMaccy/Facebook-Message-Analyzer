@@ -24,7 +24,7 @@ namespace GeneralInfoModule
 
         public string description()
         {
-            throw new NotImplementedException();
+            return "Basic statistics of user contribution to message group";
         }
 
         public bool formAvailable()

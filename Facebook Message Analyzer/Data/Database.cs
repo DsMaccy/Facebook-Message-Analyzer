@@ -118,13 +118,56 @@ namespace Facebook_Message_Analyzer.Data
                         }
                     }
                 }
-
-
             }
 
             // TODO: Check this value
             Console.WriteLine(value);
             return value;
+        }
+
+        public static void clearTable(string connectString, string tableName)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand("DELETE FROM " + tableName, sqlConnection))
+                {
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void addValues(string connectString, string tableName, Dictionary<string, object> values)
+        {
+            // Conglomerate SQL column names and column values
+            string columnNames = "";
+            string columnValues = "";
+            foreach (KeyValuePair<string, object> kvPair in values)
+            {
+                columnNames += kvPair.Key + ", ";
+                columnValues += "\"" + kvPair.Value.ToString() + "\"" + ", ";     // TODO: Make this more general (work with numbers, dates, and possibly other types of objects
+            }
+
+            columnNames = columnNames.Substring(0, columnNames.Length - 2);
+            columnValues = columnValues.Substring(0, columnValues.Length - 2);
+
+            
+            Console.WriteLine(columnNames);
+            Console.WriteLine(columnValues);
+
+
+            // TODO: Find out why exception is being thrown
+            // Run insertion command through SQL
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                string commandText = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + columnValues + ")";
+                Console.WriteLine(commandText);
+                using (SqlCommand sqlCommand = new SqlCommand(commandText, sqlConnection))
+                {
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

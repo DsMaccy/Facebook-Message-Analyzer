@@ -30,7 +30,6 @@ namespace Facebook_Message_Analyzer.Data
 
         private ConfigManager()
         {
-            //Database.createDatabase(DB_NAME, DB_CONN_STRING);
             createGenericTable();
             
         }
@@ -51,6 +50,19 @@ namespace Facebook_Message_Analyzer.Data
             Dictionary<string, Type>  columns = new Dictionary<string, Type>();
             columns.Add(DLL_PATH_TAG, typeof(string));
             Database.addTable(DB_CONN_STRING, GENERIC_TABLE_NAME, columns);
+        }
+
+        public void clearTable(string tableName)
+        {
+            Database.clearTable(DB_CONN_STRING, tableName);
+        }
+
+        public void addValues(string tableName, params Dictionary<string, object>[] values)
+        {
+            for (int i = 0; i < values.Length; i++)
+            {
+                Database.addValues(DB_CONN_STRING, GENERIC_TABLE_NAME, values[i]);
+            }
         }
     }
 }

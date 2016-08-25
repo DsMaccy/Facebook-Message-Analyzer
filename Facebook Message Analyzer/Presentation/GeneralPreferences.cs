@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Facebook_Message_Analyzer.Business;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
@@ -26,6 +27,12 @@ namespace Facebook_Message_Analyzer.Presentation
             {
                 modulePath.Text = FBD.SelectedPath;
             }
+        }
+
+        public void saveData()
+        {
+            string[] values = modulePath.Text.Split(';');
+            StateMaster.setDllLocations(values);
         }
     }
 }

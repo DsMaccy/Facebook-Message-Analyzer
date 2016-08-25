@@ -30,7 +30,15 @@ namespace Facebook_Message_Analyzer.Presentation
             foreach (KeyValuePair<string, Type> module in moduleList)
             {
                 checkedList.Items.Add(module.Key);
-                m_descriptions.Add(module.Key, ((IModule)module.Value.GetConstructor(null)).description());
+                if (StateMaster.isModuleActive(module.Value))
+                {
+                    checkedList.SetItemChecked(checkedList.Items.Count - 1, true);
+                }
+                Type moduleType = module.Value;
+
+                IModule moduleObj = Activator.CreateInstance(moduleType) as IModule;
+                string value = moduleObj.description();
+                m_descriptions.Add(module.Key, value);
             }
         }
 
@@ -42,13 +50,37 @@ namespace Facebook_Message_Analyzer.Presentation
         private void alignWidgets()
         {
             title.Left = this.ClientRectangle.Width / 2 - title.Width / 2;
-            checkedList.Width = this.ClientRectangle.Width - 26;
-            checkedList.Height = this.ClientRectangle.Height - title.Height - 27;
+            checkedList.Width = this.ClientRectangle.Width - 13*2;
+            okButton.Left = this.ClientRectangle.Width - okButton.Width - cancelButton.Width - 2*13;
+            cancelButton.Left = this.ClientRectangle.Width - cancelButton.Width - 13;
+
+            okButton.Top = this.ClientRectangle.Height - okButton.Height - 9;
+            cancelButton.Top = this.ClientRectangle.Height - cancelButton.Height - 9;
+            checkedList.Height = this.ClientRectangle.Height - checkedList.Top - 9*2 - Math.Max(cancelButton.Height, okButton.Height);
         }
 
         private void checkedList_MouseHover(object sender, EventArgs e)
         {
             Console.WriteLine(e);
+            this.moduleDescription.Tag = "Testing testing 1 2";
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, Type> moduleList = StateMaster.getModules();
+            List<Type> selectedModules = new List<Type>();
+            for (int i = 0; i < checkedList.CheckedItems.Count; i++)
+            {
+                selectedModules.Add(moduleList[checkedList.CheckedItems[i].ToString()]);
+            }
+            StateMaster.setActiveModules(selectedModules.ToArray());
+
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

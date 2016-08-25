@@ -30,6 +30,7 @@ namespace Facebook_Message_Analyzer.Business
     {
         private static Form m_activeForm = null;
         private static bool m_loggedIn = false;
+        private static List<Type> m_activeModules = new List<Type>();
 
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace Facebook_Message_Analyzer.Business
         {
             m_activeForm = new WelcomeForm();
             Application.EnableVisualStyles();
+            m_activeModules.Add(typeof(GeneralInfo));
             //Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(m_activeForm);
 
@@ -126,6 +128,39 @@ namespace Facebook_Message_Analyzer.Business
             }
 
             return modules;
+        }
+
+        public static bool isModuleActive(Type module)
+        {
+            for (int i = 0; i < m_activeModules.Count; i++)
+            {
+                if (module.Equals(m_activeModules[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void setActiveModules(params Type [] activeModules)
+        {
+            m_activeModules.Clear();
+            for (int i = 0; i < activeModules.Length; i++)
+            {
+                m_activeModules.Add(activeModules[i]);
+            }
+        }
+
+        public static void setDllLocations(params string[] filePaths)
+        {
+            ConfigManager.Manager.clearTable(ConfigManager.GENERIC_TABLE_NAME);
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+                Dictionary<string, object> value = new Dictionary<string, object>();
+                value.Add(ConfigManager.DLL_PATH_TAG, filePaths[i]);
+                ConfigManager.Manager.addValues(ConfigManager.GENERIC_TABLE_NAME, value);
+            }
+
         }
 
         public static void Exit()

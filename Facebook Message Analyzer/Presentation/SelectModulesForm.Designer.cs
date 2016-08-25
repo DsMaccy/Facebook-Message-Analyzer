@@ -32,6 +32,8 @@
             this.title = new System.Windows.Forms.Label();
             this.checkedList = new System.Windows.Forms.CheckedListBox();
             this.moduleDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.okButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // title
@@ -53,11 +55,33 @@
             this.checkedList.TabIndex = 1;
             this.checkedList.MouseHover += new System.EventHandler(this.checkedList_MouseHover);
             // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(116, 255);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(75, 23);
+            this.okButton.TabIndex = 2;
+            this.okButton.Text = "Ok";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(197, 255);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
             // SelectModulesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 292);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.okButton);
             this.Controls.Add(this.checkedList);
             this.Controls.Add(this.title);
             this.Name = "SelectModulesForm";
@@ -73,5 +97,7 @@
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.CheckedListBox checkedList;
         private System.Windows.Forms.ToolTip moduleDescription;
+        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }

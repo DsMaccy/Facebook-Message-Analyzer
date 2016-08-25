@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Facebook_Message_Analyzer.Business;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
@@ -18,13 +19,13 @@ namespace Facebook_Message_Analyzer.Presentation
             InitializeComponent();
 
             modules.Items.Add("General");
+            
 
             // TODO: Add a label in modules for evey available module that has a preference
             m_openPreference = new GeneralPreferences();
             m_openPreference.Show();
+            modules.SetSelected(0, true);
             this.Controls.Add(m_openPreference);
-
-
             alignWidgets();
         }
 
@@ -58,7 +59,16 @@ namespace Facebook_Message_Analyzer.Presentation
 
         private void apply_Click(object sender, EventArgs e)
         {
-            // TODO -- save to DB and send call to module to save their stuff if they are not the general object
+            if (modules.SelectedIndex == 0)
+            {
+                ((GeneralPreferences)(m_openPreference)).saveData();
+            }
+            else
+            {
+                // TODO -- save to DB and send call to module to save their stuff if they are not the general object
+                // TODO: Fill -- this is one of the added IModule preferences
+            }
+
         }
 
         private void cancel_Click(object sender, EventArgs e)
