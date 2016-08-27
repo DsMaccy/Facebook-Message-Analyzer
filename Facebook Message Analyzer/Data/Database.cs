@@ -45,7 +45,7 @@ namespace Facebook_Message_Analyzer.Data
                 }
                 else if (kvPair.Value == typeof(string))
                 {
-                    command += kvPair.Key + " varchar not null,";
+                    command += kvPair.Key + " varchar(50) not null,";
                 }
                 else
                 {
@@ -139,33 +139,37 @@ namespace Facebook_Message_Analyzer.Data
 
         public static void addValues(string connectString, string tableName, Dictionary<string, object> values)
         {
-            // Conglomerate SQL column names and column values
-            string columnNames = "";
-            string columnValues = "";
-            foreach (KeyValuePair<string, object> kvPair in values)
-            {
-                columnNames += kvPair.Key + ", ";
-                columnValues += "\"" + kvPair.Value.ToString() + "\"" + ", ";     // TODO: Make this more general (work with numbers, dates, and possibly other types of objects
-            }
-
-            columnNames = columnNames.Substring(0, columnNames.Length - 2);
-            columnValues = columnValues.Substring(0, columnValues.Length - 2);
-
-            
-            Console.WriteLine(columnNames);
-            Console.WriteLine(columnValues);
-
-
             // TODO: Find out why exception is being thrown
             // Run insertion command through SQL
             using (SqlConnection sqlConnection = new SqlConnection(connectString))
             {
                 sqlConnection.Open();
-                string commandText = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + columnValues + ")";
-                Console.WriteLine(commandText);
-                using (SqlCommand sqlCommand = new SqlCommand(commandText, sqlConnection))
+                using (SqlCommand sqlCommand = new SqlCommand("", sqlConnection))
                 {
+                    
+                    // Conglomerate SQL column names and column values
+                    string columnNames = "";
+                    string columnValues = "";
+                    int count = 0;
+                    foreach (KeyValuePair<string, object> kvPair in values)
+                    {
+                        columnNames += kvPair.Key + ", ";
+                        columnValues += "@val" + count + ", ";     // TODO: Make this more general (work with numbers, dates, and possibly other types of objects
+                        sqlCommand.Parameters.AddWithValue("@val" + count, kvPair.Value);
+                        count++;
+                    }
+
+                    columnNames = columnNames.Substring(0, columnNames.Length - 2);
+                    columnValues = columnValues.Substring(0, columnValues.Length - 2);
+
+
+                    Console.WriteLine(columnNames);
+                    Console.WriteLine(columnValues);
+
+
+                    sqlCommand.CommandText = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + columnValues + ")";
                     sqlCommand.ExecuteNonQuery();
+                    
                 }
             }
         }
