@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -52,6 +52,14 @@
     <StartupObject>Facebook_Message_Analyzer.Business.StateMaster</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
@@ -61,6 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,8 +85,16 @@
     <Compile Include="Business\ErrorMessages.cs" />
     <Compile Include="Data\CachedMessagesManager.cs" />
     <Compile Include="Data\ConfigManager.cs" />
+    <Compile Include="Data\Database.cs" />
     <Compile Include="Data\FBQueryManager.cs" />
     <Compile Include="Data\ModuleManager.cs" />
+    <Compile Include="Data\DatabaseConstants.cs" />
+    <Compile Include="Presentation\AnalyzingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\AnalyzingForm.Designer.cs">
+      <DependentUpon>AnalyzingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\AuthenticationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +107,24 @@
     <Compile Include="Presentation\ConversationSelectionForm.Designer.cs">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\GeneralPreferences.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation\GeneralPreferences.Designer.cs">
+      <DependentUpon>GeneralPreferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ModulePreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\ModulePreferencesForm.Designer.cs">
+      <DependentUpon>ModulePreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\SelectModulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\SelectModulesForm.Designer.cs">
+      <DependentUpon>SelectModulesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\WelcomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,11 +133,23 @@
     </Compile>
     <Compile Include="Business\StateMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\AnalyzingForm.resx">
+      <DependentUpon>AnalyzingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\ConversationSelectionForm.resx">
       <DependentUpon>ConversationSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\GeneralPreferences.resx">
+      <DependentUpon>GeneralPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\ModulePreferencesForm.resx">
+      <DependentUpon>ModulePreferencesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\SelectModulesForm.resx">
+      <DependentUpon>SelectModulesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\WelcomeForm.resx">
       <DependentUpon>WelcomeForm.cs</DependentUpon>
@@ -141,6 +188,25 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeneralInfoModule\GeneralInfoModule.csproj">
+      <Project>{ad40fb18-de19-4a42-9db0-019e8b78547e}</Project>
+      <Name>GeneralInfoModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModuleInterface\ModuleInterface.csproj">
+      <Project>{54b21902-d5bc-4ec9-bd80-8060381cbff2}</Project>
+      <Name>ModuleInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\ConfigDatabase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\ConfigDatabase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ConfigDatabase.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
