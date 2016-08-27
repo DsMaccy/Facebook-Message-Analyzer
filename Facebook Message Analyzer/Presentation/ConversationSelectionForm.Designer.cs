@@ -37,7 +37,6 @@
             this.analyze = new System.Windows.Forms.ToolStripButton();
             this.moduleSelect = new System.Windows.Forms.ToolStripButton();
             this.moduleOptions = new System.Windows.Forms.ToolStripButton();
-            this.moduleSelector = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)(this.conversations)).BeginInit();
             this.menu.SuspendLayout();
             this.SuspendLayout();
@@ -94,8 +93,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.analyze,
             this.moduleSelect,
-            this.moduleOptions,
-            this.moduleSelector});
+            this.moduleOptions});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(548, 25);
@@ -132,15 +130,6 @@
             this.moduleOptions.Text = "Module Options";
             this.moduleOptions.Click += new System.EventHandler(this.moduleOptions_Click);
             // 
-            // moduleSelector
-            // 
-            this.moduleSelector.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moduleSelector.Image = ((System.Drawing.Image)(resources.GetObject("moduleSelector.Image")));
-            this.moduleSelector.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.moduleSelector.Name = "moduleSelector";
-            this.moduleSelector.Size = new System.Drawing.Size(146, 22);
-            this.moduleSelector.Text = "Select Analysis Modules";
-            // 
             // ConversationSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +160,5 @@
         private System.Windows.Forms.ToolStripButton analyze;
         private System.Windows.Forms.ToolStripButton moduleSelect;
         private System.Windows.Forms.ToolStripButton moduleOptions;
-        private System.Windows.Forms.ToolStripDropDownButton moduleSelector;
     }
 }

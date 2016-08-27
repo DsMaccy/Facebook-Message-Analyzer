@@ -71,8 +71,22 @@ namespace ModuleInterface
         /// <returns>Returns true if the module should be allowed to create a popup window after the analysis is complete</returns>
         bool formAvailable();
 
-        // TODO: add form
+        /// <summary>
+        /// Provides the form that should be displayed when the analysis has been finished
+        /// </summary>
+        /// <returns>Returns the form meant to be displayed or null if no form is meant to be displayed</returns>
+        Form getResultForm();
 
-        // TODO: Add sql data for preferences???
+        /// <summary>
+        /// Provides a mapping of parameters that the analysis module needs to be saved and their present values
+        /// </summary>
+        /// <returns>Property values to be saved into the local database</returns>
+        Dictionary<string, dynamic> getSavedProperties();
+
+        /// <summary>
+        /// Provides database values for the analysis module to use
+        /// </summary>
+        /// <param name="dbValues">the list of database tags and values used by the analysis module</param>
+        void setSavedProperties(Dictionary<string, dynamic> dbValues);
     }
 }

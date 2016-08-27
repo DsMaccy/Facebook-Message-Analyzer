@@ -5,3 +5,10 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Gener
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csprojResolveAssemblyReference.cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb
+F:\FBMA\GeneralInfoModule\bin\Debug\GeneralInfoModule.dll
+F:\FBMA\GeneralInfoModule\bin\Debug\GeneralInfoModule.pdb
+F:\FBMA\GeneralInfoModule\bin\Debug\ModuleInterface.dll
+F:\FBMA\GeneralInfoModule\bin\Debug\ModuleInterface.pdb
+F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.csprojResolveAssemblyReference.cache
+F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
+F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb

@@ -22,6 +22,7 @@ using ModuleInterface;
 using System.IO;
 using System.Reflection;
 using GeneralInfoModule;
+using System.Threading;
 
 
 namespace Facebook_Message_Analyzer.Business
@@ -31,6 +32,7 @@ namespace Facebook_Message_Analyzer.Business
         private static Form m_activeForm = null;
         private static bool m_loggedIn = false;
         private static List<Type> m_activeModules = new List<Type>();
+        private static List<Thread> m_threads = new List<Thread>;
 
 
         /// <summary>
@@ -98,6 +100,16 @@ namespace Facebook_Message_Analyzer.Business
         public static void runAnalysisModules(int conversationIndex)
         {
             AnalyzingForm af = new AnalyzingForm();
+            System.Threading.ThreadStart threadFunction = new System.Threading.ThreadStart(
+                () => 
+                {
+                    // TODO: place analysis function in here
+                });
+
+            // TODO: Add implementation for parallelizing analysis
+            m_threads.Add(new System.Threading.Thread(threadFunction));
+            m_threads[m_threads.Count - 1].Start();
+            
             af.ShowDialog();
             // TODO -- Have new one open analysis window for each of the analysis options available
         }

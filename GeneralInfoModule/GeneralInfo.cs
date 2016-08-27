@@ -37,6 +37,16 @@ namespace GeneralInfoModule
             throw new NotImplementedException();
         }
 
+        public Form getResultForm()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, dynamic> getSavedProperties()
+        {
+            throw new NotImplementedException();
+        }
+
         public void parallelAnalyze(Message message)
         {
             throw new NotImplementedException();
@@ -53,6 +63,11 @@ namespace GeneralInfoModule
         }
 
         public void savePreferences(Dictionary<string, dynamic> newValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void setSavedProperties(Dictionary<string, dynamic> dbValues)
         {
             throw new NotImplementedException();
         }
