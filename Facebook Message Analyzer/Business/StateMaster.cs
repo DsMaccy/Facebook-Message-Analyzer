@@ -32,7 +32,7 @@ namespace Facebook_Message_Analyzer.Business
         private static Form m_activeForm = null;
         private static bool m_loggedIn = false;
         private static List<Type> m_activeModules = new List<Type>();
-        private static List<Thread> m_threads = new List<Thread>;
+        private static List<Thread> m_threads = new List<Thread>();
 
 
         /// <summary>
@@ -41,6 +41,12 @@ namespace Facebook_Message_Analyzer.Business
         [STAThread]
         static void Main()
         {
+            // Set data directory
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
+
+
             m_activeForm = new WelcomeForm();
             Application.EnableVisualStyles();
             m_activeModules.Add(typeof(GeneralInfo));

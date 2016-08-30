@@ -43,3 +43,9 @@ F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentati
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ModulePreferencesForm.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.SelectModulesForm.resources
+F:\FBMA\Facebook Message Analyzer\bin\Debug\Data\ConfigDatabase.mdf
+F:\FBMA\Facebook Message Analyzer\bin\Debug\Data\ConfigDatabase_log.ldf
+F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
+F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
+F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
+F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
