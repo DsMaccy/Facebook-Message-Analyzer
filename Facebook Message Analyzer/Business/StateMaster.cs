@@ -43,7 +43,7 @@ namespace Facebook_Message_Analyzer.Business
         {
             // Set data directory
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
+            string path = Application.UserAppDataPath;
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
 
 
