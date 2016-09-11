@@ -22,7 +22,6 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             FolderBrowserDialog FBD = new FolderBrowserDialog();
             FBD.ShowDialog();
-            Console.WriteLine(FBD.SelectedPath);
             if (FBD.SelectedPath != null && FBD.SelectedPath != "")
             {
                 modulePath.Text = FBD.SelectedPath;

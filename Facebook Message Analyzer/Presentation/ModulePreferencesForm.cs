@@ -14,18 +14,24 @@ namespace Facebook_Message_Analyzer.Presentation
     public partial class ModulePreferencesForm : Form
     {
         private UserControl m_openPreference;
+        private Dictionary<string, string> m_cachedPreferenceData;
         public ModulePreferencesForm()
         {
             InitializeComponent();
 
             modules.Items.Add("General");
             
-
             // TODO: Add a label in modules for evey available module that has a preference
             m_openPreference = new GeneralPreferences();
             m_openPreference.Show();
             modules.SetSelected(0, true);
             this.Controls.Add(m_openPreference);
+            m_cachedPreferenceData = StateMaster.getPreferenceData("General");
+            foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
+            {
+                ((GeneralPreferences)m_openPreference).Controls["modulePath"].Text = m_cachedPreferenceData["modulePath"];
+            }
+
             alignWidgets();
         }
 
@@ -65,6 +71,7 @@ namespace Facebook_Message_Analyzer.Presentation
             }
             else
             {
+
                 // TODO -- save to DB and send call to module to save their stuff if they are not the general object
                 // TODO: Fill -- this is one of the added IModule preferences
             }

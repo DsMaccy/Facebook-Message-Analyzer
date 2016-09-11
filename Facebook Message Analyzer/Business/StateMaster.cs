@@ -4,7 +4,6 @@
  * Find way to Parse DLL files in path (preferences) and add modules to application
  * Set up Preferences DB
  * Set up caching for 
- * s
  * Create Module for Generic Analysis
  * Facebook Model Times
  * Create Constants for Width and Heigth offsets
@@ -41,16 +40,33 @@ namespace Facebook_Message_Analyzer.Business
         [STAThread]
         static void Main()
         {
+            // Console Log
+            /*
+            string filepath = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
+            Console.WriteLine(filepath);
+
             // Set data directory
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = Application.UserAppDataPath;
+            string path = Application.UserAppDataPath;      // This links to the AppData/Roaming Folder under Solace Inc./FBMA
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
+            */
+            // Console Log
+            /*
+            filepath = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
+            Console.WriteLine(filepath);
+            Console.WriteLine(System.IO.File.Exists(filepath + "\\ConfigDatase.mdf"));
+            if (!(System.IO.File.Exists(filepath + "\\ConfigDatase.mdf")))
+            {
+                FileStream fs = File.Open(filepath + "\\ConfigDatase.mdf", FileMode.Create);
+                fs.Close();
+            }
+            */
 
-
+            // Set the Active Form to the welcome screen
             m_activeForm = new WelcomeForm();
             Application.EnableVisualStyles();
             m_activeModules.Add(typeof(GeneralInfo));
-            //Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(m_activeForm);
 
             if (!m_loggedIn)
@@ -124,6 +140,30 @@ namespace Facebook_Message_Analyzer.Business
         {
             ModulePreferencesForm mpf = new ModulePreferencesForm();
             mpf.ShowDialog();
+        }
+
+        public static Dictionary<string, string> getPreferenceData(string tag)
+        {
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            if (tag != "General")
+            {
+                Dictionary<string, Type> modules = getModules();
+                Type[] types = new Type[0];
+                object[] parameters = new object[0];
+                IModule moduleObject = (modules[tag]).GetConstructor(types).Invoke(parameters) as IModule;
+                Dictionary<string, dynamic> preferenceValues = moduleObject.getSavedProperties();
+                foreach (KeyValuePair<string, dynamic> kvPair in preferenceValues)
+                {
+                    values[kvPair.Key] = kvPair.Value.ToString();
+                }
+                return values;
+            }
+            else
+            {
+                dynamic value = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
+                values.Add("modulePath", value.ToString());
+                return values;
+            }
         }
 
         public static Dictionary<string, Type> getModules()

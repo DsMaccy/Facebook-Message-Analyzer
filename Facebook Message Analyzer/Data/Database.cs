@@ -17,8 +17,7 @@ namespace Facebook_Message_Analyzer.Data
             {
                 return false;
             }
-
-            Console.WriteLine(DatabaseConstants.PATH);
+            
             string command = "create DATABASE if not exists " + dbName;
             using (SqlConnection sqlConnection = new SqlConnection(connectString))
             {
@@ -49,7 +48,6 @@ namespace Facebook_Message_Analyzer.Data
                 }
                 else
                 {
-                    Console.Write("Invalid type for key: \'" + kvPair.Key + "\'");
                     return false;
                 }
                 
@@ -66,32 +64,14 @@ namespace Facebook_Message_Analyzer.Data
             return true;
         }
 
-        public static List<List<dynamic>> getValue(string connectString, string tableName, string table, params string[] keys)
+        public static List<List<dynamic>> getValue(string connectString, string tableName, params string[] keys)
         {
 
             // Create SQL command string by conglomerating data values
             List<List<dynamic>> value = null;
             //SqlConnection sqlConnection = new SqlConnection(connectString);
 
-            string command = "SELECT ";
-            if (keys.Length == 0)
-            {
-                command += "* ";
-            }
-            else
-            {
-                for (int index = 0; index < keys.Length; index++)
-                {
-                    command += keys[index];
-                    if (index < keys.Length - 1)
-                    {
-                        command += ",";
-                    }
-                }
-            }
-            command += "FROM " + tableName + ";";
-            // TODO: Check this value
-            Console.WriteLine(command);
+
 
             // Run Command in SQL, retrieve and parse data
 
@@ -100,14 +80,39 @@ namespace Facebook_Message_Analyzer.Data
             using (SqlConnection sqlConnection = new SqlConnection(connectString))
             {
                 sqlConnection.Open();
-                using (SqlCommand sc = new SqlCommand(command, sqlConnection))
+                using (SqlCommand sc = new SqlCommand("", sqlConnection))
                 {
+                    // Conglomerate Command Text
+                    string command = "SELECT ";
+                    if (keys.Length == 0)
+                    {
+                        command += "* ";
+                    }
+                    else
+                    {
+                        for (int index = 0; index < keys.Length; index++)
+                        {
+                            /*
+                                string paramTag = "@val" + index;
+                                command += paramTag;
+                                sc.Parameters.AddWithValue(paramTag, keys[index]);
+                            */
+
+                            command += keys[index];
+                            if (index < keys.Length - 1)
+                            {
+                                command += ",";
+                            }
+                        }
+                    }
+                    command += " FROM " + tableName + ";";
+
+                    sc.CommandText = command;
+
                     using (SqlDataReader reader = sc.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            // TODO: Check this value
-                            Console.WriteLine(reader);
                             List<dynamic> newRow = new List<dynamic>();
                             for (int index = 0; index < keys.Length; index++)
                             {
@@ -120,8 +125,6 @@ namespace Facebook_Message_Analyzer.Data
                 }
             }
 
-            // TODO: Check this value
-            Console.WriteLine(value);
             return value;
         }
 
@@ -146,7 +149,6 @@ namespace Facebook_Message_Analyzer.Data
                 sqlConnection.Open();
                 using (SqlCommand sqlCommand = new SqlCommand("", sqlConnection))
                 {
-                    
                     // Conglomerate SQL column names and column values
                     string columnNames = "";
                     string columnValues = "";
@@ -162,14 +164,8 @@ namespace Facebook_Message_Analyzer.Data
                     columnNames = columnNames.Substring(0, columnNames.Length - 2);
                     columnValues = columnValues.Substring(0, columnValues.Length - 2);
 
-
-                    Console.WriteLine(columnNames);
-                    Console.WriteLine(columnValues);
-
-
                     sqlCommand.CommandText = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + columnValues + ")";
                     sqlCommand.ExecuteNonQuery();
-                    
                 }
             }
         }

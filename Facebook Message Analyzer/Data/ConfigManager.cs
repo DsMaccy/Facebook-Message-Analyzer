@@ -12,7 +12,7 @@ namespace Facebook_Message_Analyzer.Data
         private static ConfigManager manager;
 
         private const string DB_NAME = "config";
-        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ConfigDatabase.mdf;Integrated Security=True";
+        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\ConfigDatabase.mdf;Integrated Security=True;";
         public const string GENERIC_TABLE_NAME = "genericPreferences";
         public const string DLL_PATH_TAG = "dllPath";
 
@@ -36,7 +36,7 @@ namespace Facebook_Message_Analyzer.Data
 
         public dynamic getValue (string table, string key)
         {
-            List<List<dynamic>> values = Database.getValue(DB_CONN_STRING, GENERIC_TABLE_NAME, DLL_PATH_TAG);
+            List<List<dynamic>> values = Database.getValue(DB_CONN_STRING, table, key);
             if (values.Count > 0)
             {
                 return values[0][0];
