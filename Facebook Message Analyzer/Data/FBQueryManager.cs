@@ -18,6 +18,7 @@ namespace Facebook_Message_Analyzer.Data
     class FBQueryManager
     {
         public static FBQueryManager Manager = new FBQueryManager();
+        public const string LOGOUT_URL = "https://www.facebook.com/?stype=lo&jlou=AfdXxs9jrmtwW_Wd7wAlGx219TRXOaF_FjDGvDM94bZnYWPQl-fh_HQTglLiJ7JtKvLGk8Ndck5IUCogRJzvY74K&smuh=5490&lh=Ac8t2PonlypJDoHD";
 
         private const string m_APP_ID = "1465357507096514";
         private const string m_APP_SECRET = "ac5817c4f2dd07bf18137d7297d4015c";
@@ -76,6 +77,26 @@ namespace Facebook_Message_Analyzer.Data
             FBClient.AppSecret = m_APP_SECRET;
 
             return FBClient.GetLoginUrl(parameters);
+        }
+
+        public Uri getLogoutURL()
+        {
+            // TODO: There is a bug with the logout
+            dynamic parameters = new System.Dynamic.ExpandoObject();
+
+            parameters.access_token = m_token;
+            parameters.next = FBQueryManager.LOGOUT_URL;
+
+            Facebook.FacebookClient FBClient = new Facebook.FacebookClient();
+            FBClient.AccessToken = m_token;
+            FBClient.AppId = m_APP_ID;
+            FBClient.AppSecret = m_APP_SECRET;
+
+            // string redirectUrl = "";
+            // string accessToken = "";
+            // new Uri("https://www.facebook.com/logout.php?next=" + redirectUrl + "&access_token=" + accessToken)
+
+            return FBClient.GetLogoutUrl(parameters);
         }
         
         public void setToken(string token)

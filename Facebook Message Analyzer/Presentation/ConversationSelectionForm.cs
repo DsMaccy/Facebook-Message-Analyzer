@@ -131,5 +131,10 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             Business.StateMaster.showPreferences();
         }
+
+        private void signOut_Click(object sender, EventArgs e)
+        {
+            Business.StateMaster.logout();
+        }
     }
 }

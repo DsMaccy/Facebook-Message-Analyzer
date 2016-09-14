@@ -18,29 +18,16 @@ namespace Facebook_Message_Analyzer.Presentation
         private string m_queryURL = "";
         private bool m_connectionSuccess;
 
-        public AuthenticationForm()
+        public AuthenticationForm(Uri url)
         {
             InitializeComponent();
-            m_connectionSuccess = requestLogin();
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>false if the form cannot be properly displayed and should be closed immediately</returns>
-        private bool requestLogin()
-        {
-
-            Uri loginUrl = StateMaster.getLoginURL();
-            if (loginUrl == null)
+            m_connectionSuccess = (url != null);
+            if (m_connectionSuccess)
             {
-                return false;
+                m_queryURL = url.AbsoluteUri;
+                authBrowser.Navigate(m_queryURL);
             }
-
-            m_queryURL = loginUrl.AbsoluteUri;
-            authBrowser.Navigate(m_queryURL);
-
-            return true;
         }
 
         private void authBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
@@ -64,15 +51,9 @@ namespace Facebook_Message_Analyzer.Presentation
                     Close();
                 }
             }
-            else if (e.Url.AbsolutePath != "/login.php")
+            else if (e.Url.AbsoluteUri == StateMaster.getLogoutRedirectUrl())
             {
-                // The url is NOT the result of OAuth 2.0 authentication.
-                MessageBox.Show("Error logging In: Please try again");
-                m_connectionSuccess = requestLogin();
-                if (!m_connectionSuccess)
-                {
-                    Close();
-                }
+                this.Close();
             }
         }
 

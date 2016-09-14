@@ -1,12 +1,9 @@
 ﻿/* TODO
- * Create a DB for each different necessary version and clean up DB files
- *  - Consider creating contract file and enum to access different databases
+ * Add Message Analysis
+ * Create modules for: points, profanity, and general statistics
  * Find way to Parse DLL files in path (preferences) and add modules to application
- * Set up Preferences DB
- * Set up caching for 
- * Create Module for Generic Analysis
- * Facebook Model Times
  * Create Constants for Width and Heigth offsets
+ * Create installer...?
  */
 
 using System;
@@ -30,9 +27,9 @@ namespace Facebook_Message_Analyzer.Business
     {
         private static Form m_activeForm = null;
         private static bool m_loggedIn = false;
+        private static bool m_restart = false;
         private static List<Type> m_activeModules = new List<Type>();
         private static List<Thread> m_threads = new List<Thread>();
-
 
         /// <summary>
         /// The main entry point for the application.
@@ -40,57 +37,34 @@ namespace Facebook_Message_Analyzer.Business
         [STAThread]
         static void Main()
         {
-            // Console Log
-            /*
-            string filepath = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
-            Console.WriteLine(filepath);
-
-            // Set data directory
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = Application.UserAppDataPath;      // This links to the AppData/Roaming Folder under Solace Inc./FBMA
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-            */
-            // Console Log
-            /*
-            filepath = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
-            Console.WriteLine(filepath);
-            Console.WriteLine(System.IO.File.Exists(filepath + "\\ConfigDatase.mdf"));
-            if (!(System.IO.File.Exists(filepath + "\\ConfigDatase.mdf")))
-            {
-                FileStream fs = File.Open(filepath + "\\ConfigDatase.mdf", FileMode.Create);
-                fs.Close();
-            }
-            */
-
-            // Set the Active Form to the welcome screen
-            m_activeForm = new WelcomeForm();
             Application.EnableVisualStyles();
             m_activeModules.Add(typeof(GeneralInfo));
 
-            Application.Run(m_activeForm);
-
-            if (!m_loggedIn)
+            do
             {
-                return;
-            }
+                m_restart = false;
+                // Set the Active Form to the welcome screen
+                m_activeForm = new WelcomeForm();
+                Application.Run(m_activeForm);
 
-            m_activeForm = new ConversationSelectionForm();
-            Application.Run(m_activeForm);
+                if (!m_loggedIn)
+                {
+                    return;
+                }
+
+                m_activeForm = new ConversationSelectionForm();
+                Application.Run(m_activeForm);
+            } while (m_restart);
         }
 
-        public static void Login()
+        public static void login()
         {
-            AuthenticationForm loginScreen = new AuthenticationForm();
+            AuthenticationForm loginScreen = new AuthenticationForm(FBQueryManager.Manager.getLoginURL());
             loginScreen.ShowDialog();
             if (m_loggedIn)
             {
                 m_activeForm.Close();
             }
-        }
-
-        public static Uri getLoginURL()
-        {
-            return FBQueryManager.Manager.getLoginURL();
         }
 
         public static void setOAuthToken(string token)
@@ -101,6 +75,27 @@ namespace Facebook_Message_Analyzer.Business
                 //m_activeForm.Close();
                 m_loggedIn = true;
             }
+            else
+            {
+                m_loggedIn = false;
+            }
+        }
+
+        public static void logout()
+        {
+            AuthenticationForm loginScreen = new AuthenticationForm(FBQueryManager.Manager.getLogoutURL());
+            loginScreen.ShowDialog();
+            
+
+            // Reset states and start over from the Welcome Screen
+            m_loggedIn = false;
+            m_activeForm.Close();
+            m_restart = true;
+        }
+
+        public static string getLogoutRedirectUrl()
+        {
+            return Data.FBQueryManager.LOGOUT_URL;
         }
 
         public static dynamic getConversations()
@@ -125,7 +120,9 @@ namespace Facebook_Message_Analyzer.Business
             System.Threading.ThreadStart threadFunction = new System.Threading.ThreadStart(
                 () => 
                 {
+                    Console.WriteLine("Analysis");
                     // TODO: place analysis function in here
+                    
                 });
 
             // TODO: Add implementation for parallelizing analysis

@@ -45,7 +45,7 @@ namespace Facebook_Message_Analyzer
 
         private void login_Click(object sender, EventArgs e)
         {
-            StateMaster.Login();
+            StateMaster.login();
         }
     }
 }

@@ -37,6 +37,8 @@
             this.analyze = new System.Windows.Forms.ToolStripButton();
             this.moduleSelect = new System.Windows.Forms.ToolStripButton();
             this.moduleOptions = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.signOut = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.conversations)).BeginInit();
             this.menu.SuspendLayout();
             this.SuspendLayout();
@@ -93,7 +95,9 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.analyze,
             this.moduleSelect,
-            this.moduleOptions});
+            this.moduleOptions,
+            this.toolStripSeparator1,
+            this.signOut});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(548, 25);
@@ -130,6 +134,22 @@
             this.moduleOptions.Text = "Module Options";
             this.moduleOptions.Click += new System.EventHandler(this.moduleOptions_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // signOut
+            // 
+            this.signOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.signOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.signOut.Image = ((System.Drawing.Image)(resources.GetObject("signOut.Image")));
+            this.signOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.signOut.Name = "signOut";
+            this.signOut.Size = new System.Drawing.Size(57, 22);
+            this.signOut.Text = "Sign Out";
+            this.signOut.Click += new System.EventHandler(this.signOut_Click);
+            // 
             // ConversationSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,5 +180,7 @@
         private System.Windows.Forms.ToolStripButton analyze;
         private System.Windows.Forms.ToolStripButton moduleSelect;
         private System.Windows.Forms.ToolStripButton moduleOptions;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton signOut;
     }
 }
