@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Facebook;
 using Facebook_Message_Analyzer.Business;
+using ModuleInterface;
 
 namespace Facebook_Message_Analyzer.Data
 {
@@ -28,6 +29,8 @@ namespace Facebook_Message_Analyzer.Data
         private string m_token;
         private dynamic m_userInfo;
         private dynamic m_conversations;
+        private dynamic m_messages = null;
+        private string m_next = "";
 
         private FBQueryManager()
         {
@@ -169,6 +172,52 @@ namespace Facebook_Message_Analyzer.Data
         public void setConversation()
         {
 
+        }
+
+        public List<FacebookMessage> getMessages(string conversationID)
+        {
+            dynamic parameters = new
+            {
+                limit = 1000
+            };
+
+            // TODO: Check values
+            if (m_next == "")
+            {
+                parameters.message_count = 1000;
+                m_messages = m_fbClient.Get("/" + conversationID + "/messages", parameters);
+                m_next = m_messages.paging.next;
+            }
+            else
+            {
+                m_messages = m_fbClient.Get(m_next);
+                m_next = m_messages.paging.next;
+            }
+
+            // Create the messageList so that the rest of the application can read it.
+            List<FacebookMessage> messageList = new List<FacebookMessage>();
+            // Parse through m_messages to create the messageList and then use that to fill the messageList object
+            return messageList;
+        }
+        public List<FacebookMessage> getMessages(string conversationID, string queryURL)
+        {
+            dynamic parameters = new
+            {
+                limit = 1000
+            };
+
+            // TODO: Check values
+            if (m_messages == null)
+            {
+                parameters.message_count = 1000;
+                m_messages = m_fbClient.Get(queryURL);
+                m_next = m_messages.paging.next;
+            }
+
+            // Create the messageList so that the rest of the application can read it.
+            List<FacebookMessage> messageList = new List<FacebookMessage>();
+            // Parse through m_messages to create the messageList and then use that to fill the messageList object
+            return messageList;
         }
     }
 }

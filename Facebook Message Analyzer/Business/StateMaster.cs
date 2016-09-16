@@ -1,5 +1,9 @@
 ﻿/* TODO
  * Add Message Analysis
+ * Check m_next values and make sure query works for FBQueryManager
+ * Add saving and querying to CachedMessagesManager
+ * Get ConversationIterator to work
+ * Create Threads to run analysis
  * Create modules for: points, profanity, and general statistics
  * Find way to Parse DLL files in path (preferences) and add modules to application
  * Create Constants for Width and Heigth offsets
@@ -29,7 +33,9 @@ namespace Facebook_Message_Analyzer.Business
         private static bool m_loggedIn = false;
         private static bool m_restart = false;
         private static List<Type> m_activeModules = new List<Type>();
-        private static List<Thread> m_threads = new List<Thread>();
+        private static List<List<Thread>> m_threads = null;
+        private static Thread masterThread = null;
+        private static List<IModule> m_runningModules = null;
 
         /// <summary>
         /// The main entry point for the application.
@@ -116,21 +122,83 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void runAnalysisModules(int conversationIndex)
         {
-            AnalyzingForm af = new AnalyzingForm();
-            System.Threading.ThreadStart threadFunction = new System.Threading.ThreadStart(
-                () => 
-                {
-                    Console.WriteLine("Analysis");
-                    // TODO: place analysis function in here
-                    
-                });
 
-            // TODO: Add implementation for parallelizing analysis
-            m_threads.Add(new System.Threading.Thread(threadFunction));
-            m_threads[m_threads.Count - 1].Start();
-            
+            if (m_activeModules.Count == 0)
+            {
+                ErrorMessages.NoAnalysisModuleSelected();
+                return;
+            }
+            masterThread = new Thread(new ThreadStart(
+                () =>
+                {
+                    bool analysisAborted = false;
+                    try
+                    {
+                        // Find out optimal number of threads
+                        int idealNumThreads = System.Environment.ProcessorCount / 2;
+                        m_threads = new List<List<Thread>>();
+                        m_runningModules = new List<IModule>();
+                        int numParallelizeableModules = 0;
+                        int numThreads = 0;
+
+                        Console.WriteLine("Number of Processors / 2 ( == ideal # of cores) = " + idealNumThreads);
+
+                        // Setup the various threads
+                        foreach (Type module in m_activeModules)
+                        {
+                            IModule moduleInstance = Activator.CreateInstance(module) as IModule;
+                            m_runningModules.Add(moduleInstance);
+
+                            if (moduleInstance.canParallelize())
+                            {
+                                numParallelizeableModules++;
+                            }
+
+                            List<Thread> threadContainer = new List<Thread>();
+                            threadContainer.Add(
+                                new Thread
+                                (
+                                    new System.Threading.ThreadStart
+                                    (
+                                        () =>
+                                        {
+                                            // For all message values
+                                            //      If parallelizeable
+                                            //          Create children threads to run analysis based on the number of 
+                                            //      Else
+                                            //          Analyze the next message either within this thread
+                                        }
+                                    )
+                                )
+                            );
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        analysisAborted = true;
+                    }
+                    finally
+                    {
+                        // Cleanup
+                        foreach (List<Thread> threadList in m_threads)
+                        {
+                            foreach (Thread thread in threadList)
+                            {
+                                thread.Abort();
+                            }
+                        }
+                        if (analysisAborted)
+                        {
+                            ErrorMessages.AnalysisAborted();
+                        }
+                    }
+
+                }));
+
+            masterThread.Start();
+
+            AnalyzingForm af = new AnalyzingForm();
             af.ShowDialog();
-            // TODO -- Have new one open analysis window for each of the analysis options available
         }
 
         public static void showPreferences()

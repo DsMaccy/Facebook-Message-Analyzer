@@ -9,13 +9,8 @@ namespace Facebook_Message_Analyzer.Data
 {
     class ConfigManager
     {
+        #region Singleton
         private static ConfigManager manager;
-
-        private const string DB_NAME = "config";
-        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\ConfigDatabase.mdf;Integrated Security=True;";
-        public const string GENERIC_TABLE_NAME = "genericPreferences";
-        public const string DLL_PATH_TAG = "dllPath";
-
         public static ConfigManager Manager
         {
             get
@@ -27,6 +22,12 @@ namespace Facebook_Message_Analyzer.Data
                 return ConfigManager.manager;
             }
         }
+        #endregion
+
+        private const string DB_NAME = "config";
+        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\ConfigDatabase.mdf;Integrated Security=True;";
+        public const string GENERIC_TABLE_NAME = "genericPreferences";
+        public const string DLL_PATH_TAG = "dllPath";
 
         private ConfigManager()
         {

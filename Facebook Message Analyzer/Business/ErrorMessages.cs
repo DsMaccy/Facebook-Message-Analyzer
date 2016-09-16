@@ -36,5 +36,15 @@ namespace Facebook_Message_Analyzer.Business
             string message = String.Concat("Too much information has been requested from Facebook for too long.  You must wait about ", 20 - timeDifference, " minutes");
             MessageBox.Show(message);
         }
+
+        public static void AnalysisAborted()
+        {
+            MessageBox.Show("Message Analysis Aborted");
+        }
+
+        internal static void NoAnalysisModuleSelected()
+        {
+            MessageBox.Show("No Analysis Module Selected.  You must select an analysis module to proceed");
+        }
     }
 }
