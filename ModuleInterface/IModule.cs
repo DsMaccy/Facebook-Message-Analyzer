@@ -14,9 +14,9 @@ namespace ModuleInterface
     }
     public struct FacebookMessage
     {
-        string message;
-        User sender;
-        DateTime timeSent;
+        public string message;
+        public User sender;
+        public DateTime timeSent;
     }
 
     public interface IModule

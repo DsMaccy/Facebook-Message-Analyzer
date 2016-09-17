@@ -119,8 +119,8 @@ namespace Facebook_Message_Analyzer.Presentation
 
         private void analyze_click(object sender, EventArgs e)
         {
-            string value = (string)conversations.SelectedRows[0].Cells[0].Value;
-            Business.StateMaster.runAnalysisModules(value);
+            string conversationID = (string)conversations.SelectedRows[0].Cells[0].Value;
+            Business.StateMaster.runAnalysisModules(conversationID);
         }
 
         private void moduleSelect_click(object sender, EventArgs e)

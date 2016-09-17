@@ -27,18 +27,35 @@ namespace Facebook_Message_Analyzer.Data
         #endregion
 
 
-        private const string DB_NAME = "config";
-        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\ConfigDatabase.mdf;Integrated Security=True;";
-        public const string GENERIC_TABLE_NAME = "genericPreferences";
+        /* Database Organization:
+         *      Message Table: 
+         *          Conversation ID
+         *          next
+         *      Messages:
+         *           
+         */
+
+        public const string DB_NAME = "cachedMessages";
+        private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\CachedMessages.mdf;Integrated Security=True;";
+        public const string MESSAGE_TABLE = "messageTable";
+        public const string MESSAGE_GROUP_TABLE = "messageGroupTable";
         public const string DLL_PATH_TAG = "dllPath";
 
         private CachedMessagesManager()
         {
+            Database.createDatabase(DB_NAME, DB_CONN_STRING);
         }
 
-        private List<FacebookMessage> getNextMessages()
+        public void saveMessages(List<FacebookMessage> messageList)
+        {
+            // TODO: Fill
+        }
+
+        public List<FacebookMessage> getMessages()
         {
             List<FacebookMessage> messageList = new List<FacebookMessage>();
+
+
 
             return messageList;
         }

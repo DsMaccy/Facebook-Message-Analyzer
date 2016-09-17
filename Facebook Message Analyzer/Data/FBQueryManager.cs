@@ -174,29 +174,52 @@ namespace Facebook_Message_Analyzer.Data
 
         }
 
-        public List<FacebookMessage> getMessages(string conversationID)
+        public List<FacebookMessage> getComments(string conversationID)
         {
-            dynamic parameters = new
-            {
-                limit = 1000
-            };
+            List<FacebookMessage> messageList = new List<FacebookMessage>();
 
             // TODO: Check values
             if (m_next == "")
             {
-                parameters.message_count = 1000;
-                m_messages = m_fbClient.Get("/" + conversationID + "/messages", parameters);
-                m_next = m_messages.paging.next;
+                dynamic parameters = new
+                {
+                    limit = 1000
+                };
+
+                //m_messages = m_fbClient.Get("/" + conversationID + "/messages", parameters);
+                //m_messages = m_fbClient.Get("me/inbox/" + conversationID, parameters);
+                for (int i = 0; i < m_conversations.data.Count; i++)
+                {
+                    if (m_conversations.data[i].id == conversationID)
+                    {
+                        m_messages = m_conversations.data[i].comments;
+                        if (m_conversations.data[i].comments == null)
+                        {
+                            m_next = m_conversations.data[i].comments.paging;
+                        }
+                        break;
+                    }
+                }
+
+                // May not be neccessary -- check else Post call
+                // TODO: Parse m_next parameter to change limit size
+
             }
             else
             {
-                m_messages = m_fbClient.Get(m_next);
+                m_messages = m_fbClient.Post(m_next, new { method = "GET", limit = 10000});
                 m_next = m_messages.paging.next;
             }
 
-            // Create the messageList so that the rest of the application can read it.
-            List<FacebookMessage> messageList = new List<FacebookMessage>();
-            // Parse through m_messages to create the messageList and then use that to fill the messageList object
+            for (int i = 0; i < m_messages.Count; i++)
+            {
+                FacebookMessage fm = new FacebookMessage();
+                fm.timeSent = m_messages.data[i].date;
+                fm.sender = m_messages.data[i].date;
+                fm.message = m_messages.data[i].date;
+                messageList.Add(fm);
+            }
+
             return messageList;
         }
         public List<FacebookMessage> getMessages(string conversationID, string queryURL)

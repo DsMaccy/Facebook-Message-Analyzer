@@ -38,6 +38,7 @@ namespace Facebook_Message_Analyzer.Business
         private static bool m_restart = false;
         private static List<Type> m_activeModules = new List<Type>();
         private static Analyzer m_analyzer = null;
+        private static Form m_analysisForm = null;
 
 
         /// <summary>
@@ -129,8 +130,8 @@ namespace Facebook_Message_Analyzer.Business
             m_analyzer.setModules(m_activeModules);
             m_analyzer.runAnalysisAsync();
 
-            AnalyzingForm af = new AnalyzingForm();
-            af.ShowDialog();
+            m_analysisForm = new AnalyzingForm();
+            m_analysisForm.ShowDialog();
         }
 
         public static void abortAnalysis()

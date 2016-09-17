@@ -33,6 +33,7 @@ namespace Facebook_Message_Analyzer.Presentation
         private void abort_Click(object sender, EventArgs e)
         {
             StateMaster.abortAnalysis();
+            this.Close();
         }
     }
 }
