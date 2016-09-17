@@ -21,6 +21,7 @@ namespace Facebook_Message_Analyzer.Business
         public FacebookMessage next()
         {
             throw new NotImplementedException();
+
             // If conversation in database
             //      Use database until all the data in DB is used up.
             //      If database has reached its end, query from FBQueryManager

@@ -82,6 +82,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Analyzer.cs" />
+    <Compile Include="Business\ConversationIterator.cs" />
     <Compile Include="Business\ErrorMessages.cs" />
     <Compile Include="Data\CachedMessagesManager.cs" />
     <Compile Include="Data\ConfigManager.cs" />

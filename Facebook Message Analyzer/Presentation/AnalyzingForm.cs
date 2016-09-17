@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Facebook_Message_Analyzer.Business;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
@@ -25,7 +26,13 @@ namespace Facebook_Message_Analyzer.Presentation
 
         private void alignWidgets()
         {
-            message.Left = this.ClientRectangle.Width / 2 - message.Width;
+            message.Left = this.ClientRectangle.Width / 2 - message.Width / 2;
+            abort.Left = this.ClientRectangle.Width / 2 - abort.Width / 2;
+        }
+
+        private void abort_Click(object sender, EventArgs e)
+        {
+            StateMaster.abortAnalysis();
         }
     }
 }
