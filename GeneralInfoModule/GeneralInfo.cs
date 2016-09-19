@@ -75,10 +75,10 @@ namespace GeneralInfoModule
         public Form getResultForm()
         {
             DataTable data = new DataTable("General Info");
-            data.Columns.Add("User", typeof(string));
+            data.Columns.Add("Users", typeof(string));
             data.Columns.Add("Number of Messages", typeof(int));
-            data.Columns.Add("First Message", typeof(DateTime));
-            data.Columns.Add("Last Message", typeof(DateTime));
+            data.Columns.Add("Time of First Message", typeof(DateTime));
+            data.Columns.Add("Time of Last Message", typeof(DateTime));
 
             foreach (User user in m_users)
             {
