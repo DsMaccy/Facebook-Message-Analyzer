@@ -74,13 +74,17 @@ namespace Facebook_Message_Analyzer.Business
 
             // Figure out how to close the analyzing window
 
+            StateMaster.closeAnalysisForm();
+
             foreach (IModule module in m_analysisModules)
             {
                 if (module.formAvailable())
                 {
-                    module.getResultForm().Show();
+                   StateMaster.displayAnalysisResult(module.getResultForm());
                 }
             }
+
+            
         } 
 
         private void analysisThread(object moduleObj)

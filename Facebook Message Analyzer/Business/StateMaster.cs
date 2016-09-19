@@ -1,10 +1,9 @@
 ﻿/* TODO
  * CachedMessagesManager querying and storing information
- * FBQueryManager querying of conversation data (needs to be tested for scalability and correctness)
+ * FB Query Message Count cap at 28 ?????
  * ConversationIterator hasNext and next
  * Implmement Parallel Analysis
- * Clean up IModule 
- * GeneralInfoModule
+ * Clean up IModule -- Probably need to wait until profanity module is created
  * Profanity Module 
  * Points Module ...?
  * DLL handling:
@@ -27,7 +26,7 @@ using System.IO;
 using System.Reflection;
 using GeneralInfoModule;
 using System.Threading;
-
+using System.Reflection;
 
 namespace Facebook_Message_Analyzer.Business
 {
@@ -108,16 +107,6 @@ namespace Facebook_Message_Analyzer.Business
             return Data.FBQueryManager.LOGOUT_URL;
         }
 
-        public static dynamic getConversations()
-        {
-            return FBQueryManager.Manager.getConversations();
-        }
-
-        public static void setConversation()
-        {
-            FBQueryManager.Manager.setConversation();
-        }
-
         public static void selectAnalysisModules()
         {
             SelectModulesForm smf = new SelectModulesForm();
@@ -132,6 +121,33 @@ namespace Facebook_Message_Analyzer.Business
 
             m_analysisForm = new AnalyzingForm();
             m_analysisForm.ShowDialog();
+        }
+
+        public static void closeAnalysisForm()
+        {
+            bool repeat = false;
+            do
+            {
+                try
+                {
+                    m_analysisForm.Invoke(new MethodInvoker(
+                        () =>
+                        {
+                            m_analysisForm.Close();
+                        }
+                    ));
+                }
+                catch (InvalidOperationException)
+                {
+                    repeat = true;
+                    Thread.Sleep(100);
+                }
+            } while (repeat);
+        }
+        
+        public static void displayAnalysisResult(Form form)
+        {
+            m_activeForm.Invoke(new MethodInvoker(() => { form.Show(); }));
         }
 
         public static void abortAnalysis()

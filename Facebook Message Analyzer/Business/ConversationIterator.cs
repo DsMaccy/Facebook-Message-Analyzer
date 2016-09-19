@@ -22,6 +22,10 @@ namespace Facebook_Message_Analyzer.Business
             m_queryOnline = false;
             m_messageList = new List<FacebookMessage>();
         }
+        ~ConversationIterator()
+        {
+            FBQueryManager.Manager.Cleanup();
+        }
         public bool hasNext()
         {
             if (m_currentIndex + 1 < m_messageList.Count)
@@ -32,6 +36,14 @@ namespace Facebook_Message_Analyzer.Business
             {
                 m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
                 m_currentIndex = -1;
+                if (m_messageList.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
                 /*
                 if (m_queryOnline)
@@ -44,12 +56,10 @@ namespace Facebook_Message_Analyzer.Business
                 }
                 */
             }
-            return false;
         }
         public FacebookMessage next()
         {
             return m_messageList[++m_currentIndex];
-            throw new NotImplementedException();
 
             // If conversation in database
             //      Use database until all the data in DB is used up.
@@ -58,5 +68,6 @@ namespace Facebook_Message_Analyzer.Business
             //      Use FBQueryManager class to query facebook servers directly
             // 
         }
+
     }
 }

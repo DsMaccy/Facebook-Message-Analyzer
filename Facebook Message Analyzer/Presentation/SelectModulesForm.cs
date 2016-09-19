@@ -14,19 +14,21 @@ namespace Facebook_Message_Analyzer.Presentation
 {
     public partial class SelectModulesForm : Form
     {
-
-        Dictionary<string, string> m_descriptions;
+        private Dictionary<string, IModule> m_modules;
+        private int m_hoverIndex;
 
         public SelectModulesForm()
         {
             InitializeComponent();
             alignWidgets();
+            m_hoverIndex = -1;
 
 
             // TODO: Programmatically add options for each of the modules
             Dictionary<string, Type> moduleList = StateMaster.getModules();
-            m_descriptions = new Dictionary<string, string>();
+            m_modules = new Dictionary<string, IModule>();
 
+            
             foreach (KeyValuePair<string, Type> module in moduleList)
             {
                 checkedList.Items.Add(module.Key);
@@ -38,7 +40,7 @@ namespace Facebook_Message_Analyzer.Presentation
 
                 IModule moduleObj = Activator.CreateInstance(moduleType) as IModule;
                 string value = moduleObj.description();
-                m_descriptions.Add(module.Key, value);
+                m_modules.Add(module.Key, moduleObj);
             }
         }
 
@@ -58,13 +60,7 @@ namespace Facebook_Message_Analyzer.Presentation
             cancelButton.Top = this.ClientRectangle.Height - cancelButton.Height - 9;
             checkedList.Height = this.ClientRectangle.Height - checkedList.Top - 9*2 - Math.Max(cancelButton.Height, okButton.Height);
         }
-
-        private void checkedList_MouseHover(object sender, EventArgs e)
-        {
-            Console.WriteLine(e);
-            this.moduleDescription.Tag = "Testing testing 1 2";
-        }
-
+        
         private void okButton_Click(object sender, EventArgs e)
         {
             Dictionary<string, Type> moduleList = StateMaster.getModules();
@@ -81,6 +77,23 @@ namespace Facebook_Message_Analyzer.Presentation
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }  
+
+        private void checkedList_MouseMove(object sender, MouseEventArgs e)
+        {
+            int newIndex = checkedList.IndexFromPoint(e.Location);
+            if (m_hoverIndex != newIndex)
+            {
+                m_hoverIndex = newIndex;
+                if (m_hoverIndex > -1)
+                {
+                    hoverText.Show(m_modules[(string)(checkedList.Items[m_hoverIndex])].description(), checkedList);
+                }
+                else
+                {
+                    hoverText.Hide(checkedList);
+                }
+            }
         }
     }
 }

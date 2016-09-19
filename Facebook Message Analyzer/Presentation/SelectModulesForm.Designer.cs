@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.title = new System.Windows.Forms.Label();
             this.checkedList = new System.Windows.Forms.CheckedListBox();
-            this.moduleDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.hoverText = new System.Windows.Forms.ToolTip(this.components);
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.checkedList.Name = "checkedList";
             this.checkedList.Size = new System.Drawing.Size(260, 214);
             this.checkedList.TabIndex = 1;
-            this.checkedList.MouseHover += new System.EventHandler(this.checkedList_MouseHover);
+            this.checkedList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkedList_MouseMove);
             // 
             // okButton
             // 
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.CheckedListBox checkedList;
-        private System.Windows.Forms.ToolTip moduleDescription;
+        private System.Windows.Forms.ToolTip hoverText;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
     }

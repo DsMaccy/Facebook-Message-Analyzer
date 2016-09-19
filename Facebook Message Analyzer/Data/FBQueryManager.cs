@@ -29,8 +29,8 @@ namespace Facebook_Message_Analyzer.Data
         private string m_token;
         private dynamic m_userInfo;
         private dynamic m_conversations;
-        private dynamic m_messages = null;
-        private string m_next = "";
+        private dynamic m_messages;
+        private string m_next;
 
         private FBQueryManager()
         {
@@ -38,6 +38,13 @@ namespace Facebook_Message_Analyzer.Data
             m_fbClient = null;
             m_userInfo = null;
             m_conversations = null;
+            m_messages = null;
+            m_next = "";
+        }
+
+        public void Cleanup()
+        {
+            m_next = null;
         }
 
         public Uri getLoginURL()
@@ -168,34 +175,22 @@ namespace Facebook_Message_Analyzer.Data
             {
             }
         }
-
-        public void setConversation()
-        {
-
-        }
-
+        
         public List<FacebookMessage> getComments(string conversationID)
         {
             List<FacebookMessage> messageList = new List<FacebookMessage>();
 
             // TODO: Check values
-            if (m_next == "")
+            if (m_next == "" || m_next == null)
             {
-                dynamic parameters = new
-                {
-                    limit = 1000
-                };
-
-                //m_messages = m_fbClient.Get("/" + conversationID + "/messages", parameters);
-                //m_messages = m_fbClient.Get("me/inbox/" + conversationID, parameters);
                 for (int i = 0; i < m_conversations.data.Count; i++)
                 {
                     if (m_conversations.data[i].id == conversationID)
                     {
                         m_messages = m_conversations.data[i].comments;
-                        if (m_conversations.data[i].comments == null)
+                        if (m_conversations.data[i].comments != null)
                         {
-                            m_next = m_conversations.data[i].comments.paging;
+                            m_next = m_conversations.data[i].comments.paging.next;
                         }
                         break;
                     }
@@ -207,39 +202,41 @@ namespace Facebook_Message_Analyzer.Data
             }
             else
             {
-                m_messages = m_fbClient.Post(m_next, new { method = "GET", limit = 10000});
-                m_next = m_messages.paging.next;
+                m_next = m_next.Replace("limit=25", "limit=10000");
+                m_messages = m_fbClient.Get(m_next);
+                // m_messages = m_fbClient.Post(m_next, new { method = "GET", limit = 10000 });
+                if (m_messages.paging != null)
+                {
+                    m_next = m_messages.paging.next;
+                }
+                else
+                {
+                    Cleanup();
+                }
             }
-
-            for (int i = 0; i < m_messages.Count; i++)
+            if (m_messages != null)
             {
-                FacebookMessage fm = new FacebookMessage();
-                fm.timeSent = m_messages.data[i].date;
-                fm.sender = m_messages.data[i].date;
-                fm.message = m_messages.data[i].date;
-                messageList.Add(fm);
+                for (int i = 0; i < m_messages.data.Count; i++)
+                {
+                    FacebookMessage fm = new FacebookMessage();
+
+                    User sender = new User();
+                    sender.id = m_messages.data[i].from.id;
+                    sender.name = m_messages.data[i].from.name;
+                    fm.sender = sender;
+                    string dtStr = (string)m_messages.data[i].created_time;
+                    int year = Int32.Parse(dtStr.Substring(0, 4));
+                    int month = Int32.Parse(dtStr.Substring(5, 2));
+                    int day = Int32.Parse(dtStr.Substring(8, 2));
+                    int hour = Int32.Parse(dtStr.Substring(11, 2));
+                    int minute = Int32.Parse(dtStr.Substring(14, 2));
+                    int second = Int32.Parse(dtStr.Substring(17, 2));
+
+                    fm.timeSent = new DateTime(year, month, day, hour, minute, second);
+                    fm.message = m_messages.data[i].message;
+                    messageList.Add(fm);
+                }
             }
-
-            return messageList;
-        }
-        public List<FacebookMessage> getMessages(string conversationID, string queryURL)
-        {
-            dynamic parameters = new
-            {
-                limit = 1000
-            };
-
-            // TODO: Check values
-            if (m_messages == null)
-            {
-                parameters.message_count = 1000;
-                m_messages = m_fbClient.Get(queryURL);
-                m_next = m_messages.paging.next;
-            }
-
-            // Create the messageList so that the rest of the application can read it.
-            List<FacebookMessage> messageList = new List<FacebookMessage>();
-            // Parse through m_messages to create the messageList and then use that to fill the messageList object
             return messageList;
         }
     }

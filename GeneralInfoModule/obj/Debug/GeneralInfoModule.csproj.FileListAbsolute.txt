@@ -12,3 +12,5 @@ F:\FBMA\GeneralInfoModule\bin\Debug\ModuleInterface.pdb
 F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.csprojResolveAssemblyReference.cache
 F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
 F:\FBMA\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.ResultForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csproj.GenerateResource.Cache
