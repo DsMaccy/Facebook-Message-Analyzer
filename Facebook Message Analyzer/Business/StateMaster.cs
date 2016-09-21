@@ -137,10 +137,13 @@ namespace Facebook_Message_Analyzer.Business
                         }
                     ));
                 }
-                catch (InvalidOperationException)
+                catch (Exception e)
                 {
-                    repeat = true;
-                    Thread.Sleep(100);
+                    if (e is InvalidOperationException || e is NullReferenceException)
+                    {
+                        repeat = true;
+                        Thread.Sleep(100);
+                    }
                 }
             } while (repeat);
         }

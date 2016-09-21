@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ModuleInterface;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace Facebook_Message_Analyzer.Data
 {
@@ -37,27 +39,123 @@ namespace Facebook_Message_Analyzer.Data
 
         public const string DB_NAME = "cachedMessages";
         private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\CachedMessages.mdf;Integrated Security=True;";
-        public const string MESSAGE_TABLE = "messageTable";
-        public const string MESSAGE_GROUP_TABLE = "messageGroupTable";
-        public const string DLL_PATH_TAG = "dllPath";
+        private const string LINK_TABLE = "linkTable";
+        private const string USER_TABLE = "userTable";
+        private string[] FB_MESSAGE_ROWS
+        {
+            get
+            {
+                return new string[] { "id", "message", "sender", "timeSent"};
+            }
+            
+        }
+        // Other tables referenced by conversation IDs
 
         private CachedMessagesManager()
         {
             Database.createDatabase(DB_NAME, DB_CONN_STRING);
         }
 
-        public void saveMessages(List<FacebookMessage> messageList)
+        internal string getNextURL(string conversationID)
         {
-            // TODO: Fill
+            Dictionary<string, object> whereClause = new Dictionary<string, object>();
+            whereClause.Add("id", conversationID);
+            return Database.getValue(DB_CONN_STRING, LINK_TABLE, "next", whereClause) as string;
         }
 
-        public List<FacebookMessage> getMessages()
+        public void saveMessages(string conversationID, List<FacebookMessage> messageList, string nextURL)
+        {
+            Dictionary<string, object> values;
+            foreach (FacebookMessage message in messageList)
+            {
+                values = new Dictionary<string, object>();
+                foreach (string tag in FB_MESSAGE_ROWS)
+                {
+                    values.Add(tag, message[tag]);
+                }
+                Database.addValues(DB_CONN_STRING, conversationID, values);
+            }
+
+            values = new Dictionary<string, object>();
+            values.Add("id", conversationID);
+            values.Add("next", nextURL);
+            Database.addValues(DB_CONN_STRING, LINK_TABLE, values);
+        }
+
+        public List<FacebookMessage> getMessages(string conversationID)
         {
             List<FacebookMessage> messageList = new List<FacebookMessage>();
+            List<List<dynamic>> table = Database.getTable(DB_CONN_STRING, conversationID, FB_MESSAGE_ROWS);
 
 
+            foreach (List<dynamic>row in table)
+            {
+                FacebookMessage fm = new FacebookMessage();
+                int index = 0;
+                foreach (string tag in FB_MESSAGE_ROWS)
+                {
+                    fm[tag] = row[index++];
+                }
+                messageList.Add(fm);
+            }
 
             return messageList;
+        }
+
+        public List<FacebookMessage> getEarliestEntries(string conversationID)
+        {
+            List<FacebookMessage> messages = new List<FacebookMessage>();
+            using (SqlConnection sqlConnection = new SqlConnection(DB_CONN_STRING))
+            {
+                sqlConnection.Open();
+                DateTime minDT;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.CommandText = "Select MIN(date) AS MinDate FROM @conversationID";
+                    command.Parameters.AddWithValue("@conversationID", conversationID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        minDT = (DateTime)reader.GetValue(0);
+                    }
+                }
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.CommandText = "Select * from @conversationID where date=@minDate";
+                    command.Parameters.AddWithValue("@conversationID", minDT);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            FacebookMessage fm = new FacebookMessage();
+                            fm.id = reader["id"] as string;
+                            fm.message = reader["message"] as string;
+                            fm.timeSent = (DateTime)reader["timeSent"];
+                            fm.sender = new User();
+                            fm.sender.id = reader["sender"] as string;
+                            using (SqlCommand getUser = new SqlCommand())
+                            {
+                                getUser.CommandText = "Select name from " + USER_TABLE + "where id=@id";
+                                getUser.Parameters.AddWithValue("@id", fm.sender.id);
+                                using (SqlDataReader userReader = getUser.ExecuteReader())
+                                {
+                                    while (userReader.Read())
+                                    {
+                                        fm.sender.name = userReader.GetString(0);
+                                    }
+                                }
+                            }
+                            messages.Add(fm);
+                        }
+                    }
+                }
+            }
+            return messages;
+        }
+
+        public List<FacebookMessage> getLastestEntries(string conversationID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

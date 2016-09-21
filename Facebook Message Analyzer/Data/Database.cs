@@ -64,7 +64,46 @@ namespace Facebook_Message_Analyzer.Data
             return true;
         }
 
-        public static List<List<dynamic>> getValue(string connectString, string tableName, params string[] keys)
+        /// <summary>
+        /// Returns the last element (ideally the only element that fits the where clause passed in as string=object
+        /// </summary>
+        /// <param name="connectString"></param>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="whereValues"></param>
+        /// <returns></returns>
+        public static object getValue(string connectString, string tableName, string columnName, Dictionary<string, object> whereValues)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.CommandText = "Select @columnName FROM @tableName Where ";
+                    command.Parameters.AddWithValue("@tableName", tableName);
+                    command.Parameters.AddWithValue("@columnName", columnName);
+
+                    int count = 0;
+                    foreach (KeyValuePair<string, object> kvPair in whereValues)
+                    {
+                        command.CommandText += "@name" + count + "=@value" + count;
+                        command.Parameters.AddWithValue("@name" + count, kvPair.Key);
+                        command.Parameters.AddWithValue("@value" + count, kvPair.Value);
+                        count++;
+                    }
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader[0];
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static List<List<dynamic>> getTable(string connectString, string tableName, params string[] keys)
         {
 
             // Create SQL command string by conglomerating data values

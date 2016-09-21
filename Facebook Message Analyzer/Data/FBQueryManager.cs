@@ -26,6 +26,7 @@ namespace Facebook_Message_Analyzer.Data
         private const string m_SUCCESS_URI = "https://www.facebook.com/connect/login_success.html";
 
         private Facebook.FacebookClient m_fbClient;
+        private bool m_apiExceededError;
         private string m_token;
         private dynamic m_userInfo;
         private dynamic m_conversations;
@@ -40,6 +41,17 @@ namespace Facebook_Message_Analyzer.Data
             m_conversations = null;
             m_messages = null;
             m_next = "";
+            m_apiExceededError = false;
+        }
+
+        internal string getNextURL(string m_conversationID)
+        {
+            return m_next;
+        }
+
+        internal void setNextURL(string nextURL)
+        {
+            m_next = nextURL;
         }
 
         public void Cleanup()
@@ -129,22 +141,29 @@ namespace Facebook_Message_Analyzer.Data
                         limit = 200,
                         offset = 50
                     });
-                }
-                /*
-                else
-                {
-                    m_conversations = m_fbClient.Get("me/inbox");
-                }*/
-
-                return (m_conversations.data);
+                }                
             }
             catch (Facebook.FacebookOAuthException)
             {
                 Console.Error.WriteLine("Api calls exceeded.  You must wait");
                 return null;
             }
+
+
+            if (m_apiExceededError)
+            {
+                m_apiExceededError = false;
+                return null;
+            }
+            return (m_conversations.data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="Facebook.FacebookOAuthException">
+        /// API calls exceeded
+        /// </exception>
         public void nextConversations()
         {
             try
@@ -157,10 +176,19 @@ namespace Facebook_Message_Analyzer.Data
             }
             catch (Exception ex) when (ex is Facebook.FacebookOAuthException || ex is Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
             {
-                // Error caused
+                if (ex is Facebook.FacebookOAuthException)
+                {
+                    m_apiExceededError = true;
+                }
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="Facebook.FacebookOAuthException">
+        /// API calls exceeded
+        /// </exception>
         public void prevConversations()
         {
             try
@@ -173,6 +201,10 @@ namespace Facebook_Message_Analyzer.Data
             }
             catch (Exception ex) when (ex is Facebook.FacebookOAuthException || ex is Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
             {
+                if (ex is Facebook.FacebookOAuthException)
+                {
+                    m_apiExceededError = true;
+                }
             }
         }
         
@@ -220,10 +252,14 @@ namespace Facebook_Message_Analyzer.Data
                 {
                     FacebookMessage fm = new FacebookMessage();
 
+                    string longID = m_messages.data[i].id as string;
+                    fm.id = longID.Substring(longID.IndexOf('_') + 1);
+
                     User sender = new User();
                     sender.id = m_messages.data[i].from.id;
                     sender.name = m_messages.data[i].from.name;
                     fm.sender = sender;
+
                     string dtStr = (string)m_messages.data[i].created_time;
                     int year = Int32.Parse(dtStr.Substring(0, 4));
                     int month = Int32.Parse(dtStr.Substring(5, 2));
@@ -231,9 +267,10 @@ namespace Facebook_Message_Analyzer.Data
                     int hour = Int32.Parse(dtStr.Substring(11, 2));
                     int minute = Int32.Parse(dtStr.Substring(14, 2));
                     int second = Int32.Parse(dtStr.Substring(17, 2));
-
                     fm.timeSent = new DateTime(year, month, day, hour, minute, second);
+
                     fm.message = m_messages.data[i].message;
+
                     messageList.Add(fm);
                 }
             }

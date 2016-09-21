@@ -19,7 +19,7 @@ namespace Facebook_Message_Analyzer.Business
         {
             m_conversationID = conversationID;
             m_currentIndex = -1;
-            m_queryOnline = false;
+            m_queryOnline = true;
             m_messageList = new List<FacebookMessage>();
         }
         ~ConversationIterator()
@@ -34,7 +34,20 @@ namespace Facebook_Message_Analyzer.Business
             }
             else
             {
-                m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
+                // TODO: Check to make sure database is working
+                if (m_queryOnline)
+                {
+                    m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
+                    string nextURL = FBQueryManager.Manager.getNextURL(m_conversationID);
+                    CachedMessagesManager.Manager.saveMessages(m_conversationID, m_messageList, nextURL);
+                }
+                else
+                {
+                    m_messageList = CachedMessagesManager.Manager.getMessages(m_conversationID);
+                    string nextURL = CachedMessagesManager.Manager.getNextURL(m_conversationID);
+                    m_queryOnline = false;
+                    FBQueryManager.Manager.setNextURL(nextURL)
+                }
                 m_currentIndex = -1;
                 if (m_messageList.Count > 0)
                 {
@@ -44,17 +57,6 @@ namespace Facebook_Message_Analyzer.Business
                 {
                     return false;
                 }
-
-                /*
-                if (m_queryOnline)
-                {
-                    // use Facebook to get next set of messages
-                }
-                else
-                {
-                    // Use CachedMessagesManager to get new messages
-                }
-                */
             }
         }
         public FacebookMessage next()

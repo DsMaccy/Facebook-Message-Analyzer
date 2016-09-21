@@ -8,6 +8,35 @@ namespace ModuleInterface
 {
     public struct User
     {
+        public object this[string property]
+        {
+            get
+            {
+                switch (property)
+                {
+                    case "name":
+                        return name;
+                    case "id":
+                        return id;
+                    default:
+                        throw new ArgumentException("property doesn't exist");
+                }
+            }
+            set
+            {
+                switch (property)
+                {
+                    case "name":
+                        name = (string)value;
+                        break;
+                    case "id":
+                        id = (string)value;
+                        break;
+                    default:
+                        throw new ArgumentException("property doesn't exist");
+                }
+            }
+        } 
         public string name;
         public string id;
 
@@ -40,9 +69,50 @@ namespace ModuleInterface
     }
     public struct FacebookMessage
     {
+        public string id;
         public string message;
         public User sender;
         public DateTime timeSent;
+
+        public object this[string property]
+        {
+            get
+            {
+                switch (property)
+                {
+                    case "message":
+                        return message;
+                    case "id":
+                        return id;
+                    case "sender":
+                        return sender;
+                    case "timeSent":
+                        return timeSent;
+                    default:
+                        throw new ArgumentException("property doesn't exist");
+                }
+            }
+            set
+            {
+                switch (property)
+                {
+                    case "message":
+                        message= (string)value;
+                        break;
+                    case "id":
+                        id = (string)value;
+                        break;
+                    case "sender":
+                        sender = (User)value;
+                        break;
+                    case "timeSent":
+                        timeSent = (DateTime)value;
+                        break;
+                    default:
+                        throw new ArgumentException("property doesn't exist");
+                }
+            }
+        }
 
         public static bool operator ==(FacebookMessage a, FacebookMessage b)
         {
@@ -65,11 +135,11 @@ namespace ModuleInterface
                 return base.Equals(obj);
             }
 
-            return sender == other.sender && timeSent.Equals(other.timeSent) && message == other.message;
+            return id == other.id;
         }
         public override int GetHashCode()
         {
-            return message.GetHashCode() * sender.GetHashCode() * timeSent.GetHashCode();
+            return Int32.Parse(id);
         }
     }
 }

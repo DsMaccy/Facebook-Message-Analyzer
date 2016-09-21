@@ -37,7 +37,7 @@ namespace Facebook_Message_Analyzer.Data
 
         public dynamic getValue (string table, string key)
         {
-            List<List<dynamic>> values = Database.getValue(DB_CONN_STRING, table, key);
+            List<List<dynamic>> values = Database.getTable(DB_CONN_STRING, table, key);
             if (values.Count > 0)
             {
                 return values[0][0];
