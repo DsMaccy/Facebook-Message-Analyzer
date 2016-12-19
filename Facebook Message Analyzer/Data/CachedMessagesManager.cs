@@ -45,7 +45,7 @@ namespace Facebook_Message_Analyzer.Data
         {
             get
             {
-                return new string[] { "id", "message", "sender", "timeSent"};
+                return new string[] {"id", "message", "sender", "timeSent"};
             }
             
         }
@@ -53,7 +53,11 @@ namespace Facebook_Message_Analyzer.Data
 
         private CachedMessagesManager()
         {
-            Database.createDatabase(DB_NAME, DB_CONN_STRING);
+            //Database.createDatabase(DB_NAME, DB_CONN_STRING);
+            Dictionary<string, Type> userColumns = new Dictionary<string, Type>();
+            Dictionary<string, Type> linkColumns = new Dictionary<string, Type>();
+            Database.addTable(DB_CONN_STRING, USER_TABLE, userColumns);
+            Database.addTable(DB_CONN_STRING, LINK_TABLE, userColumns);
         }
 
         internal string getNextURL(string conversationID)
@@ -109,7 +113,7 @@ namespace Facebook_Message_Analyzer.Data
             {
                 sqlConnection.Open();
                 DateTime minDT;
-                using (SqlCommand command = new SqlCommand())
+                using (SqlCommand command = new SqlCommand("", sqlConnection))
                 {
                     command.CommandText = "Select MIN(date) AS MinDate FROM @conversationID";
                     command.Parameters.AddWithValue("@conversationID", conversationID);
@@ -118,7 +122,7 @@ namespace Facebook_Message_Analyzer.Data
                         minDT = (DateTime)reader.GetValue(0);
                     }
                 }
-                using (SqlCommand command = new SqlCommand())
+                using (SqlCommand command = new SqlCommand("", sqlConnection))
                 {
                     command.CommandText = "Select * from @conversationID where date=@minDate";
                     command.Parameters.AddWithValue("@conversationID", minDT);

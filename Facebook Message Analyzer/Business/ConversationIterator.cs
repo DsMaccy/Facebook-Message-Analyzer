@@ -46,7 +46,7 @@ namespace Facebook_Message_Analyzer.Business
                     m_messageList = CachedMessagesManager.Manager.getMessages(m_conversationID);
                     string nextURL = CachedMessagesManager.Manager.getNextURL(m_conversationID);
                     m_queryOnline = false;
-                    FBQueryManager.Manager.setNextURL(nextURL)
+                    FBQueryManager.Manager.setNextURL(nextURL);
                 }
                 m_currentIndex = -1;
                 if (m_messageList.Count > 0)

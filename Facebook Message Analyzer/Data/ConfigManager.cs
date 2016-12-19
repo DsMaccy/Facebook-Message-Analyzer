@@ -26,8 +26,10 @@ namespace Facebook_Message_Analyzer.Data
 
         private const string DB_NAME = "config";
         private const string DB_CONN_STRING = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\ConfigDatabase.mdf;Integrated Security=True;";
+        public const string DLL_LOCATIONS_TABLE_NAME = "dllLocations";
         public const string GENERIC_TABLE_NAME = "genericPreferences";
         public const string DLL_PATH_TAG = "dllPath";
+        public const string CACHE_DATA_TAG = "cacheMessages";
 
         private ConfigManager()
         {
@@ -48,8 +50,14 @@ namespace Facebook_Message_Analyzer.Data
 
         private void createGenericTable()
         {
+            // Set up DLL Data Table
             Dictionary<string, Type>  columns = new Dictionary<string, Type>();
             columns.Add(DLL_PATH_TAG, typeof(string));
+            Database.addTable(DB_CONN_STRING, DLL_LOCATIONS_TABLE_NAME, columns);
+
+            // Set up Generic Preferences Data Table
+            columns = new Dictionary<string, Type>();
+            columns.Add(CACHE_DATA_TAG, typeof(bool));
             Database.addTable(DB_CONN_STRING, GENERIC_TABLE_NAME, columns);
         }
 
@@ -62,7 +70,7 @@ namespace Facebook_Message_Analyzer.Data
         {
             for (int i = 0; i < values.Length; i++)
             {
-                Database.addValues(DB_CONN_STRING, GENERIC_TABLE_NAME, values[i]);
+                Database.addValues(DB_CONN_STRING, DLL_LOCATIONS_TABLE_NAME, values[i]);
             }
         }
     }

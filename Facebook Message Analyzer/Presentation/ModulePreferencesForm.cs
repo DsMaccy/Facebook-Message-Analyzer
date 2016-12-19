@@ -29,7 +29,15 @@ namespace Facebook_Message_Analyzer.Presentation
             m_cachedPreferenceData = StateMaster.getPreferenceData("General");
             foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
             {
-                ((GeneralPreferences)m_openPreference).Controls["modulePath"].Text = m_cachedPreferenceData["modulePath"];
+                Control widget = ((GeneralPreferences)m_openPreference).Controls[control.Key];
+                if (widget is CheckBox)
+                {
+                    ((CheckBox)widget).Checked = control.Value.ToLower() == "true";
+                }
+                else
+                {
+                    widget.Text = control.Value;
+                }
             }
 
             alignWidgets();

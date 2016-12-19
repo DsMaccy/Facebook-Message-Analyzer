@@ -76,7 +76,7 @@ namespace Facebook_Message_Analyzer.Data
         {
             using (SqlConnection connection = new SqlConnection(connectString))
             {
-                using (SqlCommand command = new SqlCommand())
+                using (SqlCommand command = new SqlCommand("", connection))
                 {
                     command.CommandText = "Select @columnName FROM @tableName Where ";
                     command.Parameters.AddWithValue("@tableName", tableName);
@@ -90,7 +90,6 @@ namespace Facebook_Message_Analyzer.Data
                         command.Parameters.AddWithValue("@value" + count, kvPair.Value);
                         count++;
                     }
-
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -145,9 +144,8 @@ namespace Facebook_Message_Analyzer.Data
                         }
                     }
                     command += " FROM " + tableName + ";";
-
                     sc.CommandText = command;
-
+                    
                     using (SqlDataReader reader = sc.ExecuteReader())
                     {
                         while (reader.Read())

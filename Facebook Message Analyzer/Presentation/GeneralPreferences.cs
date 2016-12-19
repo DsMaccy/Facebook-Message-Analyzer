@@ -32,6 +32,7 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             string[] values = modulePath.Text.Split(';');
             StateMaster.setDllLocations(values);
+            StateMaster.setGeneralTable(cacheDataCB.Checked);
         }
     }
 }
