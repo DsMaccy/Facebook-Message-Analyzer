@@ -1,4 +1,5 @@
 ﻿/* TODO
+ * Plan out Databases
  * CachedMessagesManager querying and storing information
  * FB Query Message Count cap at 28 ?????
  * ConversationIterator hasNext and next
@@ -183,8 +184,23 @@ namespace Facebook_Message_Analyzer.Business
             }
             else
             {
-                dynamic value = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
+                // Get dll locations
+                dynamic value = ConfigManager.Manager.getValue(ConfigManager.DLL_LOCATIONS_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
+                if (value == null)
+                {
+                    value = "";
+                }
                 values.Add("modulePath", value.ToString());
+
+                // Get other general preferences
+                value = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.CACHE_DATA_TAG);
+                if (value == null)
+                {
+                    value = true;
+                }
+                values.Add(ConfigManager.CACHE_DATA_TAG, value.toString());
+
+                //
                 return values;
             }
         }
@@ -194,7 +210,7 @@ namespace Facebook_Message_Analyzer.Business
             Dictionary<string, Type> modules = new Dictionary<string, Type>();
             modules.Add("General Info Module", typeof(GeneralInfoModule.GeneralInfo));
 
-            string dllPath = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
+            string dllPath = ConfigManager.Manager.getValue(ConfigManager.DLL_LOCATIONS_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
             if (dllPath != null)
             {
                 foreach (string file in Directory.EnumerateFiles(dllPath, "*.dll"))
@@ -234,14 +250,21 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void setDllLocations(params string[] filePaths)
         {
-            ConfigManager.Manager.clearTable(ConfigManager.GENERIC_TABLE_NAME);
+            ConfigManager.Manager.clearTable(ConfigManager.DLL_LOCATIONS_TABLE_NAME);
             for (int i = 0; i < filePaths.Length; i++)
             {
                 Dictionary<string, object> value = new Dictionary<string, object>();
                 value.Add(ConfigManager.DLL_PATH_TAG, filePaths[i]);
-                ConfigManager.Manager.addValues(ConfigManager.GENERIC_TABLE_NAME, value);
+                ConfigManager.Manager.addValues(ConfigManager.DLL_LOCATIONS_TABLE_NAME, value);
             }
+        }
+        public static void setGeneralTable(bool cacheData)
+        {
+            Dictionary<string, dynamic> preferences = new Dictionary<string, dynamic>();
+            preferences.Add(ConfigManager.CACHE_DATA_TAG, cacheData);
 
+            ConfigManager.Manager.clearTable(ConfigManager.GENERIC_TABLE_NAME);
+            ConfigManager.Manager.addValues(ConfigManager.GENERIC_TABLE_NAME, preferences);
         }
 
         public static void Exit()

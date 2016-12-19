@@ -31,6 +31,7 @@
             this.moduleLocationLabel = new System.Windows.Forms.Label();
             this.modulePath = new System.Windows.Forms.TextBox();
             this.browse = new System.Windows.Forms.Button();
+            this.cacheDataCB = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // moduleLocationLabel
@@ -59,10 +60,21 @@
             this.browse.UseVisualStyleBackColor = true;
             this.browse.Click += new System.EventHandler(this.browse_Click);
             // 
+            // cacheDataCB
+            // 
+            this.cacheDataCB.AutoSize = true;
+            this.cacheDataCB.Location = new System.Drawing.Point(7, 57);
+            this.cacheDataCB.Name = "cacheDataCB";
+            this.cacheDataCB.Size = new System.Drawing.Size(264, 17);
+            this.cacheDataCB.TabIndex = 3;
+            this.cacheDataCB.Text = "Cache Message Data (saves FB messages on PC)";
+            this.cacheDataCB.UseVisualStyleBackColor = true;
+            // 
             // GeneralPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cacheDataCB);
             this.Controls.Add(this.browse);
             this.Controls.Add(this.modulePath);
             this.Controls.Add(this.moduleLocationLabel);
@@ -78,5 +90,6 @@
         private System.Windows.Forms.Label moduleLocationLabel;
         private System.Windows.Forms.TextBox modulePath;
         private System.Windows.Forms.Button browse;
+        private System.Windows.Forms.CheckBox cacheDataCB;
     }
 }
