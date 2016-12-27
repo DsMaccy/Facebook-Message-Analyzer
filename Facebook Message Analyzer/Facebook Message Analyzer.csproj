@@ -85,9 +85,20 @@
     <Compile Include="Business\Analyzer.cs" />
     <Compile Include="Business\ConversationIterator.cs" />
     <Compile Include="Business\ErrorMessages.cs" />
+    <Compile Include="Data\CachedMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CachedMessages.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Data\CachedMessagesManager.cs" />
     <Compile Include="Data\ConfigManager.cs" />
+    <Compile Include="Data\Configurations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Configurations.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Data\Database.cs" />
+    <Compile Include="Data\DataSetManager.cs" />
     <Compile Include="Data\FBQueryManager.cs" />
     <Compile Include="Data\ModuleManager.cs" />
     <Compile Include="Data\DatabaseConstants.cs" />
@@ -165,6 +176,28 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Data\CachedMessages.xsc">
+      <DependentUpon>CachedMessages.xsd</DependentUpon>
+    </None>
+    <None Include="Data\CachedMessages.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CachedMessages.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\CachedMessages.xss">
+      <DependentUpon>CachedMessages.xsd</DependentUpon>
+    </None>
+    <None Include="Data\Configurations.xsc">
+      <DependentUpon>Configurations.xsd</DependentUpon>
+    </None>
+    <None Include="Data\Configurations.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Configurations.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\Configurations.xss">
+      <DependentUpon>Configurations.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
