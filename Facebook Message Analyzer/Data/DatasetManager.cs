@@ -36,7 +36,7 @@ namespace Facebook_Message_Analyzer.Data
 
         #region Instance Variables + Constructor
         private Dictionary<DataSets, DataSet> m_dataSets;
-        private Dictionary<DataSets, string> m_savePaths = null;
+        private Dictionary<DataSets, string> m_savePaths;
         private string PATH;
 
         private DataSetManager()
@@ -47,6 +47,7 @@ namespace Facebook_Message_Analyzer.Data
             m_savePaths[DataSets.Config] = "Config";
             m_savePaths[DataSets.Messages] = "Messages";
 
+            m_dataSets = new Dictionary<DataSets, DataSet>();
             m_dataSets[DataSets.Config] = new Configurations();
             m_dataSets[DataSets.Messages] = new CachedMessages();
 

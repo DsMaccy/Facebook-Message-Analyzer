@@ -1,1 +1,18 @@
 F:\FBMA\DataSetTester\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
+F:\FBMA\DataSetTester\bin\Debug\Data\CachedMessages.mdf
+F:\FBMA\DataSetTester\bin\Debug\Data\CachedMessages_log.ldf
+F:\FBMA\DataSetTester\bin\Debug\Data\ConfigDatabase.mdf
+F:\FBMA\DataSetTester\bin\Debug\Data\ConfigDatabase_log.ldf
+F:\FBMA\DataSetTester\bin\Debug\DataSetTester.dll
+F:\FBMA\DataSetTester\bin\Debug\DataSetTester.pdb
+F:\FBMA\DataSetTester\bin\Debug\Facebook Message Analyzer.exe
+F:\FBMA\DataSetTester\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\FBMA\DataSetTester\bin\Debug\Facebook.dll
+F:\FBMA\DataSetTester\bin\Debug\ModuleInterface.dll
+F:\FBMA\DataSetTester\bin\Debug\GeneralInfoModule.dll
+F:\FBMA\DataSetTester\bin\Debug\Facebook Message Analyzer.pdb
+F:\FBMA\DataSetTester\bin\Debug\Facebook.xml
+F:\FBMA\DataSetTester\bin\Debug\ModuleInterface.pdb
+F:\FBMA\DataSetTester\bin\Debug\GeneralInfoModule.pdb
+F:\FBMA\DataSetTester\obj\Debug\DataSetTester.dll
+F:\FBMA\DataSetTester\obj\Debug\DataSetTester.pdb
