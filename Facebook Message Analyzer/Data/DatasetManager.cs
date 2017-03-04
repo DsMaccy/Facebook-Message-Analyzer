@@ -19,17 +19,17 @@ namespace Facebook_Message_Analyzer.Data
     public class DataSetManager
     {
         #region Singleton
-        private static DataSetManager instance = null;
+        private static DataSetManager manager = null;
         
-        public static DataSetManager Instance
+        public static DataSetManager Manager
         {
             get
             {
-                if (instance == null)
+                if (manager == null)
                 {
-                    instance = new DataSetManager();
+                    manager = new DataSetManager();
                 }
-                return instance;
+                return manager;
             }
         }
         #endregion
@@ -38,6 +38,11 @@ namespace Facebook_Message_Analyzer.Data
         private Dictionary<DataSets, DataSet> m_dataSets;
         private Dictionary<DataSets, string> m_savePaths;
         private string PATH;
+
+        public const string DLL_LOCATIONS_TABLE_NAME = "dllLocations";
+        public const string GENERIC_TABLE_NAME = "genericPreferences";
+        public const string DLL_PATH_TAG = "dllPath";
+        public const string CACHE_DATA_TAG = "cacheMessages";
 
         private DataSetManager()
         {
@@ -83,10 +88,21 @@ namespace Facebook_Message_Analyzer.Data
         {
             m_dataSets[ds].Tables.Remove(tableName);
         }
-        
-        public void addRow(DataSets ds, string tableName, params object[] arr)
+
+        public void clearTable(DataSets ds, string tableName)
         {
-            m_dataSets[ds].Tables[tableName].Rows.Add(arr);
+            m_dataSets[ds].Tables[tableName].Clear();
+        }
+
+        public void addValues(DataSets ds, string tableName, Dictionary<string, object> values)
+        {
+            object[] dataRow = new object[values.Count];
+            foreach(KeyValuePair<string, object> pair in values)
+            {
+                int index = m_dataSets[ds].Tables[tableName].Columns.IndexOf(pair.Key);
+                dataRow[index] = pair.Value;
+            }
+            m_dataSets[ds].Tables[tableName].Rows.Add(dataRow);
         }
 
         public System.Collections.IEnumerator getData(DataSets ds, string tableName)

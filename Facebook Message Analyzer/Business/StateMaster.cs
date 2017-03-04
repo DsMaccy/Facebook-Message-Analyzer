@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,7 +28,6 @@ using System.IO;
 using System.Reflection;
 using GeneralInfoModule;
 using System.Threading;
-using System.Reflection;
 
 namespace Facebook_Message_Analyzer.Business
 {
@@ -39,7 +39,6 @@ namespace Facebook_Message_Analyzer.Business
         private static List<Type> m_activeModules = new List<Type>();
         private static Analyzer m_analyzer = null;
         private static Form m_analysisForm = null;
-
 
         /// <summary>
         /// The main entry point for the application.
@@ -184,23 +183,26 @@ namespace Facebook_Message_Analyzer.Business
             }
             else
             {
+                
                 // Get dll locations
-                dynamic value = ConfigManager.Manager.getValue(ConfigManager.DLL_LOCATIONS_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
-                if (value == null)
+                IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
+                if (iterator.MoveNext())
                 {
-                    value = "";
+                    string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
+                    values.Add("modulePath", value); 
                 }
-                values.Add("modulePath", value.ToString());
+
+                DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
+
 
                 // Get other general preferences
-                value = ConfigManager.Manager.getValue(ConfigManager.GENERIC_TABLE_NAME, ConfigManager.CACHE_DATA_TAG);
-                if (value == null)
+                iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
+                if (iterator.MoveNext())
                 {
-                    value = true;
+                    string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.CACHE_DATA_TAG] as string;
+                    values.Add(DataSetManager.CACHE_DATA_TAG, value);
                 }
-                values.Add(ConfigManager.CACHE_DATA_TAG, value.toString());
-
-                //
+                
                 return values;
             }
         }
@@ -210,16 +212,21 @@ namespace Facebook_Message_Analyzer.Business
             Dictionary<string, Type> modules = new Dictionary<string, Type>();
             modules.Add("General Info Module", typeof(GeneralInfoModule.GeneralInfo));
 
-            string dllPath = ConfigManager.Manager.getValue(ConfigManager.DLL_LOCATIONS_TABLE_NAME, ConfigManager.DLL_PATH_TAG);
-            if (dllPath != null)
+            IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
+            if (iterator.MoveNext())
             {
-                foreach (string file in Directory.EnumerateFiles(dllPath, "*.dll"))
+                string dllPath = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
+
+                if (dllPath != null)
                 {
-                    Assembly assembly = Assembly.LoadFrom("dllPath");
-                    if (assembly.GetType() is IModule)
+                    foreach (string file in Directory.EnumerateFiles(dllPath, "*.dll"))
                     {
-                        AppDomain.CurrentDomain.Load(assembly.GetName());
-                        modules.Add(assembly.GetName() + "Module", assembly.GetType());
+                        Assembly assembly = Assembly.LoadFrom("dllPath");
+                        if (assembly.GetType() is IModule)
+                        {
+                            AppDomain.CurrentDomain.Load(assembly.GetName());
+                            modules.Add(assembly.GetName() + "Module", assembly.GetType());
+                        }
                     }
                 }
             }
@@ -250,21 +257,22 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void setDllLocations(params string[] filePaths)
         {
-            ConfigManager.Manager.clearTable(ConfigManager.DLL_LOCATIONS_TABLE_NAME);
+            DataSetManager.Manager.clearTable(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
             for (int i = 0; i < filePaths.Length; i++)
             {
                 Dictionary<string, object> value = new Dictionary<string, object>();
-                value.Add(ConfigManager.DLL_PATH_TAG, filePaths[i]);
-                ConfigManager.Manager.addValues(ConfigManager.DLL_LOCATIONS_TABLE_NAME, value);
+                value.Add(DataSetManager.DLL_PATH_TAG, filePaths[i]);
+                DataSetManager.Manager.addValues(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME, value);
             }
         }
         public static void setGeneralTable(bool cacheData)
         {
             Dictionary<string, dynamic> preferences = new Dictionary<string, dynamic>();
-            preferences.Add(ConfigManager.CACHE_DATA_TAG, cacheData);
+            preferences.Add(DataSetManager.CACHE_DATA_TAG, cacheData);
 
-            ConfigManager.Manager.clearTable(ConfigManager.GENERIC_TABLE_NAME);
-            ConfigManager.Manager.addValues(ConfigManager.GENERIC_TABLE_NAME, preferences);
+            // TODO: Consider a better model for modifying this...
+            DataSetManager.Manager.clearTable(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
+            DataSetManager.Manager.addValues(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, preferences);
         }
 
         public static void Exit()
