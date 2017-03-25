@@ -14,18 +14,26 @@ namespace Facebook_Message_Analyzer.Business
         private int m_currentIndex;
         private bool m_queryOnline;
         private List<FacebookMessage> m_messageList;
+        private FacebookMessage m_latestSavedMessage;
 
         public ConversationIterator(string conversationID)
         {
             m_conversationID = conversationID;
             m_currentIndex = -1;
+
             m_queryOnline = true;
             m_messageList = new List<FacebookMessage>();
+            m_messageList = CachedMessageManager.Manager.getMessages(conversationID);
+            CachedMessageManager.Manager.addConversation(conversationID);
+
+            m_latestSavedMessage = CachedMessageManager.Manager.getLastestEntry(conversationID);
         }
         ~ConversationIterator()
         {
             FBQueryManager.Manager.Cleanup();
         }
+
+        // Special Considerations: Passing around a singleton object to multiple threads: inefficient architecture usage
         public bool hasNext()
         {
             if (m_currentIndex + 1 < m_messageList.Count)
@@ -34,18 +42,32 @@ namespace Facebook_Message_Analyzer.Business
             }
             else
             {
-                // TODO: Check to make sure database is working
                 if (m_queryOnline)
                 {
                     m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
                     string nextURL = FBQueryManager.Manager.getNextURL(m_conversationID);
-                    CachedMessagesManager.Manager.saveMessages(m_conversationID, m_messageList, nextURL);
+                    // Works because m_messageList is in time-sorted order
+                    if (m_messageList[0].id == m_latestSavedMessage.id)
+                    {
+                        m_queryOnline = false;
+                    }
+                    else
+                    {
+
+                        System.Threading.ParameterizedThreadStart paramThreadDelegate =
+                            new System.Threading.ParameterizedThreadStart((object manager) =>
+                            {
+                                ((CachedMessageManager)manager).saveMessages(m_conversationID, m_messageList, nextURL);
+                            }
+                        );
+                        System.Threading.Thread task = new System.Threading.Thread(paramThreadDelegate);
+                        task.Start(CachedMessageManager.Manager);
+                    }
                 }
                 else
                 {
-                    m_messageList = CachedMessagesManager.Manager.getMessages(m_conversationID);
-                    string nextURL = CachedMessagesManager.Manager.getNextURL(m_conversationID);
-                    m_queryOnline = false;
+                    m_messageList = CachedMessageManager.Manager.getMessages(m_conversationID);
+                    string nextURL = CachedMessageManager.Manager.getNextURL(m_conversationID);
                     FBQueryManager.Manager.setNextURL(nextURL);
                 }
                 m_currentIndex = -1;

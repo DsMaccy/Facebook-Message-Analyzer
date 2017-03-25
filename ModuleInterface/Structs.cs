@@ -69,7 +69,7 @@ namespace ModuleInterface
     }
     public struct FacebookMessage
     {
-        public string id;
+        public int id;
         public string message;
         public User sender;
         public DateTime timeSent;
@@ -97,10 +97,19 @@ namespace ModuleInterface
                 switch (property)
                 {
                     case "message":
-                        message= (string)value;
+                        if (((object)value).GetType() == typeof(System.DBNull))
+                        {
+                            message = null;
+                        }
+                        else
+                        {
+                            message = (string)value;
+                        }
+
+                        
                         break;
                     case "id":
-                        id = (string)value;
+                        id = (int)value;
                         break;
                     case "sender":
                         sender = (User)value;
@@ -139,7 +148,7 @@ namespace ModuleInterface
         }
         public override int GetHashCode()
         {
-            return Int32.Parse(id);
+            return id;
         }
     }
 }

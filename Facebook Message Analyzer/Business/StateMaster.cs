@@ -1,8 +1,6 @@
 ﻿/* TODO
+ * ConversationIterator -- how to iterate through saved values vs. querying online
  * Plan out Databases
- * CachedMessagesManager querying and storing information
- * FB Query Message Count cap at 28 ?????
- * ConversationIterator hasNext and next
  * Implmement Parallel Analysis
  * Clean up IModule -- Probably need to wait until profanity module is created
  * Profanity Module 
@@ -52,6 +50,7 @@ namespace Facebook_Message_Analyzer.Business
             do
             {
                 m_restart = false;
+
                 // Set the Active Form to the welcome screen
                 m_activeForm = new WelcomeForm();
                 Application.Run(m_activeForm);
@@ -257,22 +256,21 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void setDllLocations(params string[] filePaths)
         {
-            DataSetManager.Manager.clearTable(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
             for (int i = 0; i < filePaths.Length; i++)
             {
                 Dictionary<string, object> value = new Dictionary<string, object>();
                 value.Add(DataSetManager.DLL_PATH_TAG, filePaths[i]);
-                DataSetManager.Manager.addValues(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME, value);
+                DataSetManager.Manager.setValues(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME, value);
             }
+            DataSetManager.Manager.saveDataSet(DataSets.Config);
         }
         public static void setGeneralTable(bool cacheData)
         {
             Dictionary<string, dynamic> preferences = new Dictionary<string, dynamic>();
             preferences.Add(DataSetManager.CACHE_DATA_TAG, cacheData);
-
-            // TODO: Consider a better model for modifying this...
-            DataSetManager.Manager.clearTable(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
-            DataSetManager.Manager.addValues(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, preferences);
+            
+            DataSetManager.Manager.setValues(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, preferences);
+            DataSetManager.Manager.saveDataSet(DataSets.Config);
         }
 
         public static void Exit()

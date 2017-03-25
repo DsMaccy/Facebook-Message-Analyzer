@@ -253,7 +253,7 @@ namespace Facebook_Message_Analyzer.Data
                     FacebookMessage fm = new FacebookMessage();
 
                     string longID = m_messages.data[i].id as string;
-                    fm.id = longID.Substring(longID.IndexOf('_') + 1);
+                    fm.id = Int32.Parse(longID.Substring(longID.IndexOf('_') + 1));
 
                     User sender = new User();
                     sender.id = m_messages.data[i].from.id;

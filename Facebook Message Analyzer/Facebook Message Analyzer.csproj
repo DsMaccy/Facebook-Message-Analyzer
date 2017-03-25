@@ -77,6 +77,7 @@
     <Compile Include="Business\Analyzer.cs" />
     <Compile Include="Business\ConversationIterator.cs" />
     <Compile Include="Business\ErrorMessages.cs" />
+    <Compile Include="Data\CachedMessageManager.cs" />
     <Compile Include="Data\CachedMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

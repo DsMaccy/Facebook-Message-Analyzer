@@ -35,8 +35,6 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Faceb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Data\ConfigDatabase.mdf
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Data\ConfigDatabase_log.ldf
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AnalyzingForm.resources
@@ -49,8 +47,6 @@ F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
 F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Data\CachedMessages.mdf
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Data\CachedMessages_log.ldf
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.ResolveComReference.cache
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.ResolveComReference.cache
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Data\CachedMessages.mdf

@@ -137,5 +137,13 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             Business.StateMaster.logout();
         }
+
+        private void conversations_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (int)Keys.Enter)
+            {
+                analyze_click(sender, e);
+            }
+        }
     }
 }

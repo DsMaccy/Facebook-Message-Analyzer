@@ -79,6 +79,7 @@
             this.conversations.Size = new System.Drawing.Size(523, 288);
             this.conversations.TabIndex = 2;
             this.conversations.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.analyze_click);
+            this.conversations.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.conversations_KeyPress);
             // 
             // refresh
             // 

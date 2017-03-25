@@ -20,7 +20,7 @@ namespace Facebook_Message_Analyzer.Data {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("CachedMessaes")]
+    [global::System.Xml.Serialization.XmlRootAttribute("CachedMessages")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class CachedMessages : global::System.Data.DataSet {
         
@@ -175,9 +175,9 @@ namespace Facebook_Message_Analyzer.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "CachedMessaes";
+            this.DataSetName = "CachedMessages";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/CachedMessaes.xsd";
+            this.Namespace = "http://tempuri.org/CachedMessages.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         }
