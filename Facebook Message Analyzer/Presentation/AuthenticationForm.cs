@@ -55,6 +55,17 @@ namespace Facebook_Message_Analyzer.Presentation
             {
                 this.Close();
             }
+            /*
+            else if (e.Url.AbsoluteUri != "https://www.facebook.com/home.php")
+            {
+                Business.StateMaster.logout();
+            }*/
+            // Unknown location
+            /*
+            else if (e.Url.AbsoluteUri != m_queryURL)
+            {
+                Business.StateMaster.logout();
+            }*/
         }
 
         protected override void OnShown(EventArgs e)

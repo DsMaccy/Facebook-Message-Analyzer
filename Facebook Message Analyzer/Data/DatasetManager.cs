@@ -78,7 +78,7 @@ namespace Facebook_Message_Analyzer.Data
             foreach (KeyValuePair<DataSets, string> kvPair in m_savePaths)
             {
                 // TODO: Test that this filename is correct (BackSlashes and all)
-                string filename = PATH + kvPair.Key;
+                string filename = PATH + kvPair.Value;
                 if (File.Exists(filename))
                 {
                     m_dataSets[kvPair.Key].ReadXml(filename);
@@ -90,8 +90,9 @@ namespace Facebook_Message_Analyzer.Data
 
         #region Data Access Methods
 
-        public void addTable(DataSets ds, string tableName, Dictionary<string, Type> columns, string primaryKey = null)
+        public void addTable(DataSets ds, string tableName, Dictionary<string, Type> columns, params string[] primaryKeys)
         {
+            
             if (m_dataSets[ds].Tables.Contains(tableName))
             {
                 throw new AlreadyInitializedError("Table already exists in this data set");
@@ -104,11 +105,14 @@ namespace Facebook_Message_Analyzer.Data
                 foreach (KeyValuePair<string, Type> kvPair in columns)
                 {
                     m_dataSets[ds].Tables[tableName].Columns.Add(kvPair.Key, kvPair.Value);
-                    if (kvPair.Key == primaryKey)
-                    {
-                        m_dataSets[ds].Tables[tableName].PrimaryKey = new DataColumn[1] { m_dataSets[ds].Tables[tableName].Columns[kvPair.Key] };
-                    }
                 }
+
+                DataColumn[] primaryKeyColumnsList = new DataColumn[primaryKeys.Length];
+                for (int index = 0; index < primaryKeys.Length; index++)
+                {
+                    primaryKeyColumnsList[index] = m_dataSets[ds].Tables[tableName].Columns[primaryKeys[index]];
+                }
+                m_dataSets[ds].Tables[tableName].PrimaryKey = primaryKeyColumnsList;
             }
             finally
             {
@@ -142,7 +146,26 @@ namespace Facebook_Message_Analyzer.Data
             }
         }
 
-        public void addValues(DataSets ds, string tableName, Dictionary<string, object> values)
+        public void addValuesToIndex(DataSets ds, string tableName, Dictionary<string, object> values, int saveIndex)
+        {
+            DataRow dataRow = m_dataSets[ds].Tables[tableName].NewRow();
+            foreach (KeyValuePair<string, object> pair in values)
+            {
+                dataRow[pair.Key] = pair.Value;
+            }
+
+            try
+            {
+                m_writeSems[ds].WaitOne();
+                m_dataSets[ds].Tables[tableName].Rows.Add(dataRow);
+            }
+            finally
+            {
+                m_writeSems[ds].Release();
+            }
+        }
+
+        public void addValuesToEnd(DataSets ds, string tableName, Dictionary<string, object> values)
         {
             object[] dataRow = new object[values.Count];
             foreach (KeyValuePair<string, object> pair in values)
@@ -172,7 +195,7 @@ namespace Facebook_Message_Analyzer.Data
             DataRow row = m_dataSets[ds].Tables[tableName].Rows.Find(values[primaryKey]);
             if (row == null)
             {
-                addValues(ds, tableName, values);
+                addValuesToEnd(ds, tableName, values);
                 return true;
             }
 
@@ -191,6 +214,19 @@ namespace Facebook_Message_Analyzer.Data
             }
         }
 
+        public void removeValues(DataSets ds, string tableName, Dictionary<string, object> primaryKeyValues)
+        {
+            DataTable table = m_dataSets[ds].Tables[tableName];
+            object[] lookup = new object[primaryKeyValues.Count];
+            foreach (KeyValuePair<string, object> pair in primaryKeyValues)
+            {
+                lookup[table.Columns.IndexOf(pair.Key)] = pair.Value;
+            }
+
+            DataRow rowToRemove = table.Rows.Find(lookup);
+            table.Rows.Remove(rowToRemove);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -204,7 +240,8 @@ namespace Facebook_Message_Analyzer.Data
             {
                 return null;
             }
-            return table.Rows.GetEnumerator();
+            DataRow[] dataRows = table.Select("", "id");
+            return dataRows.GetEnumerator(); //table.Rows.GetEnumerator();
         }
 
         /// <summary>

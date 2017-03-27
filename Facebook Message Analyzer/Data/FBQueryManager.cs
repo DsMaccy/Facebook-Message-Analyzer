@@ -49,7 +49,7 @@ namespace Facebook_Message_Analyzer.Data
             return m_next;
         }
 
-        internal void setNextURL(string nextURL)
+        internal void setNextURL(string m_conversationID, string nextURL)
         {
             m_next = nextURL;
         }

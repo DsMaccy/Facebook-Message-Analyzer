@@ -65,21 +65,21 @@ namespace DataSetTester
                     rowData["c2"] = "test1";
                     rowData["c3"] = 1000 * i;
                     rowData["c4"] = 0.01 * i;
-                    DataSetManager.Manager.addValues(DataSets.Config, testTableName, rowData);
+                    DataSetManager.Manager.addValuesToEnd(DataSets.Config, testTableName, rowData);
 
                     rowData = new Dictionary<string, object>();
                     rowData["c1"] = 2*i;
                     rowData["c2"] = "test2";
                     rowData["c3"] = 2000 * i;
                     rowData["c4"] = 0.02 * i;
-                    DataSetManager.Manager.addValues(DataSets.Messages, testTableName, rowData);
+                    DataSetManager.Manager.addValuesToEnd(DataSets.Messages, testTableName, rowData);
                 }
                 rowData = new Dictionary<string, object>();
                 rowData["c1"] = 2 * TRIALS;
                 rowData["c2"] = "test2";
                 rowData["c3"] = 2000 * TRIALS;
                 rowData["c4"] = 0.02 * TRIALS;
-                DataSetManager.Manager.addValues(DataSets.Messages, testTableName, rowData);
+                DataSetManager.Manager.addValuesToEnd(DataSets.Messages, testTableName, rowData);
 
                 IEnumerator ienum = DataSetManager.Manager.getData(DataSets.Config, testTableName);
                 int count = 0;
@@ -173,8 +173,8 @@ namespace DataSetTester
                     rowData["c2"] = "test1";
                     rowData["c3"] = 1000 * i;
                     rowData["c4"] = 0.01 * i;
-                    DataSetManager.Manager.addValues(DataSets.Config, testTableName, rowData);
-                    DataSetManager.Manager.addValues(DataSets.Messages, testTableName, rowData);
+                    DataSetManager.Manager.addValuesToEnd(DataSets.Config, testTableName, rowData);
+                    DataSetManager.Manager.addValuesToEnd(DataSets.Messages, testTableName, rowData);
                 }
 
                 // Check preliminary values before modifying

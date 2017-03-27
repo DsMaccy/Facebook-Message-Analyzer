@@ -98,28 +98,30 @@ namespace Facebook_Message_Analyzer.Business
             List<Thread> threads = new List<Thread>();
             try
             {
-                m_sem.WaitOne();
-
                 ConversationIterator messages = new ConversationIterator(m_conversationID);
+                
                 if (!module.canParallelize())
                 {
-                    while (messages.hasNext())
+                    m_sem.WaitOne();
+                    foreach (FacebookMessage message in messages)
                     {
-                        module.analyze(messages.next());
+                        module.analyze(message);
                     }
+                    m_sem.Release(1);
                 }
                 else
                 {
-                    // TODO: Change this to use multiple threads
-                    while (messages.hasNext())
+                    ParallelOptions po = new ParallelOptions();
+                    int maxParallelism = po.MaxDegreeOfParallelism;     // TODO: Check this value and see what it's about...
+                    Parallel.ForEach<FacebookMessage>(messages,
+                        new Action<FacebookMessage> ((FacebookMessage message) =>
                     {
-                        module.analyze(messages.next());
-                    }
-                    // TODO: Implement Parallel Analysis
+                        module.parallelAnalyze(message);
+                    }));
                 }
 
                 m_counterSem.Release(1);
-                m_sem.Release(1);
+                
             }
             catch(System.Threading.ThreadInterruptedException)
             {

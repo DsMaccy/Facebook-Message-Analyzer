@@ -1,7 +1,13 @@
 ﻿/* TODO
- * ConversationIterator -- how to iterate through saved values vs. querying online
+ * ConversationIterator:
+ *      Cases to Consider:
+ *          1) GOOD: Messages uncached
+ *          2) GOOD: Messages fully cached
+ *          3) Messages partially cached, no new messages
+ *          4) Message fully cached, but new messages present
+ *          5) Messages partially cached AND new messages present
  * Plan out Databases
- * Implmement Parallel Analysis
+ * Consider Making DataSetManager a Monitor or at least making it thread safe
  * Clean up IModule -- Probably need to wait until profanity module is created
  * Profanity Module 
  * Points Module ...?
@@ -182,7 +188,6 @@ namespace Facebook_Message_Analyzer.Business
             }
             else
             {
-                
                 // Get dll locations
                 IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
                 if (iterator.MoveNext())
