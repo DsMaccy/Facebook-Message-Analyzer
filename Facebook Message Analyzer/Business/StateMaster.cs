@@ -1,4 +1,5 @@
 ﻿/* TODO
+ * Test to make sure data sets can be loaded between users
  * ConversationIterator:
  *      Cases to Consider:
  *          1) GOOD: Messages uncached
@@ -7,7 +8,6 @@
  *          4) Message fully cached, but new messages present
  *          5) Messages partially cached AND new messages present
  * Plan out Databases
- * Consider Making DataSetManager a Monitor or at least making it thread safe
  * Clean up IModule -- Probably need to wait until profanity module is created
  * Profanity Module 
  * Points Module ...?
@@ -77,6 +77,7 @@ namespace Facebook_Message_Analyzer.Business
             loginScreen.ShowDialog();
             if (m_loggedIn)
             {
+                DataSetManager.Manager.loadFiles();
                 m_activeForm.Close();
             }
         }
@@ -105,6 +106,7 @@ namespace Facebook_Message_Analyzer.Business
             m_loggedIn = false;
             m_activeForm.Close();
             m_restart = true;
+            FBQueryManager.Manager.setToken(null);
         }
 
         public static string getLogoutRedirectUrl()
@@ -190,7 +192,7 @@ namespace Facebook_Message_Analyzer.Business
             {
                 // Get dll locations
                 IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
-                if (iterator.MoveNext())
+                if (iterator != null && iterator.MoveNext())
                 {
                     string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
                     values.Add("modulePath", value); 
@@ -198,10 +200,9 @@ namespace Facebook_Message_Analyzer.Business
 
                 DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
 
-
                 // Get other general preferences
                 iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
-                if (iterator.MoveNext())
+                if (iterator != null && iterator.MoveNext())
                 {
                     string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.CACHE_DATA_TAG] as string;
                     values.Add(DataSetManager.CACHE_DATA_TAG, value);
@@ -217,7 +218,7 @@ namespace Facebook_Message_Analyzer.Business
             modules.Add("General Info Module", typeof(GeneralInfoModule.GeneralInfo));
 
             IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
-            if (iterator.MoveNext())
+            if (iterator != null && iterator.MoveNext())
             {
                 string dllPath = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
 

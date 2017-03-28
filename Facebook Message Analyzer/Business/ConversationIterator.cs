@@ -9,7 +9,6 @@ using Facebook_Message_Analyzer.Data;
 
 namespace Facebook_Message_Analyzer.Business
 {
-    // TODO: User the Iterator State to determine how to handle the HasNext operator
     class ConversationIterator : IEnumerable<FacebookMessage>
     {
         private class ConversationIteratorHelper : IEnumerator<FacebookMessage>

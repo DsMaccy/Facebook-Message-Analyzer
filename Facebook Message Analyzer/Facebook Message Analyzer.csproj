@@ -83,6 +83,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CachedMessages.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Data\Configurations.cs">
+      <DependentUpon>Configurations.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Data\Configurations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

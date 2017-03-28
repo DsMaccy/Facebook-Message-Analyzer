@@ -17,6 +17,9 @@ namespace Facebook_Message_Analyzer.Data
         public AlreadyInitializedError(string message) : base(message) { }
     }
 
+    /// <summary>
+    /// Thread-Safe DataSet Management Class
+    /// </summary>
     public class DataSetManager
     {
         #region Singleton
@@ -74,18 +77,50 @@ namespace Facebook_Message_Analyzer.Data
             m_dataSets = new Dictionary<DataSets, DataSet>();
             m_dataSets[DataSets.Config] = new Configurations();
             m_dataSets[DataSets.Messages] = new CachedMessages();
-
-            foreach (KeyValuePair<DataSets, string> kvPair in m_savePaths)
-            {
-                // TODO: Test that this filename is correct (BackSlashes and all)
-                string filename = PATH + kvPair.Value;
-                if (File.Exists(filename))
-                {
-                    m_dataSets[kvPair.Key].ReadXml(filename);
-                }
-            }
+            //loadFiles();
+            
         }
 
+        #endregion
+
+        #region FileStorage and Access
+
+        internal void loadFiles()
+        {
+            
+            foreach (KeyValuePair<DataSets, string> kvPair in m_savePaths)
+            {
+                try
+                {
+                    m_writeSems[kvPair.Key].WaitOne();
+                    // TODO: Test that this filename is correct (BackSlashes and all)
+                    string filename = PATH + FBQueryManager.Manager.getMe() + "\\" + kvPair.Value;
+                    if (File.Exists(filename))
+                    {
+                        m_dataSets[kvPair.Key].ReadXml(filename);
+                    }
+                }
+                finally
+                {
+                    m_writeSems[kvPair.Key].Release();
+                }
+            }
+            
+        }
+
+        public void saveDataSet(DataSets ds)
+        {
+            try
+            {
+                m_writeSems[ds].WaitOne();
+                Directory.CreateDirectory(PATH + FBQueryManager.Manager.getMe());
+                m_dataSets[ds].WriteXml(PATH + FBQueryManager.Manager.getMe() + "\\" + m_savePaths[ds], XmlWriteMode.WriteSchema);
+            }
+            finally
+            {
+                m_writeSems[ds].Release();
+            }
+        }
         #endregion
 
         #region Data Access Methods
@@ -223,8 +258,16 @@ namespace Facebook_Message_Analyzer.Data
                 lookup[table.Columns.IndexOf(pair.Key)] = pair.Value;
             }
 
-            DataRow rowToRemove = table.Rows.Find(lookup);
-            table.Rows.Remove(rowToRemove);
+            try
+            {
+                m_writeSems[ds].WaitOne();
+                DataRow rowToRemove = table.Rows.Find(lookup);
+                table.Rows.Remove(rowToRemove);
+            }
+            finally
+            {
+                m_writeSems[ds].Release();
+            }
         }
 
         /// <summary>
@@ -254,14 +297,6 @@ namespace Facebook_Message_Analyzer.Data
         public DataRow getData(DataSets ds, string tableName, string primaryKeyLookupValue)
         {
             return m_dataSets[ds].Tables[tableName].Rows.Find(primaryKeyLookupValue);
-        }
-
-        public void saveDataSet(DataSets ds)
-        {
-            // Guard with semaphore
-            m_writeSems[ds].WaitOne();
-            m_dataSets[ds].WriteXml(PATH + m_savePaths[ds], XmlWriteMode.WriteSchema);
-            m_writeSems[ds].Release();
         }
 
         #endregion

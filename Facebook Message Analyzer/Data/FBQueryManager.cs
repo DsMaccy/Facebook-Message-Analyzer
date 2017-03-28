@@ -28,7 +28,7 @@ namespace Facebook_Message_Analyzer.Data
         private Facebook.FacebookClient m_fbClient;
         private bool m_apiExceededError;
         private string m_token;
-        private dynamic m_userInfo;
+        private string m_userInfo;
         private dynamic m_conversations;
         private dynamic m_messages;
         private string m_next;
@@ -42,6 +42,12 @@ namespace Facebook_Message_Analyzer.Data
             m_messages = null;
             m_next = "";
             m_apiExceededError = false;
+        }
+
+        internal string getMe()
+        {
+            // Use m_userInfo dynamic json object
+            return m_userInfo;
         }
 
         internal string getNextURL(string m_conversationID)
@@ -123,11 +129,24 @@ namespace Facebook_Message_Analyzer.Data
         
         public void setToken(string token)
         {
-            m_token = token;
-            m_fbClient = new Facebook.FacebookClient(m_token);
+            if (m_token != null && m_token != "")
+            {
+                DataSetManager.Manager.saveDataSet(DataSets.Config);
+                DataSetManager.Manager.saveDataSet(DataSets.Messages);
+            }
 
-            m_userInfo = m_fbClient.Get("me");
-            getConversations();
+            m_token = token;
+
+            if (token != null)
+            {    
+                m_fbClient = new Facebook.FacebookClient(m_token);
+                m_userInfo = ((dynamic)m_fbClient.Get("me")).id;
+                getConversations();
+            }
+            else
+            {
+                m_userInfo = null;
+            }
         }
 
         public dynamic getConversations()
