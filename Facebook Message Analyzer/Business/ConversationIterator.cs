@@ -29,15 +29,17 @@ namespace Facebook_Message_Analyzer.Business
             private List<FacebookMessage> m_messageList;
             private List<FacebookMessage> m_cachedMessageList;
             private Dictionary<int, string> m_queryLinks;
+            private bool m_saveMessages;
 
-            public ConversationIteratorHelper(string conversationID)
+            public ConversationIteratorHelper(string conversationID, bool saveMessages)
             {
-                constructorHelper(conversationID);
+                constructorHelper(conversationID, saveMessages);
             }
-            private void constructorHelper(string conversationID)
+            private void constructorHelper(string conversationID, bool saveMessages)
             {
                 m_conversationID = conversationID;
                 m_saveCount = 0;
+                m_saveMessages = saveMessages;
 
                 CachedMessageManager.Manager.addConversation(conversationID);
 
@@ -53,6 +55,11 @@ namespace Facebook_Message_Analyzer.Business
             #region Private Helper Methods
             private void saveMessages(List<FacebookMessage> messagesToSave)
             {
+                if (!m_saveMessages)
+                {
+                    return;
+                }
+                
                 System.Threading.ParameterizedThreadStart paramThreadDelegate =
                     new System.Threading.ParameterizedThreadStart((object customObj) =>
                     {
@@ -187,7 +194,7 @@ namespace Facebook_Message_Analyzer.Business
             void IEnumerator.Reset()
             {
                 ((IDisposable)this).Dispose();
-                constructorHelper(m_conversationID);
+                constructorHelper(m_conversationID, m_saveMessages);
             }
 
             #endregion
@@ -200,17 +207,21 @@ namespace Facebook_Message_Analyzer.Business
             #endregion
         }
 
+        #region Constructor, Destructor and Instance Variables
+
         private ConversationIteratorHelper m_iterator;
 
-        public ConversationIterator(string conversationID)
+        public ConversationIterator(string conversationID, bool saveMessages)
         {
-            m_iterator = new ConversationIteratorHelper(conversationID);
+            m_iterator = new ConversationIteratorHelper(conversationID, saveMessages);
         }
 
         ~ConversationIterator()
         {
             ((IDisposable)m_iterator).Dispose();
         }
+
+        #endregion
 
         #region IEnumerable Interface Implementation
 

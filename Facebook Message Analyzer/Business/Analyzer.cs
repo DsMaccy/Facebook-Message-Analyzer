@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections;
+using Facebook_Message_Analyzer.Data;
+using System.Data;
 using System.Threading.Tasks;
 using System.Threading;
 using ModuleInterface;
@@ -98,7 +99,16 @@ namespace Facebook_Message_Analyzer.Business
             List<Thread> threads = new List<Thread>();
             try
             {
-                ConversationIterator messages = new ConversationIterator(m_conversationID);
+                IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
+                bool saveMessages = true;
+                if (iterator != null)
+                {
+                    iterator.MoveNext();
+                    DataRow dr = iterator.Current as DataRow;
+                    saveMessages = (bool)dr[DataSetManager.CACHE_DATA_TAG];
+                }
+                
+                ConversationIterator messages = new ConversationIterator(m_conversationID, saveMessages);
                 
                 if (!module.canParallelize())
                 {

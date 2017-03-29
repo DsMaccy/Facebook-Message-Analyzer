@@ -1,4 +1,11 @@
 ﻿/* TODO
+ * Create Additional Modules:
+ *      General Module Preferences Form
+ *      Test Module for analysis counting
+ * Properties:
+ *      Handle Switching between various Property types
+ *      Fix Dirty Metric (when Apply is enabled)
+ *          Consider making dirty module preferences red
  * Test to make sure data sets can be loaded between users
  * ConversationIterator:
  *      Cases to Consider:
@@ -7,24 +14,17 @@
  *          3) Messages partially cached, no new messages
  *          4) Message fully cached, but new messages present
  *          5) Messages partially cached AND new messages present
- * Plan out Databases
- * Clean up IModule -- Probably need to wait until profanity module is created
- * Profanity Module 
- * Points Module ...?
- * DLL handling:
- *      1) Parse Dlls in path OR
- *      2) have the general preferences allow for adding the dll's directly (Involves storing DLL values in separate database) OR
- *      3) Have DLLs be handled by installer (pretty much only reason an installer is needed
- * Create installer...? -- idea 3 for "DLL handling"
+ * Create installer that will set registry values and download appropriate dll files
+ * 
+ * Create Additional Modules
+ *      Profanity Module
+ *      Points Module ...?
  */
 
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Facebook_Message_Analyzer.Business;
 using Facebook_Message_Analyzer.Presentation;
 using Facebook_Message_Analyzer.Data;
 using ModuleInterface;
@@ -32,6 +32,7 @@ using System.IO;
 using System.Reflection;
 using GeneralInfoModule;
 using System.Threading;
+using System.Data;
 
 namespace Facebook_Message_Analyzer.Business
 {
@@ -43,6 +44,8 @@ namespace Facebook_Message_Analyzer.Business
         private static List<Type> m_activeModules = new List<Type>();
         private static Analyzer m_analyzer = null;
         private static Form m_analysisForm = null;
+        private static string m_dllLocation = "";
+        private static string m_path = null;
 
         /// <summary>
         /// The main entry point for the application.
@@ -52,6 +55,11 @@ namespace Facebook_Message_Analyzer.Business
         {
             Application.EnableVisualStyles();
             m_activeModules.Add(typeof(GeneralInfo));
+            getPath();
+            m_dllLocation = Microsoft.Win32.Registry.GetValue(
+                Microsoft.Win32.Registry.CurrentUser.Name + "\\SOFTWARE\\Facebook Message Analyzer", 
+                "library path", 
+                (m_path + "libraries" + "\\")) as string;
 
             do
             {
@@ -71,6 +79,8 @@ namespace Facebook_Message_Analyzer.Business
             } while (m_restart);
         }
 
+        #region Form Activation Methods
+
         public static void login()
         {
             AuthenticationForm loginScreen = new AuthenticationForm(FBQueryManager.Manager.getLoginURL());
@@ -79,20 +89,6 @@ namespace Facebook_Message_Analyzer.Business
             {
                 DataSetManager.Manager.loadFiles();
                 m_activeForm.Close();
-            }
-        }
-
-        public static void setOAuthToken(string token)
-        {
-            if (token != null && token != "")
-            {
-                FBQueryManager.Manager.setToken(token);
-                //m_activeForm.Close();
-                m_loggedIn = true;
-            }
-            else
-            {
-                m_loggedIn = false;
             }
         }
 
@@ -107,11 +103,6 @@ namespace Facebook_Message_Analyzer.Business
             m_activeForm.Close();
             m_restart = true;
             FBQueryManager.Manager.setToken(null);
-        }
-
-        public static string getLogoutRedirectUrl()
-        {
-            return Data.FBQueryManager.LOGOUT_URL;
         }
 
         public static void selectAnalysisModules()
@@ -154,7 +145,7 @@ namespace Facebook_Message_Analyzer.Business
                 }
             } while (repeat);
         }
-        
+
         public static void displayAnalysisResult(Form form)
         {
             m_activeForm.Invoke(new MethodInvoker(() => { form.Show(); }));
@@ -172,19 +163,69 @@ namespace Facebook_Message_Analyzer.Business
             mpf.ShowDialog();
         }
 
+        public static void Exit()
+        {
+            m_activeForm.Close();
+            m_activeForm = null;
+        }
+
+        #endregion
+
+        #region Transfer Methods
+
+        public static void setOAuthToken(string token)
+        {
+            if (token != null && token != "")
+            {
+                FBQueryManager.Manager.setToken(token);
+                //m_activeForm.Close();
+                m_loggedIn = true;
+            }
+            else
+            {
+                m_loggedIn = false;
+            }
+        }
+
+        public static string getLogoutRedirectUrl()
+        {
+            return Data.FBQueryManager.LOGOUT_URL;
+        }
+
         public static Dictionary<string, string> getPreferenceData(string tag)
         {
             Dictionary<string, string> values = new Dictionary<string, string>();
             if (tag != "General")
             {
                 Dictionary<string, Type> modules = getModules();
-                Type[] types = new Type[0];
-                object[] parameters = new object[0];
+
+                Type[] types = new Type[0]; object[] parameters = new object[0];
                 IModule moduleObject = (modules[tag]).GetConstructor(types).Invoke(parameters) as IModule;
-                Dictionary<string, dynamic> preferenceValues = moduleObject.getSavedProperties();
-                foreach (KeyValuePair<string, dynamic> kvPair in preferenceValues)
+
+                if (moduleObject.preferencesAvailable())
                 {
-                    values[kvPair.Key] = kvPair.Value.ToString();
+                    IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, tag);
+                    if (iterator == null)
+                    {
+                        Control preferenceControl = moduleObject.getPreferenceControl();
+
+                        Dictionary<string, object> mappings = getControlValues(preferenceControl.Controls);
+                        foreach (KeyValuePair<string, object> mapping in mappings)
+                        {
+                            values.Add(mapping.Key, mapping.Value.ToString());
+                        }
+                    }
+                    else
+                    {
+                        while (iterator.MoveNext())
+                        {
+                            DataRow dr = iterator.Current as DataRow;
+                            foreach (DataColumn column in dr.Table.Columns)
+                            {
+                                values.Add(column.ColumnName, dr[column].ToString());
+                            }
+                        }
+                    }
                 }
                 return values;
             }
@@ -194,7 +235,7 @@ namespace Facebook_Message_Analyzer.Business
                 IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
                 if (iterator != null && iterator.MoveNext())
                 {
-                    string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
+                    string value = ((DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
                     values.Add("modulePath", value); 
                 }
 
@@ -204,8 +245,27 @@ namespace Facebook_Message_Analyzer.Business
                 iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
                 if (iterator != null && iterator.MoveNext())
                 {
-                    string value = ((System.Data.DataRow)iterator.Current)[DataSetManager.CACHE_DATA_TAG] as string;
+                    string value = ((DataRow)iterator.Current)[DataSetManager.CACHE_DATA_TAG].ToString();
                     values.Add(DataSetManager.CACHE_DATA_TAG, value);
+                }
+                else
+                {
+                    GeneralPreferences gp = new GeneralPreferences();
+
+                    Dictionary<string, object> databaseValues = getControlValues(gp.Controls);
+                    Dictionary<string, Type> columns = new Dictionary<string, Type>();
+                    foreach (KeyValuePair<string, object> kv in databaseValues)
+                    {
+                        columns.Add(kv.Key, kv.Value.GetType());
+                    }
+
+                    DataSetManager.Manager.addTable(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, columns);
+                    DataSetManager.Manager.addValuesToEnd(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, databaseValues);
+
+                    foreach (KeyValuePair<string, object> kv in databaseValues)
+                    {
+                        values.Add(kv.Key, kv.Value.ToString());
+                    }
                 }
                 
                 return values;
@@ -220,7 +280,7 @@ namespace Facebook_Message_Analyzer.Business
             IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME);
             if (iterator != null && iterator.MoveNext())
             {
-                string dllPath = ((System.Data.DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
+                string dllPath = ((DataRow)iterator.Current)[DataSetManager.DLL_PATH_TAG] as string;
 
                 if (dllPath != null)
                 {
@@ -260,29 +320,69 @@ namespace Facebook_Message_Analyzer.Business
             }
         }
 
-        public static void setDllLocations(params string[] filePaths)
+        public static string getPath()
         {
-            for (int i = 0; i < filePaths.Length; i++)
+            if (m_path == null)
             {
-                Dictionary<string, object> value = new Dictionary<string, object>();
-                value.Add(DataSetManager.DLL_PATH_TAG, filePaths[i]);
-                DataSetManager.Manager.setValues(DataSets.Config, DataSetManager.DLL_LOCATIONS_TABLE_NAME, value);
+                System.Reflection.Assembly assemblyObj = System.Reflection.Assembly.GetExecutingAssembly();
+
+                System.Reflection.AssemblyCompanyAttribute companyAttr = System.Reflection.AssemblyCompanyAttribute.GetCustomAttribute(assemblyObj, typeof(System.Reflection.AssemblyCompanyAttribute)) as System.Reflection.AssemblyCompanyAttribute;
+                string companyName = companyAttr.Company;
+
+                System.Reflection.AssemblyTitleAttribute titleAttr = System.Reflection.AssemblyTitleAttribute.GetCustomAttribute(assemblyObj, typeof(System.Reflection.AssemblyTitleAttribute)) as System.Reflection.AssemblyTitleAttribute;
+                string programTitle = titleAttr.Title;
+
+                // ... AppData/Local/Solace Inc./Facebook Message Analyzer/
+                m_path = Microsoft.Win32.Registry.GetValue(
+                    Microsoft.Win32.Registry.CurrentUser.Name + "\\SOFTWARE\\Facebook Message Analyzer", 
+                    "data path", 
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\" + companyName + "\\" + programTitle + "\\"
+                ) as string;
             }
-            DataSetManager.Manager.saveDataSet(DataSets.Config);
+
+            return m_path;
         }
-        public static void setGeneralTable(bool cacheData)
+
+        public static void setCacheData(bool shouldCache)
         {
-            Dictionary<string, dynamic> preferences = new Dictionary<string, dynamic>();
-            preferences.Add(DataSetManager.CACHE_DATA_TAG, cacheData);
+            Dictionary<string, object> values = new Dictionary<string, object>();
+
+            IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
+            iterator.MoveNext();
+            DataRow dr = iterator.Current as DataRow;
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                values[column.ColumnName] = dr[column];
+            }
+
+            values[DataSetManager.CACHE_DATA_TAG] = shouldCache;
             
-            DataSetManager.Manager.setValues(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, preferences);
+            DataSetManager.Manager.clearTable(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
+            DataSetManager.Manager.addValuesToEnd(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME, values);
             DataSetManager.Manager.saveDataSet(DataSets.Config);
         }
 
-        public static void Exit()
+        #endregion
+
+        #region Helper Methods
+
+        private static Dictionary<string, object> getControlValues(Control.ControlCollection controls)
         {
-            m_activeForm.Close();
-            m_activeForm = null;
+            Dictionary<string, object> values = new Dictionary<string, object>();
+            foreach (Control control in controls)
+            {
+                if (control is CheckBox)
+                {
+                    values.Add(control.Name, ((CheckBox)control).Checked);
+                }
+                else
+                {
+                    values.Add(control.Name, control.Text);
+                }
+            }
+            return values;
         }
+
+        #endregion
     }
 }

@@ -28,56 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.moduleLocationLabel = new System.Windows.Forms.Label();
-            this.modulePath = new System.Windows.Forms.TextBox();
-            this.browse = new System.Windows.Forms.Button();
-            this.cacheDataCB = new System.Windows.Forms.CheckBox();
+            this.cacheMessages = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // moduleLocationLabel
+            // cacheMessages
             // 
-            this.moduleLocationLabel.AutoSize = true;
-            this.moduleLocationLabel.Location = new System.Drawing.Point(4, 4);
-            this.moduleLocationLabel.Name = "moduleLocationLabel";
-            this.moduleLocationLabel.Size = new System.Drawing.Size(97, 13);
-            this.moduleLocationLabel.TabIndex = 0;
-            this.moduleLocationLabel.Text = "Module Locations: ";
-            // 
-            // modulePath
-            // 
-            this.modulePath.Location = new System.Drawing.Point(107, 0);
-            this.modulePath.Name = "modulePath";
-            this.modulePath.Size = new System.Drawing.Size(179, 20);
-            this.modulePath.TabIndex = 1;
-            // 
-            // browse
-            // 
-            this.browse.Location = new System.Drawing.Point(211, 26);
-            this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(75, 24);
-            this.browse.TabIndex = 2;
-            this.browse.Text = "browse";
-            this.browse.UseVisualStyleBackColor = true;
-            this.browse.Click += new System.EventHandler(this.browse_Click);
-            // 
-            // cacheDataCB
-            // 
-            this.cacheDataCB.AutoSize = true;
-            this.cacheDataCB.Location = new System.Drawing.Point(7, 57);
-            this.cacheDataCB.Name = "cacheDataCB";
-            this.cacheDataCB.Size = new System.Drawing.Size(264, 17);
-            this.cacheDataCB.TabIndex = 3;
-            this.cacheDataCB.Text = "Cache Message Data (saves FB messages on PC)";
-            this.cacheDataCB.UseVisualStyleBackColor = true;
+            this.cacheMessages.AutoSize = true;
+            this.cacheMessages.Checked = true;
+            this.cacheMessages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cacheMessages.Location = new System.Drawing.Point(3, 3);
+            this.cacheMessages.Name = "cacheMessages";
+            this.cacheMessages.Size = new System.Drawing.Size(264, 17);
+            this.cacheMessages.TabIndex = 3;
+            this.cacheMessages.Text = "Cache Message Data (saves FB messages on PC)";
+            this.cacheMessages.UseVisualStyleBackColor = true;
             // 
             // GeneralPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cacheDataCB);
-            this.Controls.Add(this.browse);
-            this.Controls.Add(this.modulePath);
-            this.Controls.Add(this.moduleLocationLabel);
+            this.Controls.Add(this.cacheMessages);
             this.Name = "GeneralPreferences";
             this.Size = new System.Drawing.Size(289, 205);
             this.ResumeLayout(false);
@@ -86,10 +56,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label moduleLocationLabel;
-        private System.Windows.Forms.TextBox modulePath;
-        private System.Windows.Forms.Button browse;
-        private System.Windows.Forms.CheckBox cacheDataCB;
+        private System.Windows.Forms.CheckBox cacheMessages;
     }
 }

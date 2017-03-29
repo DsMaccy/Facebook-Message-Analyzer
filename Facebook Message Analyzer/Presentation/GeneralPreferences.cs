@@ -18,21 +18,9 @@ namespace Facebook_Message_Analyzer.Presentation
             InitializeComponent();
         }
 
-        private void browse_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog FBD = new FolderBrowserDialog();
-            FBD.ShowDialog();
-            if (FBD.SelectedPath != null && FBD.SelectedPath != "")
-            {
-                modulePath.Text = FBD.SelectedPath;
-            }
-        }
-
         public void saveData()
         {
-            string[] values = modulePath.Text.Split(';');
-            StateMaster.setDllLocations(values);
-            StateMaster.setGeneralTable(cacheDataCB.Checked);
+            StateMaster.setCacheData(cacheMessages.Checked);
         }
     }
 }

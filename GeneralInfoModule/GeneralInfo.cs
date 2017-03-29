@@ -135,15 +135,10 @@ namespace GeneralInfoModule
 
         public bool preferencesAvailable()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        public System.Windows.Forms.UserControl getPreferenceForm()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Dictionary<string, dynamic> getSavedProperties()
+        public System.Windows.Forms.UserControl getPreferenceControl()
         {
             throw new NotImplementedException();
         }
@@ -152,11 +147,18 @@ namespace GeneralInfoModule
         {
             throw new NotImplementedException();
         }
+        /*
+        public Dictionary<string, dynamic> getSavedProperties()
+        {
+            throw new NotImplementedException();
+        }
 
         public void setSavedProperties(Dictionary<string, dynamic> dbValues)
         {
             throw new NotImplementedException();
         }
+
+        */
         #endregion
 
     }

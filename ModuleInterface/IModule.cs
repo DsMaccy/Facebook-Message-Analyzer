@@ -42,17 +42,31 @@ namespace ModuleInterface
         bool preferencesAvailable();
 
         /// <summary>
-        /// The User Control that is used as the preferences screen
+        /// This is called by the application whenever the User opens up the preference menu and is used universally across all instances of the IModule class
         /// Only called if preferencesAvailable returns true
         /// </summary>
-        /// <returns></returns>
-        UserControl getPreferenceForm();
+        /// <returns>The User Control that is used as the preferences screen</returns>
+        UserControl getPreferenceControl();
 
         /// <summary>
         /// Called when the user preferences get modified
         /// </summary>
         /// <param name="newValues">A dictionary of the UI elements that were modified as well as their modified values</param>
         void savePreferences(Dictionary<string, dynamic> newValues);
+
+        /*
+        /// <summary>
+        /// Provides a mapping of parameters that the analysis module needs to be saved and their present values
+        /// </summary>
+        /// <returns>Property values to be saved into the local database</returns>
+        Dictionary<string, Type> getPreference();
+
+        /// <summary>
+        /// Provides database values for the analysis module to use
+        /// </summary>
+        /// <param name="dbValues">the list of database tags and values used by the analysis module</param>
+        void setSavedProperties(Dictionary<string, object> dbValues);
+        */
 
         /// <summary>
         /// Determines whether this module will create a popup display
@@ -65,17 +79,5 @@ namespace ModuleInterface
         /// </summary>
         /// <returns>Returns the form meant to be displayed or null if no form is meant to be displayed</returns>
         Form getResultForm();
-
-        /// <summary>
-        /// Provides a mapping of parameters that the analysis module needs to be saved and their present values
-        /// </summary>
-        /// <returns>Property values to be saved into the local database</returns>
-        Dictionary<string, dynamic> getSavedProperties();
-
-        /// <summary>
-        /// Provides database values for the analysis module to use
-        /// </summary>
-        /// <param name="dbValues">the list of database tags and values used by the analysis module</param>
-        void setSavedProperties(Dictionary<string, dynamic> dbValues);
     }
 }

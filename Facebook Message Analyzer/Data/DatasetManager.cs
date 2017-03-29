@@ -55,16 +55,7 @@ namespace Facebook_Message_Analyzer.Data
             m_writeSems[DataSets.Config] = new Semaphore(1, 1);
             m_writeSems[DataSets.Messages] = new Semaphore(1, 1);
 
-            System.Reflection.Assembly assemblyObj = System.Reflection.Assembly.GetExecutingAssembly();
-
-            System.Reflection.AssemblyCompanyAttribute  companyAttr = System.Reflection.AssemblyCompanyAttribute.GetCustomAttribute(assemblyObj, typeof(System.Reflection.AssemblyCompanyAttribute)) as System.Reflection.AssemblyCompanyAttribute;
-            string companyName = companyAttr.Company;
-
-            System.Reflection.AssemblyTitleAttribute titleAttr = System.Reflection.AssemblyTitleAttribute.GetCustomAttribute(assemblyObj, typeof(System.Reflection.AssemblyTitleAttribute)) as System.Reflection.AssemblyTitleAttribute;
-            string programTitle = titleAttr.Title;
-
-            // ... AppData/Local/Solace Inc./Facebook Message Analyzer/
-            PATH = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\" + companyName + "\\" + programTitle + "\\";
+            PATH = Business.StateMaster.getPath();
             if (!Directory.Exists(PATH))
             {
                 Directory.CreateDirectory(PATH);
@@ -283,7 +274,15 @@ namespace Facebook_Message_Analyzer.Data
             {
                 return null;
             }
-            DataRow[] dataRows = table.Select("", "id");
+            DataRow[] dataRows;
+            if (ds == DataSets.Messages)
+            {
+                dataRows = table.Select("", "id");
+            }
+            else
+            {
+                dataRows = table.Select();
+            }
             return dataRows.GetEnumerator(); //table.Rows.GetEnumerator();
         }
 

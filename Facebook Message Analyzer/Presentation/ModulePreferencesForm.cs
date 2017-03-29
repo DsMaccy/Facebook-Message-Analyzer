@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Facebook_Message_Analyzer.Business;
+using ModuleInterface;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
@@ -15,32 +10,35 @@ namespace Facebook_Message_Analyzer.Presentation
     {
         private UserControl m_openPreference;
         private Dictionary<string, string> m_cachedPreferenceData;
-        public ModulePreferencesForm()
+        private bool m_dirty;
+        private bool Dirty
         {
-            InitializeComponent();
-
-            modules.Items.Add("General");
-            
-            // TODO: Add a label in modules for evey available module that has a preference
-            m_openPreference = new GeneralPreferences();
-            m_openPreference.Show();
-            modules.SetSelected(0, true);
-            this.Controls.Add(m_openPreference);
-            m_cachedPreferenceData = StateMaster.getPreferenceData("General");
-            foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
+            get
             {
-                Control widget = ((GeneralPreferences)m_openPreference).Controls[control.Key];
-                if (widget is CheckBox)
+                return m_dirty;
+            }
+            set
+            {
+                m_dirty = value;
+                if (!m_dirty)
                 {
-                    ((CheckBox)widget).Checked = control.Value.ToLower() == "true";
+                    apply.Enabled = false;
                 }
                 else
                 {
-                    widget.Text = control.Value;
+                    apply.Enabled = true;
                 }
             }
 
-            alignWidgets();
+        }
+
+        public ModulePreferencesForm()
+        {
+            InitializeComponent();            
+            modules.Items.Add("General");
+            Dirty = false;
+
+            modules.SetSelected(0, true);
         }
 
         private void ModulePreferencesForm_Resize(object sender, EventArgs e)
@@ -62,13 +60,54 @@ namespace Facebook_Message_Analyzer.Presentation
             ok.Left = cancel.Left - 9 - ok.Width;
         }
 
+        private void setPreferenceControl(int index)
+        {
+            // TODO: Add a warning about unsaved changes
+            if (m_openPreference != null)
+            {
+                m_openPreference.Hide();
+                this.Controls.Remove(m_openPreference);
+            }
+
+            string tag = modules.Items[index] as string;
+            if (tag == "General")
+            {
+                m_openPreference = new GeneralPreferences();
+                m_cachedPreferenceData = StateMaster.getPreferenceData("General");
+            }
+            else
+            {
+                Type moduleType = (StateMaster.getModules()[tag]);
+                IModule module = Activator.CreateInstance(moduleType) as IModule;
+                m_openPreference = module.getPreferenceControl();
+
+                m_cachedPreferenceData = StateMaster.getPreferenceData("General");
+            }
+            this.Controls.Add(m_openPreference);
+            m_openPreference.Show();
+            alignWidgets();
+
+
+            
+            foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
+            {
+                Control widget = ((GeneralPreferences)m_openPreference).Controls[control.Key];
+                if (widget is CheckBox)
+                {
+                    ((CheckBox)widget).Checked = control.Value.ToLower() == "true";
+                }
+                else
+                {
+                    widget.Text = control.Value;
+                }
+            }
+        }
+
+        #region Events
+
         private void modules_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Controls.Remove(m_openPreference);
-
-            // TODO: Set m_openPreference to the correct preference given the new selected index
-
-            this.Controls.Add(m_openPreference);
+            setPreferenceControl(((ListBox)sender).SelectedIndex);
         }
 
         private void apply_Click(object sender, EventArgs e)
@@ -79,11 +118,10 @@ namespace Facebook_Message_Analyzer.Presentation
             }
             else
             {
-
                 // TODO -- save to DB and send call to module to save their stuff if they are not the general object
                 // TODO: Fill -- this is one of the added IModule preferences
             }
-
+            Dirty = false;
         }
 
         private void cancel_Click(object sender, EventArgs e)
@@ -93,8 +131,18 @@ namespace Facebook_Message_Analyzer.Presentation
 
         private void ok_Click(object sender, EventArgs e)
         {
-            apply_Click(sender, e);
+            if (Dirty)
+            {
+                apply_Click(sender, e);
+            }
             this.Close();
         }
+
+        private void subControlModified(object sender, EventArgs e)
+        {
+            Dirty = true;
+        }
+
+        #endregion
     }
 }
