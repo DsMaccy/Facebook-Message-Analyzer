@@ -52,7 +52,7 @@ namespace ModuleInterface
         /// Called when the user preferences get modified
         /// </summary>
         /// <param name="newValues">A dictionary of the UI elements that were modified as well as their modified values</param>
-        void savePreferences(Dictionary<string, dynamic> newValues);
+        void savePreferences(Dictionary<string, object> newValues);
 
         /*
         /// <summary>

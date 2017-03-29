@@ -23,12 +23,11 @@ namespace Facebook_Message_Analyzer.Presentation
             alignWidgets();
             m_hoverIndex = -1;
 
-
-            // TODO: Programmatically add options for each of the modules
             Dictionary<string, Type> moduleList = StateMaster.getModules();
             m_modules = new Dictionary<string, IModule>();
-
             
+            
+                        
             foreach (KeyValuePair<string, Type> module in moduleList)
             {
                 checkedList.Items.Add(module.Key);

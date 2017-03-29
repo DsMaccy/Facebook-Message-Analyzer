@@ -44,9 +44,8 @@ namespace Facebook_Message_Analyzer.Data
         private Dictionary<DataSets, Semaphore> m_writeSems;
         private string PATH;
 
-        public const string DLL_LOCATIONS_TABLE_NAME = "dllLocations";
         public const string GENERIC_TABLE_NAME = "genericPreferences";
-        public const string DLL_PATH_TAG = "dllPath";
+        public const string SELECTED_MODULES = "selectedModules";
         public const string CACHE_DATA_TAG = "cacheMessages";
 
         private DataSetManager()

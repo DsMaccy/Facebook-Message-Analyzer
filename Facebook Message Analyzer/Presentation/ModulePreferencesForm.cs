@@ -34,8 +34,19 @@ namespace Facebook_Message_Analyzer.Presentation
 
         public ModulePreferencesForm()
         {
-            InitializeComponent();            
+            InitializeComponent();     
             modules.Items.Add("General");
+            int index = 1;
+            Dictionary<string, Type> moduleTypes = StateMaster.getModules();
+            foreach (KeyValuePair<string, Type> kv in moduleTypes)
+            {
+                IModule moduleInstance = Activator.CreateInstance(kv.Value) as IModule;
+                if (moduleInstance.preferencesAvailable())
+                {
+                    modules.Items.Add(kv.Key);
+                    index++;
+                }
+            }
             Dirty = false;
 
             modules.SetSelected(0, true);
@@ -81,7 +92,7 @@ namespace Facebook_Message_Analyzer.Presentation
                 IModule module = Activator.CreateInstance(moduleType) as IModule;
                 m_openPreference = module.getPreferenceControl();
 
-                m_cachedPreferenceData = StateMaster.getPreferenceData("General");
+                m_cachedPreferenceData = StateMaster.getPreferenceData(tag);
             }
             this.Controls.Add(m_openPreference);
             m_openPreference.Show();
@@ -91,12 +102,12 @@ namespace Facebook_Message_Analyzer.Presentation
             
             foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
             {
-                Control widget = ((GeneralPreferences)m_openPreference).Controls[control.Key];
+                Control widget = m_openPreference.Controls[control.Key];
                 if (widget is CheckBox)
                 {
                     ((CheckBox)widget).Checked = control.Value.ToLower() == "true";
                 }
-                else
+                else if (widget != null)
                 {
                     widget.Text = control.Value;
                 }
