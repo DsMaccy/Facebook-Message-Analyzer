@@ -46,27 +46,13 @@ namespace ModuleInterface
         /// Only called if preferencesAvailable returns true
         /// </summary>
         /// <returns>The User Control that is used as the preferences screen</returns>
-        UserControl getPreferenceControl();
+        PreferenceControl getPreferenceControl();
 
         /// <summary>
         /// Called when the user preferences get modified
         /// </summary>
         /// <param name="newValues">A dictionary of the UI elements that were modified as well as their modified values</param>
         void savePreferences(Dictionary<string, object> newValues);
-
-        /*
-        /// <summary>
-        /// Provides a mapping of parameters that the analysis module needs to be saved and their present values
-        /// </summary>
-        /// <returns>Property values to be saved into the local database</returns>
-        Dictionary<string, Type> getPreference();
-
-        /// <summary>
-        /// Provides database values for the analysis module to use
-        /// </summary>
-        /// <param name="dbValues">the list of database tags and values used by the analysis module</param>
-        void setSavedProperties(Dictionary<string, object> dbValues);
-        */
 
         /// <summary>
         /// Determines whether this module will create a popup display

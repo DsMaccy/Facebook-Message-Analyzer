@@ -22,11 +22,9 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataS
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\Facebook.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\ModuleInterface.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\GeneralInfoModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\Facebook Message Analyzer.pdb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\Facebook.xml
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\bin\Debug\GeneralInfoModule.pdb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\obj\Debug\DataSetTester.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\DataSetTester\obj\Debug\DataSetTester.pdb

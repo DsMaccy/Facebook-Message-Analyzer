@@ -1,12 +1,4 @@
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\FBMA\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb
@@ -15,13 +7,6 @@ F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AuthenticationForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.WelcomeForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.xml
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.xml
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ConversationSelectionForm.resources
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Facebook.xml
@@ -29,14 +14,6 @@ F:\FBMA\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.xml
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AuthenticationForm.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ConversationSelectionForm.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.WelcomeForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AnalyzingForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ModulePreferencesForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.SelectModulesForm.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AnalyzingForm.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ModulePreferencesForm.resources
@@ -47,7 +24,30 @@ F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
 F:\FBMA\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
 F:\FBMA\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.ResolveComReference.cache
 F:\FBMA\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.ResolveComReference.cache
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Data\CachedMessages.mdf
 F:\FBMA\Facebook Message Analyzer\bin\Debug\Data\CachedMessages_log.ldf
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe.config
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.exe
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook Message Analyzer.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\GeneralInfoModule.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\ModuleInterface.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Facebook.xml
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.ResolveComReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AnalyzingForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.AuthenticationForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ConversationSelectionForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.GeneralPreferences.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.ModulePreferencesForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Presentation.SelectModulesForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.WelcomeForm.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook_Message_Analyzer.Properties.Resources.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.csproj.GenerateResource.Cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.exe
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Facebook Message Analyzer\obj\Debug\Facebook Message Analyzer.pdb

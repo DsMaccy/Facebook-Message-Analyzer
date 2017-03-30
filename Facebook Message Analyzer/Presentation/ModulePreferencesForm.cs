@@ -9,7 +9,8 @@ namespace Facebook_Message_Analyzer.Presentation
     public partial class ModulePreferencesForm : Form
     {
         private UserControl m_openPreference;
-        private Dictionary<string, string> m_cachedPreferenceData;
+        private Dictionary<string, Dictionary<string, string>> m_cachedPreferenceData;
+        private Dictionary<string, Dictionary<string, string>> m_currentPreferenceData;
         private bool m_dirty;
         private bool Dirty
         {
@@ -49,6 +50,10 @@ namespace Facebook_Message_Analyzer.Presentation
             }
             Dirty = false;
 
+            
+            m_cachedPreferenceData = new Dictionary<string, Dictionary<string, string>>();
+            m_currentPreferenceData = new Dictionary<string, Dictionary<string, string>>();
+
             modules.SetSelected(0, true);
         }
 
@@ -81,35 +86,47 @@ namespace Facebook_Message_Analyzer.Presentation
             }
 
             string tag = modules.Items[index] as string;
+            Dictionary<string, string> loadedData;
             if (tag == "General")
             {
                 m_openPreference = new GeneralPreferences();
-                m_cachedPreferenceData = StateMaster.getPreferenceData("General");
             }
             else
             {
                 Type moduleType = (StateMaster.getModules()[tag]);
                 IModule module = Activator.CreateInstance(moduleType) as IModule;
-                m_openPreference = module.getPreferenceControl();
 
-                m_cachedPreferenceData = StateMaster.getPreferenceData(tag);
+                m_openPreference = module.getPreferenceControl();
             }
+
+
+            if (!m_cachedPreferenceData.ContainsKey(tag))
+            {
+                m_cachedPreferenceData[tag] = StateMaster.getPreferenceData(tag);
+            }
+
+            loadedData = m_cachedPreferenceData[tag];
+            if (m_currentPreferenceData.ContainsKey(tag))
+            {
+                loadedData = m_currentPreferenceData[tag];
+            }
+
             this.Controls.Add(m_openPreference);
             m_openPreference.Show();
             alignWidgets();
 
-
-            
-            foreach (KeyValuePair<string, string> control in m_cachedPreferenceData)
+            foreach (KeyValuePair<string, string> control in loadedData)
             {
                 Control widget = m_openPreference.Controls[control.Key];
                 if (widget is CheckBox)
                 {
                     ((CheckBox)widget).Checked = control.Value.ToLower() == "true";
+                    ((CheckBox)widget).CheckedChanged += new EventHandler(subControlModified);
                 }
                 else if (widget != null)
                 {
                     widget.Text = control.Value;
+                    widget.TextChanged += new EventHandler(subControlModified);
                 }
             }
         }

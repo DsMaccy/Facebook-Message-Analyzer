@@ -1,9 +1,9 @@
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.TestControl.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.csproj.GenerateResource.Cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\bin\Debug\TestModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\bin\Debug\TestModule.pdb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\bin\Debug\ModuleInterface.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.csprojResolveAssemblyReference.cache
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.TestControl.resources
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.csproj.GenerateResource.Cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\TestModule\obj\Debug\TestModule.pdb

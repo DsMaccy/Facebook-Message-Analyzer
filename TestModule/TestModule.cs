@@ -48,7 +48,7 @@ namespace TestModule
             return true;
         }
 
-        public UserControl getPreferenceControl()
+        public PreferenceControl getPreferenceControl()
         {
             return new TestControl();
         }

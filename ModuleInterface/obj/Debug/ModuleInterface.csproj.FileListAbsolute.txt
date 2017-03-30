@@ -3,11 +3,11 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\ModuleInterface\ModuleInterface
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\ModuleInterface\ModuleInterface\obj\Debug\ModuleInterface.csprojResolveAssemblyReference.cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\ModuleInterface\ModuleInterface\obj\Debug\ModuleInterface.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\ModuleInterface\ModuleInterface\obj\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\bin\Debug\ModuleInterface.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\bin\Debug\ModuleInterface.pdb
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.dll
-C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.pdb
 F:\FBMA\ModuleInterface\bin\Debug\ModuleInterface.dll
 F:\FBMA\ModuleInterface\bin\Debug\ModuleInterface.pdb
 F:\FBMA\ModuleInterface\obj\Debug\ModuleInterface.dll
 F:\FBMA\ModuleInterface\obj\Debug\ModuleInterface.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\bin\Debug\ModuleInterface.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.pdb
