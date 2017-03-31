@@ -73,8 +73,6 @@ namespace Facebook_Message_Analyzer.Business
                 m_counterSem.WaitOne();
             }
 
-            // Figure out how to close the analyzing window
-
             StateMaster.closeAnalysisForm();
 
             foreach (IModule module in m_analysisModules)
@@ -84,8 +82,6 @@ namespace Facebook_Message_Analyzer.Business
                    StateMaster.displayAnalysisResult(module.getResultForm());
                 }
             }
-
-            
         } 
 
         private void analysisThread(object moduleObj)

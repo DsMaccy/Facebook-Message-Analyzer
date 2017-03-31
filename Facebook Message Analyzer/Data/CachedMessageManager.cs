@@ -155,36 +155,39 @@ namespace Facebook_Message_Analyzer.Data
 
         public void saveMessages(string conversationID, List<FacebookMessage> messageList, string nextURL, int saveIndex=-1)
         {
-            Dictionary<string, object> values;
-            int count = 0;
-            int smallestID = messageList[0].id;
-            foreach (FacebookMessage message in messageList)
+            lock (this)
             {
-                if (message.id < smallestID)
+                Dictionary<string, object> values;
+                int count = 0;
+                int smallestID = messageList[0].id;
+                foreach (FacebookMessage message in messageList)
                 {
-                    smallestID = message.id;
+                    if (message.id < smallestID)
+                    {
+                        smallestID = message.id;
+                    }
+                    values = new Dictionary<string, object>();
+                    foreach (string tag in FB_MESSAGE_COLUMNS)
+                    {
+                        values.Add(tag, message[tag]);
+                    }
+                    if (saveIndex < 0)
+                    {
+                        DataSetManager.Manager.addValuesToEnd(DataSets.Messages, conversationID, values);
+                    }
+                    else
+                    {
+                        DataSetManager.Manager.addValuesToIndex(DataSets.Messages, conversationID, values, saveIndex + count);
+                    }
+                    m_saveCount += 1;
+                    if (m_saveCount == SAVE_PARAM)
+                    {
+                        m_saveCount = 0;
+                        DataSetManager.Manager.saveDataSet(DataSets.Messages);
+                    }
                 }
-                values = new Dictionary<string, object>();
-                foreach (string tag in FB_MESSAGE_COLUMNS)
-                {
-                    values.Add(tag, message[tag]);
-                }
-                if (saveIndex < 0)
-                {
-                    DataSetManager.Manager.addValuesToEnd(DataSets.Messages, conversationID, values);
-                }
-                else
-                {
-                    DataSetManager.Manager.addValuesToIndex(DataSets.Messages, conversationID, values, saveIndex + count);
-                }
-                m_saveCount += 1;
-                if (m_saveCount == SAVE_PARAM)
-                {
-                    m_saveCount = 0;
-                    DataSetManager.Manager.saveDataSet(DataSets.Messages);
-                }
+                replaceLinkValue(conversationID, smallestID, nextURL);
             }
-            replaceLinkValue(conversationID, smallestID, nextURL);
         }
 
         public void addConversation(string conversationID)

@@ -365,6 +365,7 @@ namespace Facebook_Message_Analyzer.Business
                     DataSetManager.Manager.addValuesToEnd(DataSets.Config, DataSetManager.SELECTED_MODULES_TABLE_NAME, activeModule);
                 }
             }
+            DataSetManager.Manager.saveDataSet(DataSets.Config);
         }
 
         public static string getPath()

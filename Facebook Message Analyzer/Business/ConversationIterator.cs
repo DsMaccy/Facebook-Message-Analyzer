@@ -55,7 +55,7 @@ namespace Facebook_Message_Analyzer.Business
             #region Private Helper Methods
             private void saveMessages(List<FacebookMessage> messagesToSave)
             {
-                if (!m_saveMessages)
+                if (!m_saveMessages || messagesToSave.Count == 0)
                 {
                     return;
                 }
