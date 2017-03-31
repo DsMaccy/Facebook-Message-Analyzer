@@ -148,7 +148,13 @@ namespace Facebook_Message_Analyzer.Business
 
         public static void displayAnalysisResult(Form form)
         {
-            m_activeForm.Invoke(new MethodInvoker(() => { form.Show(); }));
+            lock (m_activeForm)
+            {
+                m_activeForm.Invoke(new MethodInvoker(() =>
+                {
+                    form.Show();
+                }));
+            }
         }
 
         public static void abortAnalysis()

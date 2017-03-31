@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ModuleInterface;
 using Facebook_Message_Analyzer.Data;
 
@@ -53,6 +50,7 @@ namespace Facebook_Message_Analyzer.Business
             }
 
             #region Private Helper Methods
+
             private void saveMessages(List<FacebookMessage> messagesToSave)
             {
                 if (!m_saveMessages || messagesToSave.Count == 0)
@@ -69,7 +67,14 @@ namespace Facebook_Message_Analyzer.Business
                         List<FacebookMessage> messages = paramObj["messages"] as List<FacebookMessage>;
                         int index = (int)(paramObj["saveIndex"]);
                         string url = paramObj["url"] as string;
-                        manager.saveMessages(m_conversationID, messages, url, index);
+                        try
+                        {
+                            manager.saveMessages(m_conversationID, messages, url, index);
+                        }
+                        catch (System.Data.ConstraintException)
+                        {
+                            // TODO: Consider reacquiring cached messages
+                        }
                     }
                 );
                 Dictionary<string, object> delegateParams = new Dictionary<string, object>();
@@ -84,7 +89,6 @@ namespace Facebook_Message_Analyzer.Business
             private void getNextOnlineMessages()
             {
                 m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
-                // m_nextURL = FBQueryManager.Manager.getNextURL(m_conversationID);
             }
 
             // TODO: Ensure that the state methods work
@@ -108,7 +112,6 @@ namespace Facebook_Message_Analyzer.Business
                     m_state = IteratorState.CacheQuery;
                     m_messageList = m_cachedMessageList;
                     m_currentIndex = m_cacheIndex;
-                    //FBQueryManager.Manager.setNextURL(m_conversationID, CachedMessageManager.Manager.getNextURL(m_conversationID));
                 }
 
                 if (m_messageList == null || m_messageList.Count == 0)
@@ -129,13 +132,27 @@ namespace Facebook_Message_Analyzer.Business
                 }
                 if (m_queryLinks.ContainsKey(m_messageList[m_currentIndex].id))
                 {
-                    m_state = IteratorState.RemnantQuery;
-                    FBQueryManager.Manager.setNextURL(m_conversationID, m_queryLinks[m_messageList[m_currentIndex].id]);
-                    // TODO: Check transition correctness from using cached messages vs. online facebook servers
-                    m_cacheIndex = m_currentIndex;
-                    m_messageList = new List<FacebookMessage>();
-                    m_messageList.Add(m_cachedMessageList[m_currentIndex]);
-                    m_currentIndex = 0;
+                    lock (this)
+                    {
+                        m_queryLinks = CachedMessageManager.Manager.getNextURLs(m_conversationID);
+                        if (m_queryLinks.ContainsKey(m_messageList[m_currentIndex].id))
+                        {
+                            m_state = IteratorState.RemnantQuery;
+                            FBQueryManager.Manager.setNextURL(m_conversationID, m_queryLinks[m_messageList[m_currentIndex].id]);
+                            // TODO: Check transition correctness from using cached messages vs. online facebook servers
+                            m_cacheIndex = m_currentIndex;
+                            m_messageList = new List<FacebookMessage>();
+                            m_messageList.Add(m_cachedMessageList[m_currentIndex]);
+                            m_currentIndex = 0;
+                        }
+                        else
+                        {
+                            FacebookMessage message = m_cachedMessageList[m_cacheIndex];
+                            m_messageList = m_cachedMessageList = CachedMessageManager.Manager.getMessages(m_conversationID);
+                            m_currentIndex =  m_cacheIndex = m_cachedMessageList.BinarySearch(message);
+                            
+                        }
+                    }
                 }
                 return true;
             }
@@ -146,9 +163,6 @@ namespace Facebook_Message_Analyzer.Business
                 m_currentIndex -= 1;
                 if (m_currentIndex < 0)
                 {
-                    // Transition State between Cache and Online Query
-                    // Do not save messages
-                    //saveMessages(new List<FacebookMessage>(m_messageList));
                     getNextOnlineMessages();
                     m_currentIndex = m_messageList.Count - 1;
                     m_state = IteratorState.OnlineQuery;

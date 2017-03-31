@@ -111,7 +111,6 @@ namespace Facebook_Message_Analyzer.Business
                 else
                 {
                     ParallelOptions po = new ParallelOptions();
-                    int maxParallelism = po.MaxDegreeOfParallelism;     // TODO: Check this value and see what it's about...
                     Parallel.ForEach<FacebookMessage>(messages,
                         new Action<FacebookMessage> ((FacebookMessage message) =>
                     {
