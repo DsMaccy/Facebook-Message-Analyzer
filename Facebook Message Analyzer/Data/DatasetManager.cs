@@ -45,8 +45,8 @@ namespace Facebook_Message_Analyzer.Data
         private string PATH;
 
         public const string GENERIC_TABLE_NAME = "genericPreferences";
-        public const string SELECTED_MODULES = "selectedModules";
-        public const string CACHE_DATA_TAG = "cacheMessages";
+        public const string SELECTED_MODULES_TABLE_NAME = "activeModules";
+        public const string SELECTED_MODULES_NAME_COLUMN_TAG = "name";
 
         private DataSetManager()
         {
@@ -95,7 +95,6 @@ namespace Facebook_Message_Analyzer.Data
                     m_writeSems[kvPair.Key].Release();
                 }
             }
-            
         }
 
         public void saveDataSet(DataSets ds)
@@ -162,7 +161,7 @@ namespace Facebook_Message_Analyzer.Data
         {
             try
             {
-                m_writeSems[ds].WaitOne(); 
+                m_writeSems[ds].WaitOne();
                 m_dataSets[ds].Tables[tableName].Clear();
             }
             finally
@@ -269,7 +268,7 @@ namespace Facebook_Message_Analyzer.Data
         public System.Collections.IEnumerator getData(DataSets ds, string tableName)
         {
             DataTable table = m_dataSets[ds].Tables[tableName];
-            if (table == null || table.Rows.Count == 0)
+            if (table == null)
             {
                 return null;
             }

@@ -1,26 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using Facebook_Message_Analyzer.Business;
+using System.Windows.Forms;
+using ModuleInterface;
+using System;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
-    public partial class GeneralPreferences : UserControl
+    public partial class GeneralPreferences : PreferenceControl
     {
         public GeneralPreferences()
         {
             InitializeComponent();
         }
 
-        public void saveData()
+        public override Dictionary<string, object> GetValues()
         {
-            StateMaster.setCacheData(cacheMessages.Checked);
+            Dictionary<string, object> values = new Dictionary<string, object>();
+            values.Add("cache", cacheMessages.Checked);
+
+            return values;
+
+        }
+
+        public override void LoadValues(Dictionary<string, object> values)
+        {
+            cacheMessages.Checked = (bool) values["cache"];
         }
     }
 }

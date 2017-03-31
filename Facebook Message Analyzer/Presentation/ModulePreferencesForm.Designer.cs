@@ -20,6 +20,7 @@
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -65,6 +66,7 @@
             // 
             // cancel
             // 
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.Location = new System.Drawing.Point(309, 226);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
@@ -75,8 +77,10 @@
             // 
             // ModulePreferencesForm
             // 
+            this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(477, 261);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.apply);
@@ -84,6 +88,7 @@
             this.Controls.Add(this.modules);
             this.Name = "ModulePreferencesForm";
             this.Text = "ModulePreferences";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModulePreferencesForm_FormClosing);
             this.Resize += new System.EventHandler(this.ModulePreferencesForm_Resize);
             this.ResumeLayout(false);
 

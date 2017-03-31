@@ -9,5 +9,6 @@ namespace ModuleInterface
     interface IPreference
     {
         Dictionary<string, object> GetValues();
+        void LoadValues(Dictionary<string, object> initialValues);
     }
 }

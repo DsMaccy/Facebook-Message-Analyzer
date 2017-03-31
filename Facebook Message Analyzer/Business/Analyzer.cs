@@ -99,14 +99,7 @@ namespace Facebook_Message_Analyzer.Business
             List<Thread> threads = new List<Thread>();
             try
             {
-                IEnumerator iterator = DataSetManager.Manager.getData(DataSets.Config, DataSetManager.GENERIC_TABLE_NAME);
-                bool saveMessages = true;
-                if (iterator != null)
-                {
-                    iterator.MoveNext();
-                    DataRow dr = iterator.Current as DataRow;
-                    saveMessages = (bool)dr[DataSetManager.CACHE_DATA_TAG];
-                }
+                bool saveMessages = StateMaster.getCacheMessages();
                 
                 ConversationIterator messages = new ConversationIterator(m_conversationID, saveMessages);
                 

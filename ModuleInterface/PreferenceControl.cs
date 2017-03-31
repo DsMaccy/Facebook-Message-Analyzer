@@ -20,6 +20,7 @@ namespace ModuleInterface
         }*/
 
         public abstract Dictionary<string, object> GetValues();
+        public abstract void LoadValues(Dictionary<string, object> values);
     }
 
     public class PreferenceControlDescriptionProvider<TAbstract, TBase> : TypeDescriptionProvider

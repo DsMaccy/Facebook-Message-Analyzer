@@ -248,57 +248,6 @@ namespace Facebook_Message_Analyzer.Data
 
             return messageList;
         }
-        /*
-        public List<FacebookMessage> getEarliestEntries(string conversationID)
-        {
-            List<FacebookMessage> messages = new List<FacebookMessage>();
-            using (SqlConnection sqlConnection = new SqlConnection(DB_CONN_STRING))
-            {
-                sqlConnection.Open();
-                DateTime minDT;
-                using (SqlCommand command = new SqlCommand("", sqlConnection))
-                {
-                    command.CommandText = "Select MIN(date) AS MinDate FROM @conversationID";
-                    command.Parameters.AddWithValue("@conversationID", conversationID);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        minDT = (DateTime)reader.GetValue(0);
-                    }
-                }
-                using (SqlCommand command = new SqlCommand("", sqlConnection))
-                {
-                    command.CommandText = "Select * from @conversationID where date=@minDate";
-                    command.Parameters.AddWithValue("@conversationID", minDT);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-
-                        while (reader.Read())
-                        {
-                            FacebookMessage fm = new FacebookMessage();
-                            fm.id = reader["id"] as string;
-                            fm.message = reader["message"] as string;
-                            fm.timeSent = (DateTime)reader["timeSent"];
-                            fm.sender = new User();
-                            fm.sender.id = reader["sender"] as string;
-                            using (SqlCommand getUser = new SqlCommand())
-                            {
-                                getUser.CommandText = "Select name from " + USER_TABLE + "where id=@id";
-                                getUser.Parameters.AddWithValue("@id", fm.sender.id);
-                                using (SqlDataReader userReader = getUser.ExecuteReader())
-                                {
-                                    while (userReader.Read())
-                                    {
-                                        fm.sender.name = userReader.GetString(0);
-                                    }
-                                }
-                            }
-                            messages.Add(fm);
-                        }
-                    }
-                }
-            }
-            return messages;
-        }*/
 
         public FacebookMessage getLastestEntry(string conversationID)
         {

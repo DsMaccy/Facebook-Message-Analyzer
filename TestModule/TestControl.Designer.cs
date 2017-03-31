@@ -53,6 +53,10 @@
             // checkedListBox1
             // 
             this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "helloKitty1",
+            "helloKitty2",
+            "helloKitty3"});
             this.checkedListBox1.Location = new System.Drawing.Point(4, 27);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(120, 94);
@@ -61,9 +65,9 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(4, 127);
+            this.comboBox1.Location = new System.Drawing.Point(130, 27);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
             this.comboBox1.TabIndex = 2;
             // 
             // dateTimePicker1
@@ -87,7 +91,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(4, 201);
+            this.radioButton2.Location = new System.Drawing.Point(95, 178);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(85, 17);
             this.radioButton2.TabIndex = 5;
@@ -98,7 +102,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(4, 224);
+            this.radioButton3.Location = new System.Drawing.Point(57, 201);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(85, 17);
             this.radioButton3.TabIndex = 6;
@@ -108,14 +112,14 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(4, 247);
+            this.numericUpDown1.Location = new System.Drawing.Point(4, 224);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 7;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(4, 274);
+            this.textBox1.Location = new System.Drawing.Point(130, 224);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 8;
@@ -124,6 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.radioButton3);
@@ -134,7 +139,7 @@
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.checkBox1);
             this.Name = "TestControl";
-            this.Size = new System.Drawing.Size(217, 309);
+            this.Size = new System.Drawing.Size(252, 260);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
