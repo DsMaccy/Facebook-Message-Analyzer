@@ -57,6 +57,7 @@ namespace TestModule
         {
             return false;
         }
+
         public Form getResultForm()
         {
             throw new NotImplementedException("This should not be called");

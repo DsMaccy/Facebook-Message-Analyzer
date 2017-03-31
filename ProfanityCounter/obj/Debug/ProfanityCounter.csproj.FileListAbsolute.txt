@@ -1,0 +1,9 @@
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\bin\Debug\ProfanityCounter.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\bin\Debug\ProfanityCounter.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\obj\Debug\ProfanityCounter.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\obj\Debug\ProfanityCounter.pdb
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\obj\Debug\ProfanityCounter.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\obj\Debug\ProfanityCounter.ProfanityOptions.resources
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\obj\Debug\ProfanityCounter.csproj.GenerateResource.Cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ProfanityCounter\bin\Debug\ModuleInterface.pdb

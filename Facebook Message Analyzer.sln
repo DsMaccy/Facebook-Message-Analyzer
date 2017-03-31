@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook Message Analyzer", "Facebook Message Analyzer\Facebook Message Analyzer.csproj", "{D1A82E08-453A-44C0-B4B6-23BFD80AD8DE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AD40FB18-DE19-4A42-9DB0-019E8B78547E} = {AD40FB18-DE19-4A42-9DB0-019E8B78547E}
+		{258A6E5D-009F-4F0E-839E-F9DB30D1EA5E} = {258A6E5D-009F-4F0E-839E-F9DB30D1EA5E}
+		{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A} = {AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleInterface", "ModuleInterface\ModuleInterface.csproj", "{54B21902-D5BC-4EC9-BD80-8060381CBFF2}"
@@ -18,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "DataSetTester\
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModule", "TestModule\TestModule.csproj", "{258A6E5D-009F-4F0E-839E-F9DB30D1EA5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfanityCounter", "ProfanityCounter\ProfanityCounter.csproj", "{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{258A6E5D-009F-4F0E-839E-F9DB30D1EA5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258A6E5D-009F-4F0E-839E-F9DB30D1EA5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258A6E5D-009F-4F0E-839E-F9DB30D1EA5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC7CABE4-EE4D-4E72-A70E-8A8096EF9D1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
