@@ -3,9 +3,7 @@
  *      General Module Preferences Form
  *      Test Module for analysis counting
  * Properties:
- *      Handle Switching between various Property types
- *      Fix Dirty Metric (when Apply is enabled)
- *          Consider making dirty module preferences red
+ *      Consider making dirty module preferences red
  * Test to make sure data sets can be loaded between users
  * ConversationIterator:
  *      Cases to Consider:
@@ -134,6 +132,7 @@ namespace Facebook_Message_Analyzer.Business
                             m_analysisForm.Close();
                         }
                     ));
+                    repeat = false;
                 }
                 catch (Exception e)
                 {

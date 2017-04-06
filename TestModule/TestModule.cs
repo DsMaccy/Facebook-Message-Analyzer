@@ -12,7 +12,7 @@ namespace TestModule
         public TestModule()
         {
             m_previousMessage = new FacebookMessage();
-            m_previousValues = new Dictionary<string, object>();
+            m_previousValues = null;
         }
 
         public string description()
@@ -66,17 +66,25 @@ namespace TestModule
         public void savePreferences(Dictionary<string, object> newValues)
         {
             List<string> changedControls = new List<string>();
-
-            foreach (KeyValuePair<string, object> kv in newValues)
+            if (m_previousValues == null)
             {
-                if (kv.Value != m_previousValues[kv.Key])
+                m_previousValues = new Dictionary<string, object>(newValues);
+            }
+            else
+            {
+                foreach (KeyValuePair<string, object> kv in newValues)
                 {
-                    changedControls.Add(kv.Key);
+                    if (kv.Value != m_previousValues[kv.Key])
+                    {
+                        changedControls.Add(kv.Key);
+                    }
                 }
             }
 
-
-            MessageBox.Show("The following controls have been changed" + changedControls.ToString());
+            if (changedControls.Count > 0)
+            {
+                MessageBox.Show("The following controls have been changed: " + string.Join(" ", changedControls));
+            }
         }
     }
 }

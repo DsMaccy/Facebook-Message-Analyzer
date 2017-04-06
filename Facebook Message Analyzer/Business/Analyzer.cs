@@ -18,6 +18,7 @@ namespace Facebook_Message_Analyzer.Business
         private List<Thread> m_threads;
         private string m_conversationID;
         private Thread m_endThread;
+        private bool m_empty;
         
 
         public Analyzer(string conversationID)
@@ -29,6 +30,7 @@ namespace Facebook_Message_Analyzer.Business
             m_counterSem = null;
             m_threads = new List<Thread>();
             m_endThread = null;
+            m_empty = true;
         }
 
         public void setModules(List<Type> modules)
@@ -59,9 +61,20 @@ namespace Facebook_Message_Analyzer.Business
             m_endThread = new Thread(new ThreadStart(finishAnalysis));
             m_endThread.Start();
 
+            Dictionary<string, Type> modules = StateMaster.getModules();
+            Dictionary<Type, string> moduleTags = new Dictionary<Type, string>();
+            foreach (KeyValuePair<string, Type> kvPair in modules)
+            {
+                moduleTags[kvPair.Value] = kvPair.Key;
+            }
+
             foreach (IModule module in m_analysisModules)
             {
                 m_threads.Add(new Thread(new ParameterizedThreadStart(analysisThread)));
+                if (module.preferencesAvailable())
+                {
+                    module.savePreferences(StateMaster.getPreferenceData(moduleTags[module.GetType()]));
+                }
                 m_threads[m_threads.Count - 1].Start(module);
             }
         }
@@ -72,9 +85,17 @@ namespace Facebook_Message_Analyzer.Business
             {
                 m_counterSem.WaitOne();
             }
+            Console.WriteLine("Finished waiting for analysis threads");
 
             StateMaster.closeAnalysisForm();
 
+            Console.WriteLine("Analysis Form Closed");
+
+            if (m_empty)
+            {
+                ErrorMessages.NoMessages();
+                return;
+            }
             foreach (IModule module in m_analysisModules)
             {
                 if (module.formAvailable())
@@ -104,6 +125,7 @@ namespace Facebook_Message_Analyzer.Business
                     m_sem.WaitOne();
                     foreach (FacebookMessage message in messages)
                     {
+                        m_empty = false;
                         module.analyze(message);
                     }
                     m_sem.Release(1);
@@ -114,12 +136,12 @@ namespace Facebook_Message_Analyzer.Business
                     Parallel.ForEach<FacebookMessage>(messages,
                         new Action<FacebookMessage> ((FacebookMessage message) =>
                     {
+                        m_empty = false;
                         module.parallelAnalyze(message);
                     }));
                 }
 
                 m_counterSem.Release(1);
-                
             }
             catch(System.Threading.ThreadInterruptedException)
             {

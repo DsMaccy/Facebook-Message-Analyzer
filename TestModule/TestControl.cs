@@ -30,7 +30,6 @@ namespace TestModule
             values.Add("Radio3", radioButton3.Checked);
             values.Add("Number", numericUpDown1.Value);
             values.Add("TextBox", textBox1.Text);
-            // TODO: Fill
 
             return values;
         }

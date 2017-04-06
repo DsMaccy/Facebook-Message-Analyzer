@@ -46,5 +46,9 @@ namespace Facebook_Message_Analyzer.Business
         {
             MessageBox.Show("No Analysis Module Selected.  You must select an analysis module to proceed");
         }
+        public static void NoMessages()
+        {
+            MessageBox.Show("There were no messages in this conversation.");
+        }
     }
 }

@@ -13,3 +13,4 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Modul
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.pdb
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.ResultsScreen.resources
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.csproj.GenerateResource.Cache
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\ModuleInterface\obj\Debug\ModuleInterface.csprojResolveAssemblyReference.cache
