@@ -35,7 +35,13 @@
             this.profanityListBox = new System.Windows.Forms.ListBox();
             this.addButton = new System.Windows.Forms.Button();
             this.showWordsCheckbox = new System.Windows.Forms.CheckBox();
+            this.saveFile = new System.Windows.Forms.GroupBox();
+            this.createFiles = new System.Windows.Forms.CheckBox();
+            this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
+            this.saveLocationText = new System.Windows.Forms.TextBox();
+            this.saveLocationBrowseButton = new System.Windows.Forms.Button();
             this.wordManager.SuspendLayout();
+            this.saveFile.SuspendLayout();
             this.SuspendLayout();
             // 
             // censorCheckBox
@@ -109,18 +115,67 @@
             this.showWordsCheckbox.Text = "Show Tally of Each Word";
             this.showWordsCheckbox.UseVisualStyleBackColor = true;
             // 
+            // saveFile
+            // 
+            this.saveFile.Controls.Add(this.saveLocationBrowseButton);
+            this.saveFile.Controls.Add(this.saveLocationText);
+            this.saveFile.Controls.Add(this.createFiles);
+            this.saveFile.Location = new System.Drawing.Point(3, 234);
+            this.saveFile.Name = "saveFile";
+            this.saveFile.Size = new System.Drawing.Size(160, 101);
+            this.saveFile.TabIndex = 3;
+            this.saveFile.TabStop = false;
+            this.saveFile.Text = "Export Flagged Messages";
+            // 
+            // createFiles
+            // 
+            this.createFiles.AutoSize = true;
+            this.createFiles.Location = new System.Drawing.Point(7, 20);
+            this.createFiles.Name = "createFiles";
+            this.createFiles.Size = new System.Drawing.Size(143, 17);
+            this.createFiles.TabIndex = 0;
+            this.createFiles.Text = "Save Flagged Messages";
+            this.createFiles.UseVisualStyleBackColor = true;
+            this.createFiles.CheckedChanged += new System.EventHandler(this.createFiles_CheckedChanged);
+            // 
+            // directorySearcher1
+            // 
+            this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
+            // 
+            // saveLocationText
+            // 
+            this.saveLocationText.Location = new System.Drawing.Point(7, 44);
+            this.saveLocationText.Name = "saveLocationText";
+            this.saveLocationText.Size = new System.Drawing.Size(147, 20);
+            this.saveLocationText.TabIndex = 1;
+            // 
+            // saveLocationBrowseButton
+            // 
+            this.saveLocationBrowseButton.Location = new System.Drawing.Point(41, 70);
+            this.saveLocationBrowseButton.Name = "saveLocationBrowseButton";
+            this.saveLocationBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.saveLocationBrowseButton.TabIndex = 2;
+            this.saveLocationBrowseButton.Text = "Browse";
+            this.saveLocationBrowseButton.UseVisualStyleBackColor = true;
+            this.saveLocationBrowseButton.Click += new System.EventHandler(this.saveLocationBrowseButton_Click);
+            // 
             // ProfanityOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.saveFile);
             this.Controls.Add(this.showWordsCheckbox);
             this.Controls.Add(this.wordManager);
             this.Controls.Add(this.censorCheckBox);
             this.Name = "ProfanityOptions";
-            this.Size = new System.Drawing.Size(168, 244);
+            this.Size = new System.Drawing.Size(168, 342);
             this.wordManager.ResumeLayout(false);
             this.wordManager.PerformLayout();
+            this.saveFile.ResumeLayout(false);
+            this.saveFile.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +190,10 @@
         private System.Windows.Forms.ListBox profanityListBox;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.CheckBox showWordsCheckbox;
+        private System.Windows.Forms.GroupBox saveFile;
+        private System.Windows.Forms.Button saveLocationBrowseButton;
+        private System.Windows.Forms.TextBox saveLocationText;
+        private System.Windows.Forms.CheckBox createFiles;
+        private System.DirectoryServices.DirectorySearcher directorySearcher1;
     }
 }

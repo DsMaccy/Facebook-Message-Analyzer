@@ -107,47 +107,50 @@ namespace Facebook_Message_Analyzer.Business
 
         private void analysisThread(object moduleObj)
         {
-            IModule module = moduleObj as IModule;
-            if (module == null)
+            lock (this)
             {
-                throw new ArgumentException("Object needs to inherit from IModule");
-            }
-
-            List<Thread> threads = new List<Thread>();
-            try
-            {
-                bool saveMessages = StateMaster.getCacheMessages();
-                
-                ConversationIterator messages = new ConversationIterator(m_conversationID, saveMessages);
-                
-                if (!module.canParallelize())
+                IModule module = moduleObj as IModule;
+                if (module == null)
                 {
-                    m_sem.WaitOne();
-                    foreach (FacebookMessage message in messages)
+                    throw new ArgumentException("Object needs to inherit from IModule");
+                }
+
+                List<Thread> threads = new List<Thread>();
+                try
+                {
+                    bool saveMessages = StateMaster.getCacheMessages();
+
+                    ConversationIterator messages = new ConversationIterator(m_conversationID, saveMessages);
+
+                    if (!module.canParallelize())
                     {
-                        m_empty = false;
-                        module.analyze(message);
+                        m_sem.WaitOne();
+                        foreach (FacebookMessage message in messages)
+                        {
+                            m_empty = false;
+                            module.analyze(message);
+                        }
+                        m_sem.Release(1);
                     }
-                    m_sem.Release(1);
-                }
-                else
-                {
-                    ParallelOptions po = new ParallelOptions();
-                    Parallel.ForEach<FacebookMessage>(messages,
-                        new Action<FacebookMessage> ((FacebookMessage message) =>
+                    else
                     {
-                        m_empty = false;
-                        module.parallelAnalyze(message);
-                    }));
-                }
+                        ParallelOptions po = new ParallelOptions();
+                        Parallel.ForEach<FacebookMessage>(messages,
+                            new Action<FacebookMessage>((FacebookMessage message) =>
+                       {
+                            m_empty = false;
+                            module.parallelAnalyze(message);
+                        }));
+                    }
 
-                m_counterSem.Release(1);
-            }
-            catch(System.Threading.ThreadInterruptedException)
-            {
-                if (module.canParallelize())
+                    m_counterSem.Release(1);
+                }
+                catch (System.Threading.ThreadInterruptedException)
                 {
-                    // TODO: Cleanup threads created in parallel version
+                    if (module.canParallelize())
+                    {
+                        // TODO: Cleanup threads created in parallel version
+                    }
                 }
             }
         }

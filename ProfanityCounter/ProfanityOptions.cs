@@ -16,30 +16,13 @@ namespace ProfanityCounter
             InitializeComponent();
             profanity = new List<string>();
             profanity.Add("fuck");
-            profanity.Add("fucks");
-            profanity.Add("fucked");
-            profanity.Add("fucking");
-            profanity.Add("fucky");
             profanity.Add("shit");
-            profanity.Add("shits");
-            profanity.Add("shitting");
-            profanity.Add("shitty");
             profanity.Add("cunt");
             profanity.Add("bastard");
-            profanity.Add("bastardly");
             profanity.Add("bitch");
-            profanity.Add("bitchy");
-            profanity.Add("bitching");
-            profanity.Add("bitchin");
-            profanity.Add("bitchin'");
-            profanity.Add("asshole");
-            profanity.Add("assholes");
             profanity.Add("ass");
-            profanity.Add("asses");
             profanity.Add("nigger");
-            profanity.Add("niggers");
             profanity.Add("nigga");
-            profanity.Add("niggas");
             propogateItemList();
         }
 
@@ -75,6 +58,10 @@ namespace ProfanityCounter
             values.Add("innocent", censorCheckBox.Checked);
             values.Add("wordFlags", String.Join(";", profanity));
             values.Add("showBreakdown", showWordsCheckbox.Checked);
+            values.Add("saveLocation", saveLocationText.Text);
+            values.Add("saveChecked", createFiles.Checked);
+
+
             return values;
         }
         public override void LoadValues(Dictionary<string, object> initialValues)
@@ -82,6 +69,8 @@ namespace ProfanityCounter
             censorCheckBox.Checked = (bool)initialValues["innocent"];
             profanity = new List<string>(((string)initialValues["wordFlags"]).Split(';'));
             showWordsCheckbox.Checked = (bool)initialValues["showBreakdown"];
+            saveLocationText.Text = (string)initialValues["saveLocation"];
+            createFiles.Checked = (bool)initialValues["saveChecked"];
         }
         #endregion 
 
@@ -115,5 +104,27 @@ namespace ProfanityCounter
             }
         }
         #endregion
+
+        private void createFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            if (createFiles.Checked)
+            {
+                saveLocationBrowseButton.Enabled = true;
+                saveLocationText.Enabled = true;
+            }
+            else
+            {
+                saveLocationBrowseButton.Enabled = false;
+                saveLocationText.Enabled = false;
+            }
+        }
+
+        private void saveLocationBrowseButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.SelectedPath = saveLocationText.Text;
+            fbd.ShowDialog();
+            saveLocationText.Text = fbd.SelectedPath;
+        }
     }
 }

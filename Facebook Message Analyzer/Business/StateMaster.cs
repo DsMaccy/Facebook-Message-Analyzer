@@ -1,11 +1,9 @@
 ﻿/* TODO
- * Create Additional Modules:
- *      General Module Preferences Form
- *      Test Module for analysis counting
+ * Fix up profanity counter module (look at profanityCounter.cs for more details)
  * Properties:
  *      Consider making dirty module preferences red
  * Test to make sure data sets can be loaded between users
- * ConversationIterator:
+ * Test ConversationIterator:
  *      Cases to Consider:
  *          1) GOOD: Messages uncached
  *          2) GOOD: Messages fully cached
@@ -13,10 +11,7 @@
  *          4) Message fully cached, but new messages present
  *          5) Messages partially cached AND new messages present
  * Create installer that will set registry values and download appropriate dll files
- * 
- * Create Additional Modules
- *      Profanity Module
- *      Points Module ...?
+ * Create Additional Modules: Points Module ...?
  */
 
 using System;

@@ -4,15 +4,24 @@ using System.Threading;
 using ModuleInterface;
 using System.Data;
 
+
+/* TODO:
+ *  Bug with duplicate user instance
+ *  Be able to create files for all users of their flagged messages.
+ *  Create Flagged Message Files (at the current directory if the saveFolder string is empty
+ */
 namespace ProfanityCounter
 {
     public class ProfanityCounter : IModule
     {
 
         private Dictionary<User, Dictionary<string, int>> m_profanityTable;
+        private Dictionary<User, List<string>> flaggedMessages;
         private List<string> m_profaneWords = new List<string>();
         private bool m_censor;
         private bool m_showWordBreakdown;
+        private bool m_saveFlaggedMessages;
+        private string m_saveFolder;
 
         public ProfanityCounter()
         {
@@ -20,6 +29,8 @@ namespace ProfanityCounter
             m_profanityTable = new Dictionary<User, Dictionary<string, int>>();
             m_censor = true;
             m_showWordBreakdown = true;
+            m_saveFlaggedMessages = false;
+            m_saveFolder = "";
         }
 
         public string description()
@@ -52,17 +63,24 @@ namespace ProfanityCounter
                     }
                 }
             }
-            foreach (string word in m_profaneWords)
+
+            foreach (string profane_word in m_profaneWords)
             {
-                if (message.Contains(word))
+                List<string> profaneWords = new List<string>();
+                foreach (string message_word in message)
                 {
-                    lock (m_profanityTable[fm.sender])
+                    if (message_word == profane_word || 
+                        (message_word.Length > profane_word.Length && message_word.Substring(0, profane_word.Length) == profane_word)
+                        )
                     {
-                        if (!m_profanityTable[fm.sender].ContainsKey(word))
+                        lock (m_profanityTable[fm.sender])
                         {
-                            m_profanityTable[fm.sender][word] = 0;
+                            if (!m_profanityTable[fm.sender].ContainsKey(profane_word))
+                            {
+                                m_profanityTable[fm.sender][profane_word] = 0;
+                            }
+                            m_profanityTable[fm.sender][profane_word]++;
                         }
-                        m_profanityTable[fm.sender][word]++;
                     }
                 }
             }
@@ -91,6 +109,35 @@ namespace ProfanityCounter
         public System.Windows.Forms.Form getResultForm()
         {
             DataTable dt = new DataTable();
+            fillDataTable(dt);
+            if (m_censor)
+            {
+                censorColumnNames(dt);
+            }
+
+            trimColumns(dt);
+
+            if (m_saveFlaggedMessages)
+            {
+                saveFlaggedMessages();
+            }
+
+            return new ResultsScreen(dt);
+        }
+
+        public void savePreferences(Dictionary<string, object> newValues)
+        {
+            m_profaneWords = new List<string>(((string)newValues["wordFlags"]).Split(';'));
+            m_showWordBreakdown = (bool)newValues["showBreakdown"];
+            m_censor = (bool)newValues["innocent"];
+            m_saveFlaggedMessages = (bool)newValues["saveChecked"];
+            m_saveFolder = (string)newValues["saveLocation"];
+        }
+
+
+        #region Private Helper Methods
+        private void fillDataTable(DataTable dt)
+        {
             dt.Columns.Add("user");
             if (m_showWordBreakdown)
             {
@@ -106,7 +153,7 @@ namespace ProfanityCounter
                 DataRow dr = dt.NewRow();
                 int total = 0;
                 dr["user"] = user.name;
-                
+
                 foreach (string word in m_profaneWords)
                 {
                     if (m_showWordBreakdown)
@@ -121,30 +168,77 @@ namespace ProfanityCounter
                 dr["total"] = total;
                 dt.Rows.Add(dr);
             }
+        }
 
-            if (m_censor)
+        private void censorColumnNames(DataTable dt)
+        {
+            foreach (DataColumn column in dt.Columns)
             {
-                foreach (DataColumn column in dt.Columns)
+                if (column.ColumnName != "total" && column.ColumnName != "user")
                 {
-                    if (column.ColumnName != "total" && column.ColumnName != "user")
+                    column.ColumnName = column.ColumnName.Replace('a', '*');
+                    column.ColumnName = column.ColumnName.Replace('e', '*');
+                    column.ColumnName = column.ColumnName.Replace('i', '*');
+                    column.ColumnName = column.ColumnName.Replace('o', '*');
+                    column.ColumnName = column.ColumnName.Replace('u', '*');
+                }
+            }
+        }
+        /// <summary>
+        /// Remove profanity columns that are unused (0 count across all users)
+        /// </summary>
+        /// <param name="dt"></param>
+        private void trimColumns(DataTable dt)
+        {
+            List<DataColumn> columnsToRemove = new List<DataColumn>();
+            foreach (DataColumn column in dt.Columns)
+            {
+                if (column.ColumnName != "total" && column.ColumnName != "user")
+                {
+                    bool instanceFound = false;
+                    foreach (DataRow row in dt.Rows)
                     {
-                        column.ColumnName = column.ColumnName.Replace('a', '*');
-                        column.ColumnName = column.ColumnName.Replace('e', '*');
-                        column.ColumnName = column.ColumnName.Replace('i', '*');
-                        column.ColumnName = column.ColumnName.Replace('o', '*');
-                        column.ColumnName = column.ColumnName.Replace('u', '*');
+                        if ((int.Parse((string)row[column]) != 0))
+                        {
+                            instanceFound = true;
+                            break;
+                        }
+                    }
+                    if (!instanceFound)
+                    {
+                        columnsToRemove.Add(column);
                     }
                 }
             }
-
-            return new ResultsScreen(dt);
+            foreach (DataColumn column in columnsToRemove)
+            {
+                dt.Columns.Remove(column);
+            }
         }
 
-        public void savePreferences(Dictionary<string, object> newValues)
+        private void saveFlaggedMessages()
         {
-            m_profaneWords = new List<string>(((string)newValues["wordFlags"]).Split(';'));
-            m_showWordBreakdown = (bool)newValues["showBreakdown"];
-            m_censor = (bool)newValues["innocent"];
+            // TODO: Fill -- use m_saveFolder to create files for each of the users that contain the XML layout:
+            /* { 
+             *      User_Name
+             *      User_ID
+             *      Messages
+             *      {
+             *          message id
+             *          {
+             *              flagged words
+             *              [ 
+             *                  word1,
+             *                  word2,
+             *                  ...
+             *              ]
+             *              message time
+             *              message text
+             *          }
+             *      }
+             *
+             */
         }
+        #endregion
     }
 }
