@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Facebook_Message_Analyzer.Business;
 using ModuleInterface;
 using System.Threading;
+using System.Drawing;
 
 namespace Facebook_Message_Analyzer.Presentation
 {
@@ -101,11 +102,12 @@ namespace Facebook_Message_Analyzer.Presentation
             m_openPreference.Left = modules.Left + modules.Width + 9;
             m_openPreference.Width = apply.Right - m_openPreference.Left;
 
-            MinimumSize = new System.Drawing.Size(modules.Width + ok.Width + cancel.Width + apply.Width + 9 * 7, 18 * 4 + Math.Max(apply.Height, Math.Max(ok.Height, cancel.Height)));
+            MinimumSize = new Size(modules.Width + ok.Width + cancel.Width + apply.Width + 9 * 7, 18 * 4 + Math.Max(apply.Height, Math.Max(ok.Height, cancel.Height)));
         }
 
         private void setPreferenceControl(int index)
         {
+
             if (m_openPreference != null)
             {
                 m_openPreference.Hide();
@@ -113,6 +115,7 @@ namespace Facebook_Message_Analyzer.Presentation
             }
 
             string tag = modules.Items[index] as string;
+
             m_currentModule = tag;
             if (tag == "General")
             {
@@ -162,19 +165,18 @@ namespace Facebook_Message_Analyzer.Presentation
                                 Dirty = true;
                             }));
                         }
-                        else { Dirty = true; }
+                        else {
+                            Dirty = true;
+                        }
                         m_dirtyModules.Add(m_currentModule);
                         thisIsDirty = true;
                         break;
                     }
                 }
-                if (thisIsDirty)
-                {
-                    m_dirtyModules.Add(m_currentModule);
-                }
-                else
+                if (!thisIsDirty)
                 {
                     m_dirtyModules.Remove(m_currentModule);
+                    
                     if (m_dirtyModules.Count == 0)
                     {
                         if (InvokeRequired)
@@ -231,12 +233,44 @@ namespace Facebook_Message_Analyzer.Presentation
             m_daemonThread.Abort();
             if (!m_validClosing && Dirty)
             {
-                DialogResult dr = MessageBox.Show("There is unsaved data.  Do you still want to exit?", "", MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("There are unsaved changes.  If you exit now, all \nchanges will be lost.  Are you sure you to exit?", "", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.No)
                 {
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void modules_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                e = new DrawItemEventArgs(e.Graphics,
+                                          new Font(e.Font, FontStyle.Bold),
+                                          e.Bounds,
+                                          e.Index,
+                                          e.State ^ DrawItemState.Selected,
+                                          e.ForeColor,
+                                          e.BackColor);
+
+            // draw the background color you want
+            // mine is set to olive, change it to whatever you want
+            g.FillRectangle(new SolidBrush(Color.White), e.Bounds);
+
+            // draw the text of the list item, not doing this will only show
+            // the background color
+            // you will need to get the text of item to display
+            string text = (string)modules.Items[e.Index];
+            Color color = Color.Black;
+            if (m_dirtyModules.Contains(text))
+            {
+                color = Color.Red;
+            }
+            g.DrawString(text, e.Font, new SolidBrush(color), new PointF(e.Bounds.X, e.Bounds.Y));
+            
+
+            e.DrawFocusRectangle();
         }
 
         #endregion

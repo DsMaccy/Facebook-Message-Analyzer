@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using ModuleInterface;
 using System.Data;
+using System.IO;
 
-
-/* TODO:
- *  Bug with duplicate user instance
- *  Be able to create files for all users of their flagged messages.
- *  Create Flagged Message Files (at the current directory if the saveFolder string is empty
- */
 namespace ProfanityCounter
 {
     public class ProfanityCounter : IModule
     {
-
         private Dictionary<User, Dictionary<string, int>> m_profanityTable;
-        private Dictionary<User, List<string>> flaggedMessages;
+        private Dictionary<User, Dictionary<FacebookMessage, List<string>>> m_flaggedMessages;
         private List<string> m_profaneWords = new List<string>();
         private bool m_censor;
         private bool m_showWordBreakdown;
@@ -31,7 +25,10 @@ namespace ProfanityCounter
             m_showWordBreakdown = true;
             m_saveFlaggedMessages = false;
             m_saveFolder = "";
+            m_flaggedMessages = new Dictionary<User, Dictionary<FacebookMessage, List<string>>>();
         }
+
+        #region IModule Interface Methods
 
         public string description()
         {
@@ -80,6 +77,19 @@ namespace ProfanityCounter
                                 m_profanityTable[fm.sender][profane_word] = 0;
                             }
                             m_profanityTable[fm.sender][profane_word]++;
+
+                            if (!m_flaggedMessages.ContainsKey(fm.sender))
+                            {
+                                lock (m_flaggedMessages)
+                                {
+                                    m_flaggedMessages.Add(fm.sender, new Dictionary<FacebookMessage, List<string>>());
+                                }
+                            }
+                            if (!m_flaggedMessages[fm.sender].ContainsKey(fm))
+                            {
+                                m_flaggedMessages[fm.sender].Add(fm, new List<string>());
+                            }
+                            m_flaggedMessages[fm.sender][fm].Add(profane_word);
                         }
                     }
                 }
@@ -134,6 +144,7 @@ namespace ProfanityCounter
             m_saveFolder = (string)newValues["saveLocation"];
         }
 
+        #endregion
 
         #region Private Helper Methods
         private void fillDataTable(DataTable dt)
@@ -218,26 +229,50 @@ namespace ProfanityCounter
 
         private void saveFlaggedMessages()
         {
-            // TODO: Fill -- use m_saveFolder to create files for each of the users that contain the XML layout:
-            /* { 
-             *      User_Name
-             *      User_ID
-             *      Messages
+            /********File Contents*******
+             * Intro Message
+             * Messages
+             * {
+             *      message id
              *      {
-             *          message id
-             *          {
-             *              flagged words
-             *              [ 
-             *                  word1,
-             *                  word2,
-             *                  ...
-             *              ]
-             *              message time
-             *              message text
-             *          }
+             *          flagged words
+             *          [ 
+             *              word1,
+             *              word2,
+             *              ...
+             *          ]
+             *          message time
+             *          message text
              *      }
-             *
+             * }
              */
+            if (m_saveFolder == "")
+            { m_saveFolder = "."; }
+            Directory.CreateDirectory(m_saveFolder);
+            foreach (KeyValuePair<User, Dictionary<FacebookMessage, List<string>>> kv in m_flaggedMessages)
+            {
+                if (m_saveFolder[m_saveFolder.Length - 1] != '\\' && m_saveFolder[m_saveFolder.Length - 1] != '/')
+                { m_saveFolder += "\\"; }
+                User user = kv.Key;
+                string fileName = m_saveFolder + "_" + user.name + "_" + user.id + ".txt";
+                
+                string fileContents = "Flagged profane messages for " + user.name + "\n";
+                fileContents += "Messages:\n{\n";
+
+                Dictionary<FacebookMessage, List<string>> messages = kv.Value;
+                foreach (KeyValuePair<FacebookMessage, List<string>> message in messages)
+                {
+                    fileContents += "\t" + message.Key.id + ":\n\t{\n";
+                    fileContents += "\t\tFlaggedWords: \n\t\t[\n";
+                    fileContents += "\t\t\t" + String.Join(",\n\t\t\t", message.Value);
+                    fileContents += "\n\t\t]\n";
+                    fileContents += "\t\tTimeSent: " + message.Key.timeSent.ToString() + "\n";
+                    fileContents += "\t\tMessage: " + message.Key.message + "\n";
+                    fileContents += "\t}\n";
+                }
+                fileContents += "}";
+                File.WriteAllText(fileName, fileContents);
+            }
         }
         #endregion
     }

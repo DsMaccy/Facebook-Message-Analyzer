@@ -16,18 +16,18 @@ namespace Facebook_Message_Analyzer.Presentation
     {
         private Dictionary<string, IModule> m_modules;
         private int m_hoverIndex;
+        private bool m_alreadySelected;
 
         public SelectModulesForm()
         {
             InitializeComponent();
             alignWidgets();
             m_hoverIndex = -1;
+            m_alreadySelected = false;
 
             Dictionary<string, Type> moduleList = StateMaster.getModules();
             m_modules = new Dictionary<string, IModule>();
-            
-            
-                        
+
             foreach (KeyValuePair<string, Type> module in moduleList)
             {
                 checkedList.Items.Add(module.Key);
@@ -41,6 +41,8 @@ namespace Facebook_Message_Analyzer.Presentation
                 string value = moduleObj.description();
                 m_modules.Add(module.Key, moduleObj);
             }
+
+            m_alreadySelected = false;
         }
 
         private void SelectModulesForm_Resize(object sender, EventArgs e)
@@ -93,6 +95,41 @@ namespace Facebook_Message_Analyzer.Presentation
                     hoverText.Hide(checkedList);
                 }
             }
+        }
+
+        private void checkedList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!m_alreadySelected)
+            {
+
+                if (checkedList.GetItemChecked(checkedList.SelectedIndex))
+                {
+                    checkedList.SetItemCheckState(checkedList.SelectedIndex, CheckState.Unchecked);
+                    m_alreadySelected = false;
+                }
+                else
+                {
+                    checkedList.SetItemCheckState(checkedList.SelectedIndex, CheckState.Checked);
+                    m_alreadySelected = false;
+                }
+            }
+            else
+            {
+                m_alreadySelected = false;
+            }
+        }
+
+        private void checkedList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            m_alreadySelected = true;
+            //if (m_alreadySelected)
+            //{
+            //    m_alreadySelected = false;
+            //}
+            //else
+            //{
+                
+            //}
         }
     }
 }

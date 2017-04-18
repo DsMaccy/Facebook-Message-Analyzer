@@ -36,10 +36,10 @@
             this.addButton = new System.Windows.Forms.Button();
             this.showWordsCheckbox = new System.Windows.Forms.CheckBox();
             this.saveFile = new System.Windows.Forms.GroupBox();
+            this.saveLocationBrowseButton = new System.Windows.Forms.Button();
+            this.saveLocationText = new System.Windows.Forms.TextBox();
             this.createFiles = new System.Windows.Forms.CheckBox();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
-            this.saveLocationText = new System.Windows.Forms.TextBox();
-            this.saveLocationBrowseButton = new System.Windows.Forms.Button();
             this.wordManager.SuspendLayout();
             this.saveFile.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +127,25 @@
             this.saveFile.TabStop = false;
             this.saveFile.Text = "Export Flagged Messages";
             // 
+            // saveLocationBrowseButton
+            // 
+            this.saveLocationBrowseButton.Enabled = false;
+            this.saveLocationBrowseButton.Location = new System.Drawing.Point(41, 70);
+            this.saveLocationBrowseButton.Name = "saveLocationBrowseButton";
+            this.saveLocationBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.saveLocationBrowseButton.TabIndex = 2;
+            this.saveLocationBrowseButton.Text = "Browse";
+            this.saveLocationBrowseButton.UseVisualStyleBackColor = true;
+            this.saveLocationBrowseButton.Click += new System.EventHandler(this.saveLocationBrowseButton_Click);
+            // 
+            // saveLocationText
+            // 
+            this.saveLocationText.Enabled = false;
+            this.saveLocationText.Location = new System.Drawing.Point(7, 44);
+            this.saveLocationText.Name = "saveLocationText";
+            this.saveLocationText.Size = new System.Drawing.Size(147, 20);
+            this.saveLocationText.TabIndex = 1;
+            // 
             // createFiles
             // 
             this.createFiles.AutoSize = true;
@@ -143,23 +162,6 @@
             this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            // 
-            // saveLocationText
-            // 
-            this.saveLocationText.Location = new System.Drawing.Point(7, 44);
-            this.saveLocationText.Name = "saveLocationText";
-            this.saveLocationText.Size = new System.Drawing.Size(147, 20);
-            this.saveLocationText.TabIndex = 1;
-            // 
-            // saveLocationBrowseButton
-            // 
-            this.saveLocationBrowseButton.Location = new System.Drawing.Point(41, 70);
-            this.saveLocationBrowseButton.Name = "saveLocationBrowseButton";
-            this.saveLocationBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.saveLocationBrowseButton.TabIndex = 2;
-            this.saveLocationBrowseButton.Text = "Browse";
-            this.saveLocationBrowseButton.UseVisualStyleBackColor = true;
-            this.saveLocationBrowseButton.Click += new System.EventHandler(this.saveLocationBrowseButton_Click);
             // 
             // ProfanityOptions
             // 

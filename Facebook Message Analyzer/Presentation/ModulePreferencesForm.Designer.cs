@@ -37,11 +37,13 @@
             // 
             // modules
             // 
+            this.modules.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.modules.FormattingEnabled = true;
             this.modules.Location = new System.Drawing.Point(12, 12);
             this.modules.Name = "modules";
             this.modules.Size = new System.Drawing.Size(99, 238);
             this.modules.TabIndex = 0;
+            this.modules.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.modules_DrawItem);
             this.modules.SelectedIndexChanged += new System.EventHandler(this.modules_SelectedIndexChanged);
             // 
             // ok

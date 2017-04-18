@@ -1,17 +1,13 @@
 ﻿/* TODO
- * Fix up profanity counter module (look at profanityCounter.cs for more details)
- * Properties:
- *      Consider making dirty module preferences red
- * Test to make sure data sets can be loaded between users
  * Test ConversationIterator:
  *      Cases to Consider:
- *          1) GOOD: Messages uncached
- *          2) GOOD: Messages fully cached
- *          3) Messages partially cached, no new messages
- *          4) Message fully cached, but new messages present
- *          5) Messages partially cached AND new messages present
+ *          1) Too many messages for one run, API Overflow (make sure that the error message is shown and execution is paused)
+ *          2) Messages partially cached, no new messages
+ *          3) Message fully cached, but new messages present
+ *          4) Messages partially cached AND new messages present
  * Create installer that will set registry values and download appropriate dll files
  * Create Additional Modules: Points Module ...?
+ * Take the project out of development mode
  */
 
 using System;

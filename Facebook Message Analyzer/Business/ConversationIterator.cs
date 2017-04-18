@@ -88,7 +88,21 @@ namespace Facebook_Message_Analyzer.Business
             }
             private void getNextOnlineMessages()
             {
-                m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
+                bool repeat = false;
+                do
+                {
+                    repeat = false;
+                    try
+                    {
+                        m_messageList = FBQueryManager.Manager.getComments(m_conversationID);
+                    }
+                    catch (Exception ex) when (ex is Facebook.FacebookOAuthException || ex is Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+                    {
+                        Business.ErrorMessages.APIOverflow();
+                        repeat = true;
+                        System.Threading.Thread.Sleep(20 * 60 * 1000);  // wait for 20 minutes
+                    }
+                } while (repeat);
             }
 
             // TODO: Ensure that the state methods work

@@ -53,6 +53,8 @@
             this.checkedList.Name = "checkedList";
             this.checkedList.Size = new System.Drawing.Size(260, 214);
             this.checkedList.TabIndex = 1;
+            this.checkedList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedList_ItemCheck);
+            this.checkedList.SelectedIndexChanged += new System.EventHandler(this.checkedList_SelectedIndexChanged);
             this.checkedList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkedList_MouseMove);
             // 
             // okButton
