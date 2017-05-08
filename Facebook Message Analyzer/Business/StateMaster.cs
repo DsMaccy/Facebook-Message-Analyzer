@@ -1,11 +1,12 @@
 ﻿/* TODO
+ * Create installer that will set registry values and download appropriate dll files
+ * Fix profanity analysis to use regex
  * Test ConversationIterator:
  *      Cases to Consider:
  *          1) Too many messages for one run, API Overflow (make sure that the error message is shown and execution is paused)
  *          2) Messages partially cached, no new messages
  *          3) Message fully cached, but new messages present
  *          4) Messages partially cached AND new messages present
- * Create installer that will set registry values and download appropriate dll files
  * Create Additional Modules: Points Module ...?
  * Take the project out of development mode
  */

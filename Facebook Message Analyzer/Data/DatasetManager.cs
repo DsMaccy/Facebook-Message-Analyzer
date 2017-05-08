@@ -87,7 +87,15 @@ namespace Facebook_Message_Analyzer.Data
                     string filename = PATH + FBQueryManager.Manager.getMe() + "\\" + kvPair.Value;
                     if (File.Exists(filename))
                     {
-                        m_dataSets[kvPair.Key].ReadXml(filename);
+                        try
+                        {
+                            m_dataSets[kvPair.Key].ReadXml(filename);
+                        }
+                        catch (Exception)
+                        {
+                            // Remove the file if it cannot be read
+                            File.Delete(filename);
+                        }
                     }
                 }
                 finally

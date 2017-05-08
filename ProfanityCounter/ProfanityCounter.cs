@@ -42,9 +42,12 @@ namespace ProfanityCounter
 
         public void parallelAnalyze(FacebookMessage fm)
         {
-            if (!m_profanityTable.ContainsKey(fm.sender))
+            lock (m_profanityTable)
             {
-                m_profanityTable[fm.sender] = new Dictionary<string, int>();
+                if (!m_profanityTable.ContainsKey(fm.sender))
+                {
+                    m_profanityTable[fm.sender] = new Dictionary<string, int>();
+                }
             }
             if (fm.message == null)
             { return; }

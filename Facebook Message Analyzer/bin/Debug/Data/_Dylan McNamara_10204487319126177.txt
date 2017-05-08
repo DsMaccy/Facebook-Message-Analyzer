@@ -1,0 +1,85 @@
+Flagged profane messages for Dylan McNamara
+Messages:
+{
+	1457860503:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 3/13/2016 9:15:03 AM
+		Message: Carne Assad
+	}
+	1421779086:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 1/20/2015 6:38:06 PM
+		Message: Hey Kevin. Didn't want to be an ass about this, but both the 'too's in your hashtag should have 2 'o's.
+	}
+	1412007678:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 9/29/2014 4:21:18 PM
+		Message: Kinda. Most students just aren't going to classes, so the teachers are being really lenient. One of my teachers pushed back an assignment a week just for the protests. I fly into Seoul but might also visit the dmz and busan
+	}
+	1409715789:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 9/3/2014 3:43:09 AM
+		Message: Up, right, left, down.  It's all the same shit.  When are you in Shanghai?
+	}
+	1409630976:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 9/2/2014 4:09:36 AM
+		Message: we use a lot of shit in EE
+	}
+	1381899883:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 10/16/2013 5:04:43 AM
+		Message: I did, but I'm in the cs basement right now working my ass of.
+	}
+	1375718641:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 8/5/2013 4:04:01 PM
+		Message: Main gym equipment I really old and shitty. I like canyonview better.
+	}
+	1372525357:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 6/29/2013 5:02:37 PM
+		Message: A. Like last time. But I was surprised because I fucked everything else up. I got a 3/4 on the may lab quiz. My average on the homeworkers was probably a D. So in other words, I probably killed the final.
+	}
+	1358513140:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 1/18/2013 12:45:40 PM
+		Message: Dude , when you get this, can you send me your math homework please? I don't know how to do half this shit.
+	}
+}

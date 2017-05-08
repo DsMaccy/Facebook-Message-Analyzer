@@ -24,6 +24,10 @@ namespace ModuleInterface
             }
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentException("Cannot set value to null");
+                }
                 switch (property)
                 {
                     case "name":

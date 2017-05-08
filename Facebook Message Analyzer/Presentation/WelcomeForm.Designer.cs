@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.title = new System.Windows.Forms.Label();
             this.version = new System.Windows.Forms.Label();
             this.login = new System.Windows.Forms.Button();
@@ -71,8 +72,9 @@
             this.Controls.Add(this.login);
             this.Controls.Add(this.version);
             this.Controls.Add(this.title);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WelcomeForm";
-            this.Text = "Form1";
+            this.Text = "Welcome to the Facebook Message Analyzer";
             this.ResumeLayout(false);
             this.PerformLayout();
 

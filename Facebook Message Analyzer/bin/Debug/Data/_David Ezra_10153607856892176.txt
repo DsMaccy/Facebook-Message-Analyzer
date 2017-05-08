@@ -1,0 +1,22 @@
+Flagged profane messages for David Ezra
+Messages:
+{
+	1437255934:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 7/18/2015 9:45:34 PM
+		Message: Sorry dude I passed the fuck out. But yeah I'm in town. Did you happen to get an ID by any chance cause I'm going clubbing for a friend's birthday? If not we can do something tomorrow
+	}
+	1413771362:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 10/20/2014 2:16:02 AM
+		Message: Easy shit bro
+	}
+}

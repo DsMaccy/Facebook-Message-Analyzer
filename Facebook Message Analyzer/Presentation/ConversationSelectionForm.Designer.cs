@@ -161,8 +161,9 @@
             this.Controls.Add(this.conversations);
             this.Controls.Add(this.next);
             this.Controls.Add(this.previous);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConversationSelectionForm";
-            this.Text = "ConversationSelectionForm";
+            this.Text = "Conversation Selection Window";
             ((System.ComponentModel.ISupportInitialize)(this.conversations)).EndInit();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();

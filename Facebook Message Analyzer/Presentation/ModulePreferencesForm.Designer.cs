@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModulePreferencesForm));
             this.modules = new System.Windows.Forms.ListBox();
             this.ok = new System.Windows.Forms.Button();
             this.apply = new System.Windows.Forms.Button();
@@ -88,8 +89,9 @@
             this.Controls.Add(this.apply);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.modules);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ModulePreferencesForm";
-            this.Text = "ModulePreferences";
+            this.Text = "Module Preferences";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModulePreferencesForm_FormClosing);
             this.Resize += new System.EventHandler(this.ModulePreferencesForm_Resize);
             this.ResumeLayout(false);

@@ -142,7 +142,9 @@ namespace Facebook_Message_Analyzer.Presentation
         {
             if (e.KeyChar == (int)Keys.Enter)
             {
+                e.Handled = true;
                 analyze_click(sender, e);
+                
             }
         }
     }

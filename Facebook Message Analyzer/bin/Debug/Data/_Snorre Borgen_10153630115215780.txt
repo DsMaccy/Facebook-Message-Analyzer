@@ -1,0 +1,58 @@
+Flagged profane messages for Snorre Borgen
+Messages:
+{
+	1414027013:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 10/23/2014 1:16:53 AM
+		Message: are you writing the assignment by hand and then scaning it in later?
+	}
+	1413992663:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 10/22/2014 3:44:23 PM
+		Message: i was in school for like 12 hours today working on other shit,haha
+	}
+	1413992595:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 10/22/2014 3:43:15 PM
+		Message: fuck me
+	}
+	1413992588:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 10/22/2014 3:43:08 PM
+		Message: i literally just saw right now that our next assignment is for tomorrow
+	}
+	1411977484:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 9/29/2014 7:58:04 AM
+		Message: oh, fuck me
+	}
+	1411611208:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 9/25/2014 2:13:28 AM
+		Message: have you looked at the assignement 1 in power electronics yet?
+	}
+}

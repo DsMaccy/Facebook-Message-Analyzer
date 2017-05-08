@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalyzingForm));
             this.message = new System.Windows.Forms.Label();
             this.abort = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -59,8 +60,9 @@
             this.ClientSize = new System.Drawing.Size(432, 157);
             this.Controls.Add(this.abort);
             this.Controls.Add(this.message);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnalyzingForm";
-            this.Text = "AnalyzeForm";
+            this.Text = "Analysis Window";
             this.Resize += new System.EventHandler(this.AnalyzingForm_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();

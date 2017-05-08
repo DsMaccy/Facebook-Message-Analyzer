@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectModulesForm));
             this.title = new System.Windows.Forms.Label();
             this.checkedList = new System.Windows.Forms.CheckedListBox();
             this.hoverText = new System.Windows.Forms.ToolTip(this.components);
@@ -89,8 +90,9 @@
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.checkedList);
             this.Controls.Add(this.title);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SelectModulesForm";
-            this.Text = "SelectModulesForm";
+            this.Text = "Module Selection Window";
             this.Resize += new System.EventHandler(this.SelectModulesForm_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,0 +1,121 @@
+Flagged profane messages for Kevin Lin
+Messages:
+{
+	1452713727:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 1/13/2016 7:35:27 PM
+		Message: Fucking useless... 
+	}
+	1434221249:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 6/13/2015 6:47:29 PM
+		Message: But that's fucking up all the traffic right now
+	}
+	1434220325:
+	{
+		FlaggedWords: 
+		[
+			bitch
+		]
+		TimeSent: 6/13/2015 6:32:05 PM
+		Message: Cause parking on campus right now is a bitch
+	}
+	1434220057:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 6/13/2015 6:27:37 PM
+		Message: I'm packing my shit right now
+	}
+	1407539004:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 8/8/2014 11:03:24 PM
+		Message: You're thirsty as fuck bro
+	}
+	1402706904:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 6/14/2014 12:48:24 AM
+		Message: and internet is too shit to play games
+	}
+	1399529312:
+	{
+		FlaggedWords: 
+		[
+			bitch
+		]
+		TimeSent: 5/8/2014 6:08:32 AM
+		Message: Ya bitch
+	}
+	1389465166:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 1/11/2014 6:32:46 PM
+		Message: Shit overslept
+	}
+	1389431348:
+	{
+		FlaggedWords: 
+		[
+			bitch
+		]
+		TimeSent: 1/11/2014 9:09:08 AM
+		Message: cause u know... ppl tend to be bitches and bail
+	}
+	1372525419:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 6/29/2013 5:03:39 PM
+		Message: And as usual I fucked up the final
+	}
+	1372525134:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 6/29/2013 4:58:54 PM
+		Message: I fucked up the final apparently
+	}
+	1357891268:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 1/11/2013 8:01:08 AM
+		Message: I don't even know the matlab shit
+	}
+	1357891144:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 1/11/2013 7:59:04 AM
+		Message: And matlab shit due 17th
+	}
+}

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AuthenticationForm));
             this.authBrowser = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
@@ -47,8 +48,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(688, 382);
             this.Controls.Add(this.authBrowser);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AuthenticationForm";
-            this.Text = "AuthenticationScreen";
+            this.Text = "Authentication Window";
             this.ResumeLayout(false);
 
         }
