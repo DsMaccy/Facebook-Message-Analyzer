@@ -1,0 +1,3 @@
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\cab1.cab
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.msi
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.wixpdb

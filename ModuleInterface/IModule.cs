@@ -14,6 +14,12 @@ namespace ModuleInterface
         /// Gives an explanation of what this analysis module does
         /// </summary>
         /// <returns>A string description</returns>
+        string name();
+
+        /// <summary>
+        /// Gives an explanation of what this analysis module does
+        /// </summary>
+        /// <returns>A string description</returns>
         string description();
 
         /// <summary>

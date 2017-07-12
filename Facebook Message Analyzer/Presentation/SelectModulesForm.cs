@@ -14,7 +14,7 @@ namespace Facebook_Message_Analyzer.Presentation
 {
     public partial class SelectModulesForm : Form
     {
-        private Dictionary<string, IModule> m_modules;
+        private List<IModule> m_modules;
         private int m_hoverIndex;
         private bool m_alreadySelected;
 
@@ -26,20 +26,21 @@ namespace Facebook_Message_Analyzer.Presentation
             m_alreadySelected = false;
 
             Dictionary<string, Type> moduleList = StateMaster.getModules();
-            m_modules = new Dictionary<string, IModule>();
+            m_modules = new List<IModule>();
 
             foreach (KeyValuePair<string, Type> module in moduleList)
             {
-                checkedList.Items.Add(module.Key);
+                Type moduleType = module.Value;
+                IModule moduleObj = Activator.CreateInstance(moduleType) as IModule;
+
+                checkedList.Items.Add(moduleObj.name());//.Key);
                 if (StateMaster.isModuleActive(module.Value))
                 {
                     checkedList.SetItemChecked(checkedList.Items.Count - 1, true);
                 }
-                Type moduleType = module.Value;
 
-                IModule moduleObj = Activator.CreateInstance(moduleType) as IModule;
                 string value = moduleObj.description();
-                m_modules.Add(module.Key, moduleObj);
+                m_modules.Add(moduleObj);
             }
 
             m_alreadySelected = false;
@@ -64,11 +65,12 @@ namespace Facebook_Message_Analyzer.Presentation
         
         private void okButton_Click(object sender, EventArgs e)
         {
-            Dictionary<string, Type> moduleList = StateMaster.getModules();
+            // Dictionary<string, Type> moduleList = StateMaster.getModules();
             List<Type> selectedModules = new List<Type>();
-            for (int i = 0; i < checkedList.CheckedItems.Count; i++)
+            for (int i = 0; i < checkedList.CheckedIndices.Count; i++)
             {
-                selectedModules.Add(moduleList[checkedList.CheckedItems[i].ToString()]);
+                selectedModules.Add(m_modules[checkedList.CheckedIndices[i]].GetType());
+                // selectedModules.Add(moduleList[checkedList.CheckedItems[i].ToString()]);
             }
             StateMaster.setActiveModules(selectedModules.ToArray());
 
@@ -88,7 +90,7 @@ namespace Facebook_Message_Analyzer.Presentation
                 m_hoverIndex = newIndex;
                 if (m_hoverIndex > -1)
                 {
-                    hoverText.Show(m_modules[(string)(checkedList.Items[m_hoverIndex])].description(), checkedList);
+                    hoverText.Show(m_modules[m_hoverIndex].description(), checkedList);
                 }
                 else
                 {
@@ -122,14 +124,6 @@ namespace Facebook_Message_Analyzer.Presentation
         private void checkedList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             m_alreadySelected = true;
-            //if (m_alreadySelected)
-            //{
-            //    m_alreadySelected = false;
-            //}
-            //else
-            //{
-                
-            //}
         }
     }
 }

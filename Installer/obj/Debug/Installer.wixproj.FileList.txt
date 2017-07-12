@@ -1,0 +1,11 @@
+obj\Debug\Product.wixobj
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\cab1.cab
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.msi
+C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.wixpdb
+obj\Debug\Installer.wixproj.BindContentsFileListnull.txt
+obj\Debug\Installer.wixproj.BindOutputsFileListnull.txt
+obj\Debug\Installer.wixproj.BindBuiltOutputsFileListnull.txt
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\cab1.cab
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.msi
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\Installer\bin\Debug\Installer.wixpdb
+obj\Debug\UI.wixobj

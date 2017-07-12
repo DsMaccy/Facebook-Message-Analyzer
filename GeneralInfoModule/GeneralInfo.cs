@@ -33,6 +33,11 @@ namespace GeneralInfoModule
         
         #region IModule Methods
 
+        public string name()
+        {
+            return "General Info Module";
+        }
+
         public void analyze(FacebookMessage message)
         {
             // Add User to user list if not already in it

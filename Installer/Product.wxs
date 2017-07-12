@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Installer" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="274fda32-0707-4858-bf44-baae0b4c6580">
+	<Product Id="*" Name="Installer" Language="1033" Version="1.0.0.0" Manufacturer="Solace Inc." UpgradeCode="274fda32-0707-4858-bf44-baae0b4c6580">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -10,20 +10,75 @@
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
-
+    
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Installer" />
+				<Directory Id="COMPANYFOLDER" Name="Solace Inc.">
+                    <Directory Id="INSTALLFOLDER" Name="Facebook Message Analyzer">
+                        <Directory Id="LIBRARIESFOLDER" Name="Libraries"/>
+                    </Directory>
+                </Directory>
 			</Directory>
 		</Directory>
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+        <UIRef Id="UI" />
 	</Fragment>
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<Component Id="ProductComponent">
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
+            <Component Id="MainProgram" Guid="6DD5C996-8DCB-40A6-B1E2-5157BEDEDD4C">
+
+                <File Id="MainExe" Source="../Facebook Message Analyzer/bin/Debug/Facebook Message Analyzer.exe" KeyPath="yes" Checksum="yes">
+                    <Shortcut Directory="INSTALLFOLDER" Id="MainExeShortcut" Name="FBMA"/>
+                </File>
+                <RemoveFile Id="RemoveMainExe" On="uninstall" Name="Facebook Message Analyzer.exe"/>
+            </Component>
+            
+            <Component Id="RegistryAdditions" Guid="85756A2C-E688-4CC5-90E2-FD20724AC150">
+                <RegistryKey Root="HKCU" Key="Software\Solace Inc.\Facebook Message Analyzer" Action="createAndRemoveOnUninstall">
+                    <RegistryValue Type="string" Name="data path" Value="%USERPROFILE\AppData\Local\Solace Inc\Facebook Message Analyzer\"/>
+                    <RegistryValue Type="string" Name="link path" Value="LIBRARIESFOLDER"/>
+                </RegistryKey>
+                <RemoveRegistryKey Root="HKCU" Key="Software\Solace Inc.\Facebook Message Analyzer" Action="removeOnUninstall"/>
 			</Component>
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Libraries" Directory="LIBRARIESFOLDER">
+            
+            <Component Id="GeneralInfoModule" Guid="7AF994AE-0B1E-45A7-81DE-B9A221A9F34E">
+                <File Id="GenModuleDll" Source="GeneralInfoModule.dll" KeyPath="yes" Checksum="yes"/>
+                <RemoveFile Id="RemoveGenModDll" Name="GeneralInfoModule.dll" On="uninstall"/>
+            </Component>
+            
+            <Component Id="ProfanityModule" Guid="7AF994AE-0B1E-45A7-81DE-B9A221A9F34E">
+				<File Id="ProfModuleDll" Source="ProfanityModule.dll" KeyPath="yes" Checksum="yes"/>
+                <RemoveFile Id="RemoveProfModuleDll" Name="ProfanityModule.dll" On="uninstall"/>
+			</Component>
+            
 		</ComponentGroup>
 	</Fragment>
+
+    <Fragment>
+        <FeatureGroup Id="Application Features">
+            <Feature Id="MainAppFeature" Title="Main Application" Level="1">
+                <ComponentGroupRef Id="ProductComponents" Primary="yes"/>
+            </Feature>
+            <Feature Id="LibraryFeature" Title="Additional Libraries">
+                <ComponentGroupRef Id="Libraries" Primary="yes"/>
+            </Feature>
+        </FeatureGroup>
+    </Fragment>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </Wix>

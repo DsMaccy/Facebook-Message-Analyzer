@@ -1,6 +1,5 @@
 ﻿/* TODO
  * Create installer that will set registry values and download appropriate dll files
- * Fix profanity analysis to use regex
  * Test ConversationIterator:
  *      Cases to Consider:
  *          1) Too many messages for one run, API Overflow (make sure that the error message is shown and execution is paused)
@@ -9,6 +8,7 @@
  *          4) Messages partially cached AND new messages present
  * Create Additional Modules: Points Module ...?
  * Take the project out of development mode
+ * Fix profanity analysis to use regex -- put an exception list for ass and assign (or add a whitelist)
  */
 
 using System;

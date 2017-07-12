@@ -1,0 +1,58 @@
+Flagged profane messages for Kurt Lang
+Messages:
+{
+	1482814841:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 12/27/2016 5:00:41 AM
+		Message: I'm always late to this shit
+	}
+	1480717744:
+	{
+		FlaggedWords: 
+		[
+			fuck
+		]
+		TimeSent: 12/2/2016 10:29:04 PM
+		Message: Did you fuck her yet?
+	}
+	1482814822:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 12/27/2016 5:00:22 AM
+		Message: Shit
+	}
+	1466879177:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 6/25/2016 6:26:17 PM
+		Message: Shit yeah I totally thought we were going tomorrow.
+	}
+	1460826884:
+	{
+		FlaggedWords: 
+		[
+			shit
+		]
+		TimeSent: 4/16/2016 5:14:44 PM
+		Message: Shit I forgot to mention I got work this weekend I'm not gonna be able to make it
+	}
+	1459662264:
+	{
+		FlaggedWords: 
+		[
+			ass
+		]
+		TimeSent: 4/3/2016 5:44:24 AM
+		Message: Arc light at utc is assigned?
+	}
+}

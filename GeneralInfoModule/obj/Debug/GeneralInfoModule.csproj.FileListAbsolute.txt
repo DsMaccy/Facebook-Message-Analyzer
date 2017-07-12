@@ -16,3 +16,12 @@ C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\Gener
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csproj.GenerateResource.Cache
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
 C:\Users\dsmac\Desktop\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\GeneralInfoModule.dll
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\GeneralInfoModule.pdb
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\ModuleInterface.dll
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\bin\Debug\ModuleInterface.pdb
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csprojResolveAssemblyReference.cache
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.ResultForm.resources
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.csproj.GenerateResource.Cache
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.dll
+C:\Users\dsmac\Documents\Facebook Message Analyzer\Facebook Message Analyzer\GeneralInfoModule\obj\Debug\GeneralInfoModule.pdb

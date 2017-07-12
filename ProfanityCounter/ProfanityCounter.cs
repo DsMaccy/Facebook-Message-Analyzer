@@ -30,6 +30,11 @@ namespace ProfanityCounter
 
         #region IModule Interface Methods
 
+        public string name()
+        {
+            return "Profanity Module";
+        }
+
         public string description()
         {
             return "Count how many times each user has used profanity";

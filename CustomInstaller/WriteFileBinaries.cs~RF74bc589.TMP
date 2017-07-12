@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace CustomInstaller
+{
+    class WriteFileBinaries
+    {
+        public static void WriteMainApp(string writeLocation)
+        {
+            using (FileStream main = File.Open("Facebook Message Analyzer.exe", FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                using (FileStream mainOut = File.Open(writeLocation + "Facebook Message Analyzer.exe", FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    using (BinaryReader br = new BinaryReader(main))
+                    {
+                        using (BinaryWriter bw = new BinaryWriter(mainOut))
+                        {
+                            bw.Write(br.ReadBytes());
+                            while (nextByte != 0)
+                            {
+                                mainOut.WriteByte((byte)nextByte);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void WriteDLL1()
+        {
+
+        }
+    }
+}

@@ -15,6 +15,11 @@ namespace TestModule
             m_previousValues = null;
         }
 
+        public string name()
+        {
+            return "Test Module";
+        }
+
         public string description()
         {
             return "This is used to make sure that the analysis works correctly.";
